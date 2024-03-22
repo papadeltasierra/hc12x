@@ -6,12 +6,38 @@
     - The [Arduino IDE] `monitor` program seems to work fine.
 
 ## What is an [HC-12]?
-An [HC-12] is a cheap little board that can perform quite complex wireless communications at frequencies from about 200MHz to 900MHz.  It achieves this through the use of two chips:
+An [HC-12] is a cheap little board that can perform quite complex wireless communications at frequencies from about 200MHz to 900MHz.  It achieves this through the use of three chips:
 
 - An [STMicroelectronics] [STM8] 8-bit processor that is the interface that configures and transmits and receives via a...
-- [Silicon Labs] [4463] High-Performance, Low Current Tranceiver.
+- [Silicon Labs] [4463] High-Performance, Low Current Tranceiver
+- An AS179-92LF 2-way radio frequency switch (marked S79)
 
 Using the standard firmware, data cna be transmitted between pairs of [HC-12]s using the default custom protocol and settings.
+
+### Connections
+The connections around the HC-12 are as follows:
+
+|STM8|4463|AS179-92LF|Purpose|
+|-|-|-|-|
+|D4|
+|D5|||UART TX|
+|D6|||UART RX|
+|PA1<br/>PA2||30MHz oscillator|
+|GND|||Ground|
+|VCAP|||Not used|
+|VCC|||3.3V supply|
+|A3|||module ready signal|
+|D3|
+|D2|nSEL||nSEL|
+|D1|||SWIM<br/>Pad by 'TX' pin/label|
+|C7|SDI||SPI MISO|
+|C6|SDO||SPI MOSI|
+|C5|SCLK||SPI CLK|
+|C4|nIRQ||Interrupt<br/>Packet received?|
+|C3|GPIO1|||
+|B4|GPIO0|||
+|B5|||SET<br/>Selects programming mode|
+||GPIO2<br/>GPIO3|V2<br/>V1|Seleting HF switch throw<br/>Maybe turns antenna on/off?<br/>Or selects transmit/receive?|
 
 ## Aims of this Project
 The [4463] can do so much more than the [HC-12] standard firmware exposes, and that is the purpose of this project, to free the [4463] and allow the [HC-12] to do more.  So this project will:
@@ -31,6 +57,7 @@ The [4463] can do so much more than the [HC-12] standard firmware exposes, and t
 - [ST Visual Programmer STM8]
 - An alternative is the older [STM8 IDE]
 - [STM8] software library
+- Silicon Labs [WDS] (Wireless Development Suite)
 - Silicon Micro WMBUS package ?????
 - [Ghidra] _A software reverse engineering (SRE) suite of tools developed by NSA's Research Directorate in support of the Cybersecurity mission_ if yuo wish to reverse engineer the firmware
     - [esaulenka/ghidra_STM8] is required to allow [Ghidra] to understand the STM8 byte code
@@ -66,6 +93,11 @@ You should see this:
 ### Associating the STM8 standard Peripherals Library
 ?????????????????????
 
+## Programming Overview
+- The [WDS] has sample code that is not intended for the STM8 but might be portable
+- The [WDS] can be used to customize the configuration for various scenarios
+- Sample code for the `hc-12` like configuration functions is provided in this project.
+
 ## Standard HC-12 (STM8) Firmware
 See the [rumpeltux/hc12] tools for instructions on downloading the standard [HC-12] firmware.
 
@@ -86,6 +118,7 @@ Some projects patch teh standard [HC-12] firmware but this project will not do t
 [STMicroelectronics]: https://www.st.com
 [stm8]: https://www.st.com/en/microcontrollers-microprocessors/stm8-8-bit-mcus.html
 [Silicon Labs]: https://silabs.com
+[WDS]: https://www.silabs.com/Support%20Documents/Software/WDS3-Setup.exe
 [4463]: https://www.silabs.com/documents/public/data-sheets/Si4463-61-60-C.pdf
 [WMBUS]: https://en.wikipedia.org/wiki/Meter-Bus
 [4GSK]: https://en.wikipedia.org/wiki/Frequency-shift_keying
