@@ -110,6 +110,8 @@ See the [rumpeltux/hc12] tools for instructions on downloading the standard [HC-
 Some projects patch the standard [HC-12] firmware but this project will not do that.  Instead a totally new set of firmware will be written that emulates some features of the standard firmware but allows the functionality to be changed by building in custom parts.
 
 ### Emulated Features
+> Design decision may mean we ignore the standard [HC-12] bootloader features and instead follow [UM05060] protocol definition for the standard stm8s bootloader.  This will mean that a bootloader program (probably write a Python script!) is required but allows use of example code from ST Microelectronics.
+
 - The use of `AT` commands via the `set` line to configure the [HC-12] will be replicated
 - The `AT+V` command to show firmware version will be emulated.
 - The `AT+UPDATE` command to install different firware will be emulated.
