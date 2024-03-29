@@ -7,6 +7,7 @@
 - [AN2659 Application note, STM8 in-application programming (IAP) using a  customized user-bootloader][AN2659]
 - [PM0051 Programming manual, How to program STM8S and STM8A Flash program memory and data EEPROM][PM0051]
 - [UM0560; User manual; STM8 bootloader][UM0560]
+- [PM0044; Programming manuual; STM8 CPU programming manual][PM0044]
 
 ### Other Authors
 - [Developing STM8 boot code with SDCC][stm8-boot-code]
@@ -35,6 +36,7 @@ https://github.com/rumpeltux/hc12
 [AN2659]: https://www.st.com/resource/en/application_note/an2659-stm8-inapplication-programming-iap-using-a-customized-userbootloader-stmicroelectronics.pdf
 [PM0051]: https://www.st.com/resource/en/programming_manual/pm0051-how-to-program-stm8s-and-stm8a-flash-program-memory-and-data-eeprom-stmicroelectronics.pdf
 [UM0560]: https://www.st.com/resource/en/user_manual/um0560-stm8-bootloader-stmicroelectronics.pdf
+[PM0044]: https://www.st.com/resource/en/programming_manual/pm0044-stm8-cpu-programming-manual-stmicroelectronics.pdf
 
 [stm8-boot-code]: https://yurovsky.github.io/2017/04/18/stm8-boot-code-sdcc.html
 [hc12-tools]: https://github.com/rumpeltux/hc12
