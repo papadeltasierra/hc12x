@@ -8,5 +8,5 @@ Filename=hc-12-expanded.stp
 Dependencies=
 [Options]
 ActiveProject=hc-12-expanded
-ActiveConfig=Release
+ActiveConfig=Debug
 AddSortedElements=1
