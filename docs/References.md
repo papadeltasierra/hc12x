@@ -2,30 +2,30 @@
 
 ## ST Microelectronics stm8s003f3
 ### ST Microelectronics
-- [STM8S003F3 STM8S003K3 specifications](stm8s003f3)
-- [RM0016 Reference manual, STM8S Series and STM8AF Series 8-bit microcontrollers](RM0016)
-- [AN2659 Application note, STM8 in-application programming (IAP) using a  customized user-bootloader](AN2659)
-- [PM0051 Programming manual, How to program STM8S and STM8A Flash program memory and data EEPROM](PM0051)
+- [STM8S003F3 STM8S003K3 specifications][stm8s003f3]
+- [RM0016 Reference manual, STM8S Series and STM8AF Series 8-bit microcontrollers][RM0016]
+- [AN2659 Application note, STM8 in-application programming (IAP) using a  customized user-bootloader][AN2659]
+- [PM0051 Programming manual, How to program STM8S and STM8A Flash program memory and data EEPROM][PM0051]
 
 ### Other Authors
-- [Developing STM8 boot code with SDCC](stm8-boot-code)
+- [Developing STM8 boot code with SDCC][stm8-boot-code]
 https://github.com/rumpeltux/hc12
-- [HC-12 tools](hc12-tools)
+- [HC-12 tools][hc12-tools]
 
 ### Tooling
-- [STVD-STM8S - ST Visual develop IDE](STM8S-STVD)
-- [STM8S/A Standard Peripheral Library](STM8S-SPL)
-- [Cosmic Software stm8 Compiler](Cosmic)
+- [STVD-STM8S - ST Visual develop IDE][STM8S-STVD]
+- [STM8S/A Standard Peripheral Library][STM8S-SPL]
+- [Cosmic Software stm8 Compiler][Cosmic]
 
 ## Silicon Labs 4463
 ### Silicon Labs
-- [AN633, PROGRAMMING GUIDE FOR EZRADIOPRO® Si4X6X DEVICES](AN633)
+- [AN633, PROGRAMMING GUIDE FOR EZRADIOPRO® Si4X6X DEVICES][AN633]
 
 ### Tooling
-- [Wireless Development Suite](wds3)
+- [Wireless Development Suite][wds3]
 
 ## Skyworks
-- [AS179-92LF: 20MHz to 4.0GHz GaAs SPDT Switch](AS179-92LF)
+- [AS179-92LF: 20MHz to 4.0GHz GaAs SPDT Switch][AS179-92LF]
 
 [stm8s003f3]: https://www.st.com/resource/en/datasheet/stm8s003f3.pdf
 [RM0016]: https://www.st.com/resource/en/reference_manual/rm0016-stm8s-series-and-stm8af-series-8bit-microcontrollers-stmicroelectronics.pdf

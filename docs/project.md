@@ -1,8 +1,8 @@
 # HC-12-Expanded Project Guide
 
 ## Notes
-- Everything below has been attempted usnig an [HC-12] v2.3
-- The common [Putty] serial cnosole does not seem to work.  This might be a settings issue on my part but every command I send it responses `ERROR`.
+- Everything below has been attempted using an [HC-12] v2.3.  However note that there are many cloned [HC-12] boards around, and mine might be one of them!
+- The common [Putty] serial console does not seem to work when connected to the [HC-12].  This might be a settings issue on my part but every command I send it responses `ERROR`.
     - The [Arduino IDE] `monitor` program seems to work fine.
 
 ## What is an [HC-12]?
@@ -10,12 +10,16 @@ An [HC-12] is a cheap little board that can perform quite complex wireless commu
 
 - An [STMicroelectronics] [STM8] 8-bit processor that is the interface that configures and transmits and receives via a...
 - [Silicon Labs] [4463] High-Performance, Low Current Tranceiver
-- An AS179-92LF 2-way radio frequency switch (marked S79)
+- A [Skyworks] [AS179-92LF] 2-way radio frequency switch (marked S79)
 
-Using the standard firmware, data cna be transmitted between pairs of [HC-12]s using the default custom protocol and settings.
+Using the standard firmware, data can be transmitted between pairs of [HC-12]s using the default custom protocol and settings.
+
+> There is no specification of the custom protocol used or access to to source code for the standard firmware used with these boards.
 
 ### Connections
 The connections around the HC-12 are as follows:
+
+> Assume there might be errors below - hard to follow them on a board this size!
 
 |STM8|4463|AS179-92LF|Purpose|
 |-|-|-|-|
@@ -48,18 +52,18 @@ The [4463] can do so much more than the [HC-12] standard firmware exposes, and t
 - Attempt to create a standard framework that can be used to extend the [HC-12] for other functions using whatever functions of the [4463] your project requires.
 
 ## Hardware Requirements
-- An [HC-12]
-- A suitable USB-TTL serial port device
-- ??? aka _Blue Pill_
+- An [STM8S-DISCOVERY kit with STM8S105C6 MCU](stm8s-discovery) is being used for initial development of the software.
+- An [HC-12] will be the final target board
+- A suitable USB-TTL serial port device is required for serial communications to the boards
+- An STM32F103C8T6 aka _Blue Pill_ might be used at some point.
 
 ## Software Requirements
-- [HC-12] firmware extractor i.e. [rumpeltux/hc12]
+- [HC-12] firmware extractor i.e. [rumpeltux/hc12]; this will be attempted but given my board might be a clone, it might not work!
 - [ST Visual Programmer STM8]
 - An alternative is the older [STM8 IDE]
 - [STM8] software library
 - Silicon Labs [WDS] (Wireless Development Suite)
-- Silicon Micro WMBUS package ?????
-- [Ghidra] _A software reverse engineering (SRE) suite of tools developed by NSA's Research Directorate in support of the Cybersecurity mission_ if yuo wish to reverse engineer the firmware
+- [Ghidra] _A software reverse engineering (SRE) suite of tools developed by NSA's Research Directorate in support of the Cybersecurity mission_ if you wish to reverse engineer the firmware
     - [esaulenka/ghidra_STM8] is required to allow [Ghidra] to understand the STM8 byte code
 
 ### Installling the older [STM8 IDE]
@@ -91,7 +95,7 @@ You should see this:
 - The [STM8 IDE] should install and should happily launch and build projects.
 
 ### Associating the STM8 standard Peripherals Library
-?????????????????????
+The SPL consists of header files and source so is just imported _file-by-file_ into STVD projects.
 
 ## Programming Overview
 - The [WDS] has sample code that is not intended for the STM8 but might be portable
@@ -101,12 +105,13 @@ You should see this:
 ## Standard HC-12 (STM8) Firmware
 See the [rumpeltux/hc12] tools for instructions on downloading the standard [HC-12] firmware.
 
-> It is very much recommended that you download your firmware first so that you can restore your [HC-12] if required.
+> It is very much recommended that you download your firmware first so that you can restore your [HC-12] if required. This may, or may not, work if your [HC-12] isa clone or a difference version from the one the author used.
 
-Some projects patch teh standard [HC-12] firmware but this project will not do thta.  Instead a totally new set of firmware will be written that emulates some features of the standard firmware but allows the functionality to be changed by building in custom parts.
+Some projects patch the standard [HC-12] firmware but this project will not do that.  Instead a totally new set of firmware will be written that emulates some features of the standard firmware but allows the functionality to be changed by building in custom parts.
 
 ### Emulated Features
 - The use of `AT` commands via the `set` line to configure the [HC-12] will be replicated
+- The `AT+V` command to show firmware version will be emulated.
 - The `AT+UPDATE` command to install different firware will be emulated.
 
 [HC-12]: https://statics3.seeedstudio.com/assets/file/bazaar/product/HC-12_english_datasheets.pdf
@@ -125,3 +130,7 @@ Some projects patch teh standard [HC-12] firmware but this project will not do t
 [STM8 IDE]: https://www.st.com/en/development-tools/stm8-ides/products.html
 [otya128/winevdm]: https://github.com/otya128/winevdm?tab=readme-ov-file
 [ST Visual Programmer STM8]: https://www.st.com/en/development-tools/stvp-stm8.html
+[Skyworks]: https://www.skyworksinc.com/
+[AS179-92LF]: https://www.mouser.co.uk/datasheet/2/472/AS179_92LF_200176J-3365297.pdf
+
+[stm8s-discovery]: https://www.st.com/en/evaluation-tools/stm8s-discovery.html
