@@ -191,13 +191,14 @@ ResourceID=0
 
 [WorkState_v1_2.DockState.Bar-4]
 BarID=59420
-Bars=6
+Bars=7
 Bar#0=0
 Bar#1=5708
-Bar#2=5720
-Bar#3=0
-Bar#4=32770
-Bar#5=0
+Bar#2=0
+Bar#3=32770
+Bar#4=0
+Bar#5=5720
+Bar#6=0
 Style=0
 ExStyle=0
 PrevFloating=False
@@ -725,15 +726,16 @@ Buttons=KDIBAAAAAADEBOAAAAAAAEBOAAAAAAEFPBAAAAAAFFPBAAAAAA
 BarID=5720
 XPos=1
 YPos=-2
+MRUWidth=300
 Docking=True
-MRUDockID=0
+MRUDockID=59420
 MRUDockLeftPos=1
 MRUDockTopPos=-2
 MRUDockRightPos=355
-MRUDockBottomPos=487
-MRUFloatStyle=4
-MRUFloatXPos=-1
-MRUFloatYPos=0
+MRUDockBottomPos=467
+MRUFloatStyle=4096
+MRUFloatXPos=-1232
+MRUFloatYPos=80
 Style=8068
 ExStyle=69393
 PrevFloating=False
@@ -747,7 +749,7 @@ MRUFloatCY=180
 MRUHorzDockCX=300
 MRUHorzDockCY=180
 MRUVertDockCX=354
-MRUVertDockCY=489
+MRUVertDockCY=469
 MRUDockingState=0
 DockingStyle=61440
 TypeID=0
@@ -764,7 +766,7 @@ MRUDockID=0
 MRUDockLeftPos=1
 MRUDockTopPos=5
 MRUDockRightPos=1920
-MRUDockBottomPos=419
+MRUDockBottomPos=439
 MRUFloatStyle=4
 MRUFloatXPos=-1
 MRUFloatYPos=0
@@ -779,7 +781,7 @@ PctWidth=1000000
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=1919
-MRUHorzDockCY=414
+MRUHorzDockCY=434
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -849,7 +851,7 @@ PctWidth=500000
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=300
-MRUHorzDockCY=414
+MRUHorzDockCY=434
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -1059,7 +1061,7 @@ PctWidth=666665
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=300
-MRUHorzDockCY=414
+MRUHorzDockCY=434
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -1094,7 +1096,7 @@ PctWidth=750000
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=300
-MRUHorzDockCY=414
+MRUHorzDockCY=434
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -1129,7 +1131,7 @@ PctWidth=800000
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=300
-MRUHorzDockCY=414
+MRUHorzDockCY=434
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -1243,11 +1245,15 @@ ptn_Child2=ChildFrames
 
 [WorkState_v1_2.Frames.MainFrame]
 WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPHLAAAAAAEHAAAAAAEGEAAAAADBDAAAAA
-Title=ST Visual Develop - hc-12-expanded.stw - [main.c]
+Title=ST Visual Develop - hc-12-expanded.stw - [main.h]
 
 [WorkState_v1_2.Frames.ChildFrames]
 ptn_Child1=Document-0
 ptn_Child2=Document-1
+ptn_Child3=Document-2
+ptn_Child4=Document-3
+ptn_Child5=Document-4
+ptn_Child6=Document-5
 
 [WorkState_v1_2.Frames.ChildFrames.Document-0]
 ptn_Child1=ViewFrame-0
@@ -1256,8 +1262,8 @@ ptn_Child1=ViewFrame-0
 DocPathName=main.c
 DocumentString=
 DocTemplateIndex=0
-WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPOEAAAAAAOEAAAAAAFMFAAAAABIBAAAAA
-IsActiveChildFrame=True
+WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPOEAAAAAAOEAAAAAAFMFAAAAABIBAAAAA
+IsActiveChildFrame=False
 IsFrameVisible=True
 
 [WorkState_v1_2.Frames.ChildFrames.Document-1]
@@ -1268,5 +1274,49 @@ DocPathName=stm8s_conf.h
 DocumentString=
 DocTemplateIndex=0
 WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPIGAAAAAAIGAAAAAAPNFAAAAALJBAAAAA
+IsActiveChildFrame=False
+IsFrameVisible=True
+
+[WorkState_v1_2.Frames.ChildFrames.Document-2]
+ptn_Child1=ViewFrame-0
+
+[WorkState_v1_2.Frames.ChildFrames.Document-2.ViewFrame-0]
+DocPathName=bootloader\stm8s.h
+DocumentString=
+DocTemplateIndex=0
+WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPEDAAAAAAEDAAAAAAPKFAAAAALGBAAAAA
+IsActiveChildFrame=False
+IsFrameVisible=True
+
+[WorkState_v1_2.Frames.ChildFrames.Document-3]
+ptn_Child1=ViewFrame-0
+
+[WorkState_v1_2.Frames.ChildFrames.Document-3.ViewFrame-0]
+DocPathName=bootloader\main.c
+DocumentString=
+DocTemplateIndex=0
+WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPOEAAAAAAOEAAAAAAJMFAAAAAFIBAAAAA
+IsActiveChildFrame=False
+IsFrameVisible=True
+
+[WorkState_v1_2.Frames.ChildFrames.Document-4]
+ptn_Child1=ViewFrame-0
+
+[WorkState_v1_2.Frames.ChildFrames.Document-4.ViewFrame-0]
+DocPathName=bootloader\main.h
+DocumentString=
+DocTemplateIndex=0
+WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPIGAAAAAAIGAAAAAADOFAAAAAPJBAAAAA
+IsActiveChildFrame=True
+IsFrameVisible=True
+
+[WorkState_v1_2.Frames.ChildFrames.Document-5]
+ptn_Child1=ViewFrame-0
+
+[WorkState_v1_2.Frames.ChildFrames.Document-5.ViewFrame-0]
+DocPathName=bootloader\stm8_interrupt_vector.c
+DocumentString=
+DocTemplateIndex=0
+WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPCIAAAAAACIAAAAAAJMFAAAAAHCCAAAAA
 IsActiveChildFrame=False
 IsFrameVisible=True

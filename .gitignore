@@ -1,3 +1,5 @@
 .vscode
 **/Debug
 **/Release
+**/Debug_(Discovery)
+**/Release_(Discovery)

@@ -6,7 +6,11 @@ Keyword=ST7Workspace-V0.7
 [Project0]
 Filename=hc-12-expanded.stp
 Dependencies=
+
+[Project1]
+Filename=bootloader\bootloader.stp
+Dependencies=
 [Options]
-ActiveProject=hc-12-expanded
-ActiveConfig=Debug
+ActiveProject=bootloader
+ActiveConfig=Debug (Discovery)
 AddSortedElements=1

@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file main.h
-  * @brief This file contains all definition for AN2659 user-Bootloader examples 
+  * @brief This file contains all definition for AN2659 user-Bootloader examples
   * @author STMicroelectronics - APG Application Team
   * @version V2.0.0
   * @date 25/11/2010
@@ -32,9 +32,12 @@
 
 /* #define I2C_protocol */
 /* #define SPI_Protocol */
-/* #define UART1_Protocol */ 
-/* #define UART2_Protocol */
-#define UART3_Protocol 
+#ifdef STM8SB003
+#define UART1_Protocol
+#elif defined(STM8S105)
+#define UART2_Protocol
+#endif
+/* #define UART3_Protocol */
 
 /*********************************************************/
 /*              USER BOOT CODE Customisation 	     			 */
@@ -44,12 +47,14 @@
 #define MAIN_USER_RESET_ADDR 0x9000ul
 
 // bootloader enable pin definition
-#define BL_ENABLE_PORT  GPIOD
-#define BL_ENABLE_PIN   GPIO_PIN_2
+/* #define BL_ENABLE_PORT  GPIOD */
+/* #define BL_ENABLE_PIN   GPIO_PIN_2 */
+#define BL_ENABLE_PORT  GPIOB
+#define BL_ENABLE_PIN   GPIO_PIN_5
 
 // I2C - Adress (only if I2C protocol used)
 #ifdef I2C_protocol
-	#define I2C_ADDR 0xA2 
+	#define I2C_ADDR 0xA2
 #endif
 
 
@@ -89,6 +94,8 @@
 /* Parameters of this section depend of the used Microcontroler */
 /* see microcontroler's data sheet for more information 				*/
 
+/* According to UM0560, a SECTOR is always 1kB */
+#ifdef AN2659
 //mask for memory block boundary
 #define  BLOCK_BYTES          128
 #define  ADDRESS_BLOCK_MASK   127 	/*(BLOCK_BYTES - 1)*/
@@ -105,7 +112,7 @@
 #define  FLASH_START          0x008000ul
 #define  FLASH_END            0x02FFFFul
 #define  FLASH_BLOCKS_NUMBER  0x500 /*((FLASH_END  - FLASH_START  + 1)/BLOCK_SIZE)*/
-#define  SECTORS_IN_FLASH     0xA0 /*((FLASH_END  - FLASH_START  + 1)/BLOCK_SIZE/BLOCK_PER_SECTOR)*/ 
+#define  SECTORS_IN_FLASH     0xA0 /*((FLASH_END  - FLASH_START  + 1)/BLOCK_SIZE/BLOCK_PER_SECTOR)*/
 #define  FLASH_CLEAR_BYTE     0xA5
 
 #define  EEPROM_START         0x004000ul
@@ -116,6 +123,62 @@
 #define  SECTORS_COUNT        0x21 /*(SECTORS_IN_FLASH + SECTORS_IN_EEPROM)*/
 #define  MAX_SECTOR_NUMBER    0x20 /*(SECTORS_IN_FLASH + SECTORS_IN_EEPROM - 1)*/
 
+#elif defined(STM8S003)
+//mask for memory block boundary
+#define  BLOCK_BYTES          128
+#define  ADDRESS_BLOCK_MASK   127 	/*(BLOCK_BYTES - 1)*/
+
+//memory boundaries
+#define  RAM_START            0x000000ul
+#define  RAM_END              0x0007FFul
+#define  OPTION_START         0x004800ul
+#define  OPTION_END           0x00480Aul
+#define  UBC_OPTION_LOCATION  0x004801ul
+#define  BLOCK_SIZE           0x40
+#define  BLOCK_PER_SECTOR     0x08
+
+#define  FLASH_START          0x008000ul
+#define  FLASH_END            0x008FFFul
+#define  FLASH_BLOCKS_NUMBER  0x40 /*((FLASH_END  - FLASH_START  + 1)/BLOCK_SIZE)*/
+#define  SECTORS_IN_FLASH     0x08 /*((FLASH_END  - FLASH_START  + 1)/BLOCK_SIZE/BLOCK_PER_SECTOR)*/
+#define  FLASH_CLEAR_BYTE     0xA5
+
+#define  EEPROM_START         0x004000ul
+#define  EEPROM_END           0x00407Ful
+#define  EEPROM_BLOCKS_NUMBER 0x02 /*((EEPROM_END - EEPROM_START + 1)/BLOCK_SIZE)*/
+#define  SECTORS_IN_EEPROM    0x00 /*((EEPROM_END - EEPROM_START + 1)/BLOCK_SIZE/BLOCK_PER_SECTOR)*/
+
+#define  SECTORS_COUNT        0x08 /*(SECTORS_IN_FLASH + SECTORS_IN_EEPROM)*/
+#define  MAX_SECTOR_NUMBER    0x07 /*(SECTORS_IN_FLASH + SECTORS_IN_EEPROM - 1)*/
+
+#elif defined(STM8S105C6)
+//mask for memory block boundary
+#define  BLOCK_BYTES          128
+#define  ADDRESS_BLOCK_MASK   127 	/*(BLOCK_BYTES - 1)*/
+
+//memory boundaries
+#define  RAM_START            0x000000ul
+#define  RAM_END              0x0007FFul
+#define  OPTION_START         0x004800ul
+#define  OPTION_END           0x00487Ful
+#define  UBC_OPTION_LOCATION  0x004801ul
+#define  BLOCK_SIZE           0x40
+#define  BLOCK_PER_SECTOR     0x08
+
+#define  FLASH_START          0x008000ul
+#define  FLASH_END            0x00FFFFul
+#define  FLASH_BLOCKS_NUMBER  0x100 /*((FLASH_END  - FLASH_START  + 1)/BLOCK_SIZE)*/
+#define  SECTORS_IN_FLASH     0x20 /*((FLASH_END  - FLASH_START  + 1)/BLOCK_SIZE/BLOCK_PER_SECTOR)*/
+#define  FLASH_CLEAR_BYTE     0xA5
+
+#define  EEPROM_START         0x004000ul
+#define  EEPROM_END           0x0043FFul
+#define  EEPROM_BLOCKS_NUMBER 0x08 /*((EEPROM_END - EEPROM_START + 1)/BLOCK_SIZE)*/
+#define  SECTORS_IN_EEPROM    0x01 /*((EEPROM_END - EEPROM_START + 1)/BLOCK_SIZE/BLOCK_PER_SECTOR)*/
+
+#define  SECTORS_COUNT        0x08 /*(SECTORS_IN_FLASH + SECTORS_IN_EEPROM)*/
+#define  MAX_SECTOR_NUMBER    0x07 /*(SECTORS_IN_FLASH + SECTORS_IN_EEPROM - 1)*/
+#endif
 /* Exported types ------------------------------------------------------------*/
 
 
