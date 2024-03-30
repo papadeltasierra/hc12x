@@ -1,0 +1,3032 @@
+; ..\..\SRC\MAIN.SRC generated from: ..\..\SRC\MAIN.C
+
+
+$MODESTM8 ; STM8 code
+;$@$ROMMODEL(DEFAULT)
+NAME    MAIN
+
+?DT?MAIN                               SEGMENT DATA INSECTION0
+?EDT?MAIN                              SEGMENT DATA INSECTION0
+?ZDT?MAIN                              SEGMENT ZDATA INSECTION0
+?PR?MAIN?MAIN                          SEGMENT CODE INSECTION0
+?PR??PROCESSCOMMANDS?MAIN              SEGMENT CODE INSECTION0
+?PR??GT_COMMAND_PROCESS?MAIN           SEGMENT CODE INSECTION0
+?PR??RM_COMMAND_PROCESS?MAIN           SEGMENT CODE INSECTION0
+?PR??GO_COMMAND_PROCESS?MAIN           SEGMENT CODE INSECTION0
+?PR??WM_COMMAND_PROCESS?MAIN           SEGMENT CODE INSECTION0
+?PR??CHECKADDRESS?MAIN                 SEGMENT CODE INSECTION0
+?PR??WRITEBUFFER?MAIN                  SEGMENT CODE INSECTION0
+?PR??WRITEBUFFERFLASH?MAIN             SEGMENT CODE INSECTION0
+?PR??DEINITBOOTLOADER?MAIN             SEGMENT CODE INSECTION0
+?PR??PROTOCOL_INIT?MAIN                SEGMENT CODE INSECTION0
+?PR??TRANSMIT?MAIN                     SEGMENT CODE INSECTION0
+?PR??RECEIVE?MAIN                      SEGMENT CODE INSECTION0
+?PR??MASTER_IDENT?MAIN                 SEGMENT CODE INSECTION0
+?PR??RECEIVEADDRESS?MAIN               SEGMENT CODE INSECTION0
+?PR??RECEIVECOUNT?MAIN                 SEGMENT CODE INSECTION0
+?PR??UNLOCK_PROG?MAIN                  SEGMENT CODE INSECTION0
+?PR??UNLOCK_DATA?MAIN                  SEGMENT CODE INSECTION0
+?PR??MEM_PROGRAMBLOCK?MAIN             SEGMENT CODE INSECTION0 INRAM
+?PR??FLASH_PROGRAMOPTIONBYTE?MAIN      SEGMENT CODE INSECTION0
+?STR?MAIN                              SEGMENT CODE INSECTION0
+?PR??CLK_GETCLOCKFREQ?MAIN             SEGMENT CODE INSECTION0
+        EXTRN   CODE  (?Mem_ProgramBlock)
+        EXTRN   DATA  (__address__Mem_ProgramBlock)
+        EXTRN   DATA  (__size__Mem_ProgramBlock)
+        EXTRN   PAGE0  (?BH)
+        EXTRN   PAGE0  (?CH)
+        EXTRN   PAGE0  (?BL)
+        EXTRN   CODE  (?protocol_init)
+        EXTRN   CODE  (?Master_ident)
+        EXTRN   CODE  (?Transmit)
+        EXTRN   CODE  (?DeInitBootloader)
+        EXTRN   CODE  (?memcpy)
+        EXTRN   CODE  (?unlock_PROG)
+        EXTRN   CODE  (?unlock_DATA)
+        EXTRN   CODE  (?ProcessCommands)
+        EXTRN   CODE  (?Receive)
+        EXTRN   CODE  (?GT_Command_Process)
+        EXTRN   CODE  (?RM_Command_Process)
+        EXTRN   CODE  (?GO_Command_Process)
+        EXTRN   CODE  (?WM_Command_Process)
+        EXTRN   CODE  (?ReceiveAddress)
+        EXTRN   CODE  (?ReceiveCount)
+        EXTRN   CODE  (?C?mv4_isa2bc)
+        EXTRN   CODE  (?C?srl328)
+        EXTRN   CODE  (?WriteBuffer)
+        EXTRN   CODE  (?C?mv4_pg2bc)
+        EXTRN   CODE  (?C?cpu3232ix)
+        EXTRN   PAGE0  (?CL)
+        EXTRN   CODE  (?C?uchartol)
+        EXTRN   CODE  (?C?mv4_bc2sk)
+        EXTRN   CODE  (?C?add3232)
+        EXTRN   CODE  (?WriteBufferFlash)
+        EXTRN   CODE  (?FLASH_ProgramOptionByte)
+        EXTRN   CODE  (?C?mv4_bc2isa)
+        EXTRN   CODE  (?C?accix328)
+        EXTRN   CODE  (?C?mv4_pg2sk1)
+        EXTRN   CODE  (?C?addix32)
+        EXTRN   CODE  (?C?mv4_pg2bc1)
+        EXTRN   CODE  (?C?subix32)
+        EXTRN   CODE  (?C?mulu3232)
+        EXTRN   CODE  (?C?memcpy)
+        EXTRN   CODE  (?C?divs3232)
+        EXTRN   CODE  (CST7_START)
+        PUBLIC  ?CheckAddress
+        PUBLIC  ?CLK_GetClockFreq
+        PUBLIC  ?Mem_ProgramBlock
+        PUBLIC  ?FLASH_ProgramOptionByte
+        PUBLIC  ?unlock_DATA
+        PUBLIC  ?unlock_PROG
+        PUBLIC  ?ReceiveCount
+        PUBLIC  ?ReceiveAddress
+        PUBLIC  ?Receive
+        PUBLIC  ?Transmit
+        PUBLIC  ?Master_ident
+        PUBLIC  ?protocol_init
+        PUBLIC  ?DeInitBootloader
+        PUBLIC  ?WriteBufferFlash
+        PUBLIC  ?WriteBuffer
+        PUBLIC  ?GO_Command_Process
+        PUBLIC  ?WM_Command_Process
+        PUBLIC  ?RM_Command_Process
+        PUBLIC  ?GT_Command_Process
+        PUBLIC  ?ProcessCommands
+        PUBLIC  main
+        PUBLIC  RoutinesInRAM
+        PUBLIC  ReceivedData
+        PUBLIC  DataBuffer
+        PUBLIC  GoAddress
+        PUBLIC  MainUserApplication
+        PUBLIC  _ICE_DUMMY_
+          _ICE_DUMMY_	EQU   0
+
+
+        RSEG  ?DT?MAIN
+?DT?MAIN?BASE:
+        MainUserApplication: DS  002H
+         $INITDATA(090H, 000H)
+
+
+        RSEG  ?EDT?MAIN
+?EDT?MAIN?BASE:
+        GoAddress: DS  002H
+        DataBuffer: DS  082H
+        ReceivedData: DS  002H
+
+        RSEG  ?ZDT?MAIN
+?ZDT?MAIN?BASE:
+        RoutinesInRAM: DS  001H
+
+        RSEG  ?STR?MAIN
+?STR?MAIN?BASE:
+        DB  001H, 002H, 004H, 008H
+; ; #include "main.h"
+; ; #ifdef _RAISONANCE_
+; ; //needed by memcpy for raisonance
+; ; #include <string.h>
+; ; extern int __address__Mem_ProgramBlock; 
+; ; extern int __size__Mem_ProgramBlock; 
+; ; #endif /*_RAISONANCE_*/
+; ; 
+; ; 
+; ; //typedef FAR void (*)(void) TFunction;
+; ; typedef void ( *TFunction)(void);
+; ; typedef enum {
+; ;      FLASH_MEMTYPE_PROG      = (u8)0x00,
+; ;      FLASH_MEMTYPE_DATA      = (u8)0x01 
+; ; } FLASH_MemType_TypeDef;
+; ; 
+; ; 
+; ; //main application code (user reset) - init user code start - to interrupt table reset jump
+; ; const TFunction MainUserApplication = (TFunction)MAIN_USER_RESET_ADDR;
+; ; //address for GO command
+; ; TFunction GoAddress;
+; ; 
+; ; //Declare input buffer and its pointer 
+; ; u8 DataBuffer[130];
+; ; u8 *ReceivedData;
+; ; //Declare loaded into RAM
+; ; u8 RoutinesInRAM = 0;
+; ; 
+; ; #ifdef _COSMIC_
+; ; 
+; ; void main(void);
+; ; void ProcessCommands(void);
+; ; u8 GT_Command_Process(void);
+; ; u8 RM_Command_Process(void);
+; ; u8 WM_Command_Process(void);
+; ; u8 GO_Command_Process(void);
+; ; u8 CheckTimeout(void);
+; ; u8 WriteBuffer(u8 FAR* DataAddress, u8 DataCount);
+; ; u8 WriteBufferFlash(u8 FAR* DataAddress, u8 DataCount, FLASH_MemType_TypeDef MemType);
+; ; void DeInitBootloader(void);
+; ; void protocol_init(void);
+; ; u8 Master_ident(u8 IDENT_byte);
+; ; void Transmit(u8 Data);
+; ; u8 Receive(u8* ReceivedData);
+; ; u8 ReceiveAddress(void);
+; ; u8 ReceiveCount(u8 max, u8 enablechecksum);
+; ; void unlock_PROG(void);
+; ; void unlock_DATA(void);
+; ; void FLASH_ProgramOptionByte(u16 Address, u8 Data);
+; ; void Mem_ProgramBlock(u16 BlockNum, FLASH_MemType_TypeDef MemType, u8 *Buffer);
+; ; u32 CLK_GetClockFreq(void);
+; ; 
+; ; //**************************************************************************
+; ; void main(void){
+; ;   sim();               // disable interrupts 
+; ;   RoutinesInRAM = 0;
+; ; 
+; ;   // Set GPIO for bootloader Pin status detection 
+; ;   GPIOD->DDR &= ~0x04; 	  // PD2 as Input 
+; ; 	GPIOD->CR1 |= 0x04; 		// PD2 as Pull Up
+; ; 	GPIOD->CR2 &= ~0x04;	  // no external interrupt
+; ; 	
+; ; 	// Detect if bootloader is enabled (pin in high state)
+; ; 	if( (GPIOD->IDR & 0x04) == 0x04 ) 
+; ;   {
+; ;     //if user application is not virgin - valid reset vector jump
+; ;     if((*((u8 FAR*)MainUserApplication)==0x82) || (*((u8 FAR*)MainUserApplication)==0xAC))
+; ;     {
+; ;       //De-init PortD bootloader detection
+; ; 			GPIOD->ODR=0x00;
+; ; 			GPIOD->DDR=0x00;
+; ; 			GPIOD->CR1=0x00;
+; ; 			GPIOD->CR2=0x00;			
+; ;       //reset stack pointer (lower byte - because compiler decreases SP with some bytes)
+; ; #ifdef _COSMIC_
+; ; #pragma ASM
+; ;  LDW X,SP
+; ;  LD A,0FFH
+; ;  LD XL,A
+; ;  LDW SP,X
+; ;  JPF 09000H  
+; ; #pragma ENDASM
+; ; #endif
+; ;     }
+; ;   }
+; ; 
+; ;   //Else start bootloader itself
+; ; 	
+; ; 	//De-init PortD bootloader detection
+; ; 	GPIOD->ODR=0x00;
+; ; 	GPIOD->DDR=0x00;
+; ; 	GPIOD->CR1=0x00;
+; ; 	GPIOD->CR2=0x00;
+; ;  
+; ;   /* Set High speed internal clock prescaler */
+; ;   CLK->CKDIVR = 0x00;
+; ; 
+; ;   /* initialisation of selected protocol peripheral	*/
+; ;   protocol_init();
+; ; 
+; ;   //wait for identification
+; ;   if(!Master_ident(IDENT))  
+; ;   {
+; ; 		Transmit(NACK);
+; ; 		//identification FAILED 
+; ;     DeInitBootloader();     // then set back all microcontroller changes to reset values
+; ;     //reset stack pointer (lower byte - because compiler decreases SP with some bytes)
+; ; #ifdef _COSMIC_ 
+; ; #pragma ASM
+; ;  LDW X,SP
+; ;  LD A,0FFH
+; ;  LD XL,A
+; ;  LDW SP,X
+; ;  JPF 09000H  
+; ; #pragma ENDASM 
+; ; #endif 
+; ;   }
+; ;   //identification SUCESS - copy routines to RAM
+; ; #ifdef _COSMIC_  
+; ; #ifdef _RAISONANCE_ 
+; ;  memcpy(Mem_ProgramBlock, 
+; ;  (void *)&__address__Mem_ProgramBlock,
+; ;  (int)&__size__Mem_ProgramBlock); 
+; ; #endif /*_RAISONANCE_*/
+; ;   RoutinesInRAM = 1;
+; ;   unlock_PROG();
+; ; 	unlock_DATA();
+; ; 	//send ACK to host
+; ;   Transmit(ACK);
+; ;   do
+; ;   {
+; ;     //process commands from host
+; ;     ProcessCommands();
+; ; 
+; ;     //received GO command - set back all microcontroller changes to reset values
+; ;     DeInitBootloader();
+; ; 
+; ;     //jump to GO address
+; ;     GoAddress();
+; ;   }while (1);
+; ; 	
+; ; }//main
+
+        RSEG  ?PR?MAIN?MAIN
+main:
+                        ;$@$C_ROUTINE(main)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(80)
+        SIM     
+                        ;$@$C_SOURCE_LINE(81)
+        MOV     RoutinesInRAM,#000H
+                        ;$@$C_SOURCE_LINE(84)
+        LD      A,#0FBH
+        AND     A,05011H
+        LD      ?BH,A
+        MOV     05011H,?BH
+                        ;$@$C_SOURCE_LINE(85)
+        LD      A,#004H
+        OR      A,05012H
+        LD      ?BH,A
+        MOV     05012H,?BH
+                        ;$@$C_SOURCE_LINE(86)
+        LD      A,#0FBH
+        AND     A,05013H
+        LD      ?BH,A
+        MOV     05013H,?BH
+                        ;$@$C_SOURCE_LINE(89)
+        LD      A,#004H
+        AND     A,05010H
+        PUSH    A
+        LD      A,#004H
+        LD      YL,A
+        POP     ?BH
+        LD      A,YL
+        CP      A,?BH
+        JRNE    ?NXT_0004
+                        ;$@$C_SOURCE_LINE(92)
+        LDW     X,MainUserApplication
+        LDW     ?CH,X
+        CLR     ?BL
+        CLRW    X
+        CLRW    X
+        LDF     A,([?BL.e],X)
+        LD      ?BH,A
+        CLRW    X
+        LD      A,?BH
+        LD      XL,A
+        PUSHW   X
+        LDW     X,#00082H
+        POPW    Y
+        LDW     ?BH.w,Y
+        CPW     X,?BH.w
+        JREQ    ?LAB_0001
+        LDW     X,MainUserApplication
+        LDW     ?CH,X
+        CLR     ?BL
+        CLRW    X
+        CLRW    X
+        LDF     A,([?BL.e],X)
+        LD      ?BH,A
+        CLRW    X
+        LD      A,?BH
+        LD      XL,A
+        PUSHW   X
+        LDW     X,#000ACH
+        POPW    Y
+        LDW     ?BH.w,Y
+        CPW     X,?BH.w
+        JRNE    ?NXT_0005
+?LAB_0001:
+                        ;$@$C_SOURCE_LINE(95)
+        MOV     0500FH,#000H
+                        ;$@$C_SOURCE_LINE(96)
+        MOV     05011H,#000H
+                        ;$@$C_SOURCE_LINE(97)
+        MOV     05012H,#000H
+                        ;$@$C_SOURCE_LINE(98)
+        MOV     05013H,#000H
+; #pragma asm
+        LDW X,SP
+        LD A,0FFH
+        LD XL,A
+        LDW SP,X
+        JPF 09000H  
+; #pragma endasm
+?NXT_0005:
+?NXT_0004:
+                        ;$@$C_SOURCE_LINE(127)
+        MOV     0500FH,#000H
+                        ;$@$C_SOURCE_LINE(128)
+        MOV     05011H,#000H
+                        ;$@$C_SOURCE_LINE(129)
+        MOV     05012H,#000H
+                        ;$@$C_SOURCE_LINE(130)
+        MOV     05013H,#000H
+                        ;$@$C_SOURCE_LINE(133)
+        MOV     050C6H,#000H
+                        ;$@$C_SOURCE_LINE(136)
+        CALL    ?protocol_init
+                        ;$@$C_SOURCE_LINE(139)
+        LD      A,#07FH
+        CALL    ?Master_ident
+        TNZ     A
+        JRNE    ?NXT_0006
+                        ;$@$C_SOURCE_LINE(141)
+        LD      A,#01FH
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(143)
+        CALL    ?DeInitBootloader
+; #pragma asm
+        LDW X,SP
+        LD A,0FFH
+        LD XL,A
+        LDW SP,X
+        JPF 09000H  
+; #pragma endasm
+?NXT_0006:
+                        ;$@$C_SOURCE_LINE(174)
+        LD      A,#__size__Mem_ProgramBlock
+        PUSH    A
+        LDW     X,#__address__Mem_ProgramBlock
+        PUSHW   X
+        LDW     X,#?Mem_ProgramBlock
+        CALL    ?memcpy
+        ADD     SP,#003H
+                        ;$@$C_SOURCE_LINE(176)
+        MOV     RoutinesInRAM,#001H
+                        ;$@$C_SOURCE_LINE(177)
+        CALL    ?unlock_PROG
+                        ;$@$C_SOURCE_LINE(178)
+        CALL    ?unlock_DATA
+                        ;$@$C_SOURCE_LINE(180)
+        LD      A,#079H
+        CALL    ?Transmit
+?DO_0001:
+                        ;$@$C_SOURCE_LINE(184)
+        CALL    ?ProcessCommands
+                        ;$@$C_SOURCE_LINE(187)
+        CALL    ?DeInitBootloader
+                        ;$@$C_SOURCE_LINE(190)
+        CALL    [GoAddress.w].w
+?TEST_0001:
+        JRA     ?DO_0001
+?NXT_0007:
+?EPILOG_0000:
+        RET     
+
+; END OF main
+;; ; 
+; ; void ProcessCommands(void){
+; ;   u8 result;
+; ;   u8 wait;
+; ; 	do
+; ;   {
+; ; 		wait = 8;
+; ; 		while(wait)
+; ; 			wait --;
+; ;     //init pointer
+; ;     ReceivedData = DataBuffer;
+; ;   
+; ;     //receive data 1-st byte
+; ;     if(!Receive(ReceivedData++))
+; ;       continue;
+; ;   
+; ;     //receive data 2-nd byte
+; ;     if(!Receive(ReceivedData++))
+; ;       continue;
+; ;   
+; ;     //check if command bytes are complements
+; ;     if(DataBuffer[N_COMMAND] != (u8)(~DataBuffer[N_NEG_COMMAND]))
+; ;     {
+; ;       Transmit(NACK);
+; ;       continue;
+; ;     }
+; ;   
+; ;     //parse commands
+; ;     Transmit(ACK);
+; ;     switch(DataBuffer[0])
+; ;     {
+; ;       case (GT_Command): result = GT_Command_Process(); break;
+; ;       case (RM_Command): result = RM_Command_Process(); break;
+; ;       case (GO_Command): result = GO_Command_Process(); break;
+; ;       case (WM_Command): result = WM_Command_Process(); break;
+; ;     }
+; ;   }while( (!result) || (DataBuffer[0] != GO_Command) ); //until GO command received
+; ; }//ProcessCommands
+
+        RSEG  ?PR??PROCESSCOMMANDS?MAIN
+?ProcessCommands:
+                        ;$@$C_ROUTINE(?ProcessCommands)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(195)
+        PUSHW   X
+?DO_0003:
+                        ;$@$C_SOURCE_LINE(200)
+        LD      A,#008H
+        LD      (002H,SP),A                        ; [ wait ]
+?WHILE_0001:
+                        ;$@$C_SOURCE_LINE(201)
+        TNZ     (002H,SP)                          ; [ wait ]
+        JREQ    ?NXT_0015
+                        ;$@$C_SOURCE_LINE(202)
+        DEC     (002H,SP)                          ; [ wait ]
+        JRA     ?WHILE_0001
+?NXT_0015:
+                        ;$@$C_SOURCE_LINE(204)
+        LDW     X,#DataBuffer
+        LDW     ReceivedData,X
+                        ;$@$C_SOURCE_LINE(207)
+        LDW     X,ReceivedData
+        PUSHW   X
+        LDW     X,ReceivedData
+        INCW    X
+        LDW     ReceivedData,X
+        POPW    X
+        CALL    ?Receive
+        TNZ     A
+        JRNE    ?NXT_0016
+                        ;$@$C_SOURCE_LINE(208)
+        JRA     ?TEST_0003
+?NXT_0016:
+                        ;$@$C_SOURCE_LINE(211)
+        LDW     X,ReceivedData
+        PUSHW   X
+        LDW     X,ReceivedData
+        INCW    X
+        LDW     ReceivedData,X
+        POPW    X
+        CALL    ?Receive
+        TNZ     A
+        JRNE    ?NXT_0017
+                        ;$@$C_SOURCE_LINE(212)
+        JRA     ?TEST_0003
+?NXT_0017:
+                        ;$@$C_SOURCE_LINE(215)
+        CLRW    X
+        LD      A,DataBuffer + 01H
+        LD      XL,A
+        CPLW    X
+        CLR     A
+        LD      XH,A
+        PUSHW   X
+        CLRW    X
+        LD      A,DataBuffer
+        LD      XL,A
+        POPW    Y
+        LDW     ?BH.w,Y
+        CPW     X,?BH.w
+        JREQ    ?NXT_0018
+                        ;$@$C_SOURCE_LINE(217)
+        LD      A,#01FH
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(218)
+        JRA     ?TEST_0003
+?NXT_0018:
+                        ;$@$C_SOURCE_LINE(222)
+        LD      A,#079H
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(223)
+        MOV     ?BH,DataBuffer
+        LD      A,?BH
+        CP      A,#000H
+        JREQ    ?CASE_0004
+?LAB_0008:
+        LD      A,?BH
+        CP      A,#011H
+        JREQ    ?CASE_0005
+?LAB_0009:
+        LD      A,?BH
+        CP      A,#021H
+        JREQ    ?CASE_0006
+?LAB_0010:
+        CLRW    X
+        LD      A,?BH
+        CLRW    X
+        LD      XL,A
+        CPW     X,#00031H
+        JRNE    ?LAB_0007
+        JRA     ?CASE_0007
+?LAB_0007:
+        JRA     ?NXT_0019
+?CASE_0004:
+                        ;$@$C_SOURCE_LINE(225)
+        CALL    ?GT_Command_Process
+        LD      (001H,SP),A                        ; [ result ]
+        JRA     ?NXT_0019
+?CASE_0005:
+                        ;$@$C_SOURCE_LINE(226)
+        CALL    ?RM_Command_Process
+        LD      (001H,SP),A                        ; [ result ]
+        JRA     ?NXT_0019
+?CASE_0006:
+                        ;$@$C_SOURCE_LINE(227)
+        CALL    ?GO_Command_Process
+        LD      (001H,SP),A                        ; [ result ]
+        JRA     ?NXT_0019
+?CASE_0007:
+                        ;$@$C_SOURCE_LINE(228)
+        CALL    ?WM_Command_Process
+        LD      (001H,SP),A                        ; [ result ]
+        JRA     ?NXT_0019
+?NXT_0019:
+?TEST_0003:
+        TNZ     (001H,SP)                          ; [ result ]
+        JRNE    ?LAB_0012
+        JP      ?DO_0003
+?LAB_0012:
+        LD      A,#021H
+        CP      A,DataBuffer
+        JREQ    ?LAB_0013
+        JP      ?DO_0003
+?LAB_0013:
+?LAB_0011:
+?NXT_0014:
+?EPILOG_0001:
+        POPW    X
+        RET     
+
+; END OF ?ProcessCommands
+;; ; 
+; ; u8 GT_Command_Process(void){
+; ;   //send bytes number (Version+commands)=N
+; ;   Transmit(Num_GT_Command);
+; ;   
+; ;   //Send the BL Version Number
+; ;   Transmit(Version_Number);
+; ;   
+; ;   //Send GET command
+; ;   Transmit(GT_Command);
+; ;   
+; ;   //Send Read Memory command
+; ;   Transmit(RM_Command);
+; ;   
+; ;   //Send GO command
+; ;   Transmit(GO_Command);
+; ;   
+; ;   //Send Write Memory command
+; ;   Transmit(WM_Command);
+; ;   
+; ;   //Send Erase Memory command
+; ;   Transmit(EM_Command);
+; ;   
+; ;   //Send Erase Memory command
+; ;   Transmit(ACK);
+; ;   
+; ;   return 1;
+; ; }//GT_Command
+
+        RSEG  ?PR??GT_COMMAND_PROCESS?MAIN
+?GT_Command_Process:
+                        ;$@$C_ROUTINE(?GT_Command_Process)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(235)
+        LD      A,#005H
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(238)
+        LD      A,#010H
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(241)
+        LD      A,#000H
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(244)
+        LD      A,#011H
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(247)
+        LD      A,#021H
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(250)
+        LD      A,#031H
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(253)
+        LD      A,#043H
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(256)
+        LD      A,#079H
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(258)
+        LD      A,#001H
+?EPILOG_0002:
+        RET     
+
+; END OF ?GT_Command_Process
+;; ; 
+; ; u8 RM_Command_Process(void){
+; ;   u8 i;
+; ; 	u8 FAR* DataAddress;
+; ;   u8 Checksum;
+; ;   //receive address
+; ;   if(!ReceiveAddress())
+; ;   {
+; ;     Transmit(NACK);// if not valid - NACK
+; ;     return 0;
+; ;   }
+; ;     
+; ;   //update address to read from
+; ;   DataAddress = *(u8 FAR**)(&DataBuffer[N_ADDR_3]);
+; ;   
+; ;   //receive count
+; ;   if(!ReceiveCount(0xFF, 1))
+; ;   {
+; ;     Transmit(NACK);// if not valid - NACK
+; ;     return 0;
+; ;   }
+; ;    
+; ;   //send data
+; ;   Checksum = 0;
+; ;   for(i=0; i<=DataBuffer[N_DATACOUNT]; i++)
+; ;   {
+; ;     Checksum ^= DataAddress[i];
+; ;     Transmit(DataAddress[i]);
+; ;   }
+; ;   return 1;
+; ; }//RM_Command
+
+        RSEG  ?PR??RM_COMMAND_PROCESS?MAIN
+?RM_Command_Process:
+                        ;$@$C_ROUTINE(?RM_Command_Process)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(261)
+        SUB     SP,#005H
+                        ;$@$C_SOURCE_LINE(266)
+        CALL    ?ReceiveAddress
+        TNZ     A
+        JRNE    ?NXT_0024
+                        ;$@$C_SOURCE_LINE(268)
+        LD      A,#01FH
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(269)
+        LD      A,#000H
+        JRA     ?EPILOG_0003
+?NXT_0024:
+                        ;$@$C_SOURCE_LINE(273)
+        LD      A,DataBuffer + 03H
+        LD      (002H,SP),A                        ; [ DataAddress ]
+        LDW     X,DataBuffer + 04H
+        LDW     (003H,SP),X                        ; [ DataAddress + 01H ]
+                        ;$@$C_SOURCE_LINE(276)
+        PUSH    #001H
+        LD      A,#0FFH
+        CALL    ?ReceiveCount
+        ADD     SP,#001H
+        TNZ     A
+        JRNE    ?NXT_0025
+                        ;$@$C_SOURCE_LINE(278)
+        LD      A,#01FH
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(279)
+        LD      A,#000H
+        JRA     ?EPILOG_0003
+?NXT_0025:
+                        ;$@$C_SOURCE_LINE(283)
+        LD      A,#000H
+        LD      (005H,SP),A                        ; [ Checksum ]
+                        ;$@$C_SOURCE_LINE(284)
+        LD      A,#000H
+        LD      (001H,SP),A                        ; [ i ]
+?FOR_0001:
+        LD      A,DataBuffer + 07H
+        CP      A,(001H,SP)                        ; [ i ]
+        JRULT   ?NXT_0026
+                        ;$@$C_SOURCE_LINE(286)
+        CLRW    X
+        LD      A,(001H,SP)                        ; [ i ]
+        LD      XL,A
+        PUSHW   X
+        LD      A,(004H,SP)                        ; [ DataAddress ]
+        LD      ?BL,A
+        LDW     X,(005H,SP)                        ; [ DataAddress + 01H ]
+        LDW     ?CH,X
+        POPW    X
+        ADDW    X,?CH.w
+        LDW     ?CH.w,X
+        CLRW    X
+        CLRW    X
+        LDF     A,([?BL.e],X)
+        LD      ?BH,A
+        LD      A,(005H,SP)                        ; [ Checksum ]
+        XOR     A,?BH
+        LD      ?BH,A
+        LD      A,?BH
+        LD      (005H,SP),A                        ; [ Checksum ]
+                        ;$@$C_SOURCE_LINE(287)
+        CLRW    X
+        LD      A,(001H,SP)                        ; [ i ]
+        LD      XL,A
+        PUSHW   X
+        LD      A,(004H,SP)                        ; [ DataAddress ]
+        LD      ?BL,A
+        LDW     X,(005H,SP)                        ; [ DataAddress + 01H ]
+        LDW     ?CH,X
+        POPW    X
+        ADDW    X,?CH.w
+        LDW     ?CH.w,X
+        CLRW    X
+        CLRW    X
+        LDF     A,([?BL.e],X)
+        LD      ?BH,A
+        LD      A,?BH
+        CALL    ?Transmit
+?NXT_0027:
+                        ;$@$C_SOURCE_LINE(284)
+        LD      A,(001H,SP)                        ; [ i ]
+        INC     (001H,SP)                          ; [ i ]
+        JRA     ?FOR_0001
+?NXT_0026:
+                        ;$@$C_SOURCE_LINE(289)
+        LD      A,#001H
+?EPILOG_0003:
+        ADD     SP,#005H
+        RET     
+
+; END OF ?RM_Command_Process
+;; ; 
+; ; u8 GO_Command_Process(void){
+; ; 	u32 Address32;
+; ; 	u16 Address16;
+; ;   //receive address
+; ;   if(!ReceiveAddress())
+; ;   {
+; ;     Transmit(NACK);// if not valid - NACK
+; ;     return 0;
+; ;   }
+; ;   //update GO address 
+; ;   Address32 = *(u32*)(&DataBuffer[N_ADDR_3]);
+; ; 	Address16 = (u16)(Address32 >> 8);
+; ;   GoAddress = (TFunction)Address16;
+; ;   return 1;
+; ; }//GO_Command
+
+        RSEG  ?PR??GO_COMMAND_PROCESS?MAIN
+?GO_Command_Process:
+                        ;$@$C_ROUTINE(?GO_Command_Process)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(292)
+        SUB     SP,#006H
+                        ;$@$C_SOURCE_LINE(296)
+        CALL    ?ReceiveAddress
+        TNZ     A
+        JRNE    ?NXT_0029
+                        ;$@$C_SOURCE_LINE(298)
+        LD      A,#01FH
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(299)
+        LD      A,#000H
+        JRA     ?EPILOG_0004
+?NXT_0029:
+                        ;$@$C_SOURCE_LINE(302)
+        LDW     X,DataBuffer + 03H
+        LDW     (001H,SP),X                        ; [ Address32 ]
+        LDW     X,DataBuffer + 05H
+        LDW     (003H,SP),X                        ; [ Address32 + 02H ]
+                        ;$@$C_SOURCE_LINE(303)
+        CLR     A
+        CALL    ?C?mv4_isa2bc
+        LD      A,#008H
+        CALL    ?C?srl328
+        LDW     X,?CH.w
+        LDW     (005H,SP),X                        ; [ Address16 ]
+                        ;$@$C_SOURCE_LINE(304)
+        LDW     X,(005H,SP)                        ; [ Address16 ]
+        LDW     GoAddress,X
+                        ;$@$C_SOURCE_LINE(305)
+        LD      A,#001H
+?EPILOG_0004:
+        ADD     SP,#006H
+        RET     
+
+; END OF ?GO_Command_Process
+;; ; 
+; ; u8 WM_Command_Process(void){
+; ;   u8 i;
+; ; 	u8 FAR* DataAddress;
+; ;   u8 Checksum;
+; ;   u8 DataCount;
+; ;   u8 ChecksumByte;
+; ;   int ierror = 0;
+; ;   
+; ;   //receive address
+; ;   if(!ReceiveAddress())
+; ;   {
+; ;     Transmit(NACK);// if not valid - NACK
+; ;     return 0;
+; ;   }
+; ;   
+; ;   //update address to write to
+; ;   DataAddress = *(u8 FAR**)(&DataBuffer[N_ADDR_3]);
+; ;   
+; ;   //receive count
+; ;    if(!ReceiveCount(BLOCK_SIZE-1, 0))
+; ;   {
+; ;     Transmit(NACK);// if not valid - NACK
+; ;     return 0;
+; ;   }  
+; ;   
+; ;   //receive data
+; ;   DataCount = DataBuffer[N_DATACOUNT]; // init count
+; ;   Checksum = DataCount;                //init checksum
+; ;   for(i=0; i<=DataCount; i++)
+; ;   {
+; ;     if(!Receive(&DataBuffer[i]))
+; ; 		{
+; ;       ierror = 1;
+; ; 		}
+; ; 		//calculate checksum from received bytes
+; ;     Checksum ^= DataBuffer[i];
+; ;   }
+; ;   
+; ;   //receive checksum byte
+; ;   if(!Receive(&ChecksumByte))
+; ;   {
+; ; 		ierror = 1;
+; ; 	}
+; ; 	//check checksum
+; ;   if(ChecksumByte != Checksum)
+; ; 	{
+; ;     ierror = 1;
+; ;   }
+; ;   //if some error occured during data reception
+; ;   if (ierror == 1)
+; ;   {
+; ;     Transmit(NACK); //send error
+; ;     return 0;    
+; ;   }
+; ;   
+; ;   //write buffer to memory
+; ;   if (!WriteBuffer(DataAddress, DataCount+1))
+; ;   {
+; ;     Transmit(NACK); //send error
+; ;     return 0;    
+; ;   }
+; ;   //confirm correct writing
+; ;   Transmit(ACK);
+; ;   return 1;
+; ; }//WM_Command
+
+        RSEG  ?PR??WM_COMMAND_PROCESS?MAIN
+?WM_Command_Process:
+                        ;$@$C_ROUTINE(?WM_Command_Process)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(308)
+        SUB     SP,#009H
+                        ;$@$C_SOURCE_LINE(314)
+        LDW     X,#00000H
+        LDW     (008H,SP),X                        ; [ ierror ]
+                        ;$@$C_SOURCE_LINE(317)
+        CALL    ?ReceiveAddress
+        TNZ     A
+        JRNE    ?NXT_0039
+                        ;$@$C_SOURCE_LINE(319)
+        LD      A,#01FH
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(320)
+        LD      A,#000H
+        JP      ?EPILOG_0005
+?NXT_0039:
+                        ;$@$C_SOURCE_LINE(324)
+        LD      A,DataBuffer + 03H
+        LD      (002H,SP),A                        ; [ DataAddress ]
+        LDW     X,DataBuffer + 04H
+        LDW     (003H,SP),X                        ; [ DataAddress + 01H ]
+                        ;$@$C_SOURCE_LINE(327)
+        PUSH    #000H
+        LD      A,#07FH
+        CALL    ?ReceiveCount
+        ADD     SP,#001H
+        TNZ     A
+        JRNE    ?NXT_0040
+                        ;$@$C_SOURCE_LINE(329)
+        LD      A,#01FH
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(330)
+        LD      A,#000H
+        JP      ?EPILOG_0005
+?NXT_0040:
+                        ;$@$C_SOURCE_LINE(334)
+        LD      A,DataBuffer + 07H
+        LD      (006H,SP),A                        ; [ DataCount ]
+                        ;$@$C_SOURCE_LINE(335)
+        LD      A,(006H,SP)                        ; [ DataCount ]
+        LD      (005H,SP),A                        ; [ Checksum ]
+                        ;$@$C_SOURCE_LINE(336)
+        LD      A,#000H
+        LD      (001H,SP),A                        ; [ i ]
+?FOR_0003:
+        LD      A,(006H,SP)                        ; [ DataCount ]
+        CP      A,(001H,SP)                        ; [ i ]
+        JRULT   ?NXT_0041
+                        ;$@$C_SOURCE_LINE(338)
+        CLRW    X
+        LD      A,(001H,SP)                        ; [ i ]
+        LD      XL,A
+        ADDW    X,#DataBuffer
+        CALL    ?Receive
+        TNZ     A
+        JRNE    ?NXT_0043
+                        ;$@$C_SOURCE_LINE(340)
+        LDW     X,#00001H
+        LDW     (008H,SP),X                        ; [ ierror ]
+?NXT_0043:
+                        ;$@$C_SOURCE_LINE(343)
+        CLRW    X
+        LD      A,(001H,SP)                        ; [ i ]
+        LD      XL,A
+        LD      A,(005H,SP)                        ; [ Checksum ]
+        XOR     A,(DataBuffer + 00H,X)
+        LD      ?BH,A
+        LD      A,?BH
+        LD      (005H,SP),A                        ; [ Checksum ]
+?NXT_0042:
+                        ;$@$C_SOURCE_LINE(336)
+        LD      A,(001H,SP)                        ; [ i ]
+        INC     (001H,SP)                          ; [ i ]
+        JRA     ?FOR_0003
+?NXT_0041:
+                        ;$@$C_SOURCE_LINE(347)
+        LDW     X,SP
+        ADDW    X,#00007H
+        CALL    ?Receive
+        TNZ     A
+        JRNE    ?NXT_0044
+                        ;$@$C_SOURCE_LINE(349)
+        LDW     X,#00001H
+        LDW     (008H,SP),X                        ; [ ierror ]
+?NXT_0044:
+                        ;$@$C_SOURCE_LINE(352)
+        LD      A,(007H,SP)                        ; [ ChecksumByte ]
+        CP      A,(005H,SP)                        ; [ Checksum ]
+        JREQ    ?NXT_0045
+                        ;$@$C_SOURCE_LINE(354)
+        LDW     X,#00001H
+        LDW     (008H,SP),X                        ; [ ierror ]
+?NXT_0045:
+                        ;$@$C_SOURCE_LINE(357)
+        LDW     X,#00001H
+        CPW     X,(008H,SP)                        ; [ ierror ]
+        JRNE    ?NXT_0046
+                        ;$@$C_SOURCE_LINE(359)
+        LD      A,#01FH
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(360)
+        LD      A,#000H
+        JRA     ?EPILOG_0005
+?NXT_0046:
+                        ;$@$C_SOURCE_LINE(364)
+        LD      A,#001H
+        ADD     A,(006H,SP)                        ; [ DataCount ]
+        PUSH    A
+        LD      A,(005H,SP)                        ; [ DataAddress + 02H ]
+        PUSH    A
+        LD      A,(005H,SP)                        ; [ DataAddress + 01H ]
+        PUSH    A
+        LD      A,(005H,SP)                        ; [ DataAddress ]
+        PUSH    A
+        CALL    ?WriteBuffer
+        ADD     SP,#004H
+        TNZ     A
+        JRNE    ?NXT_0047
+                        ;$@$C_SOURCE_LINE(366)
+        LD      A,#01FH
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(367)
+        LD      A,#000H
+        JRA     ?EPILOG_0005
+?NXT_0047:
+                        ;$@$C_SOURCE_LINE(370)
+        LD      A,#079H
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(371)
+        LD      A,#001H
+?EPILOG_0005:
+        ADD     SP,#009H
+        RET     
+
+; END OF ?WM_Command_Process
+;; ; 
+; ; u8 CheckAddress(u32 DataAddress){
+; ;   //for Flash
+; ;   if ((DataAddress >= FLASH_START) && (DataAddress <= FLASH_END))
+; ;     return 1;
+; ;   else
+; ;     //for EEPROM
+; ;     if ((DataAddress >= EEPROM_START) && (DataAddress <= EEPROM_END))
+; ;       return 1;
+; ;     else
+; ;       //for RAM
+; ;       if ((DataAddress >= RAM_START) && (DataAddress <= RAM_END))
+; ;         return 1;
+; ;       else
+; ;         //for Option bytes
+; ;         if ((DataAddress >= OPTION_START) && (DataAddress <= OPTION_END))
+; ;           return 1;
+; ;   return 0;
+; ; }//CheckAddress
+
+        RSEG  ?PR??CHECKADDRESS?MAIN
+?CheckAddress:
+                        ;$@$C_ROUTINE(?CheckAddress)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(376)
+        CALL    ?C?mv4_pg2bc
+?DATASTART_0007:
+        DB      000H
+        DB      000H
+        DB      080H
+        DB      000H
+?DATAEND_0007:
+        LDW     X,SP
+        ADDW    X,#00003H
+        CALL    ?C?cpu3232ix
+        JRUGT   ?ELSE_0036
+        CALL    ?C?mv4_pg2bc
+?DATASTART_0008:
+        DB      000H
+        DB      002H
+        DB      0FFH
+        DB      0FFH
+?DATAEND_0008:
+        LDW     X,SP
+        ADDW    X,#00003H
+        CALL    ?C?cpu3232ix
+        JRULT   ?ELSE_0036
+?LAB_0018:
+?EASY_0001?CheckAddress:
+                        ;$@$C_SOURCE_LINE(377)
+        LD      A,#001H
+        JRA     ?EPILOG_0006
+?ELSE_0036:
+                        ;$@$C_SOURCE_LINE(380)
+        CALL    ?C?mv4_pg2bc
+?DATASTART_0009:
+        DB      000H
+        DB      000H
+        DB      040H
+        DB      000H
+?DATAEND_0009:
+        LDW     X,SP
+        ADDW    X,#00003H
+        CALL    ?C?cpu3232ix
+        JRUGT   ?ELSE_0037
+        CALL    ?C?mv4_pg2bc
+?DATASTART_0010:
+        DB      000H
+        DB      000H
+        DB      043H
+        DB      0FFH
+?DATAEND_0010:
+        LDW     X,SP
+        ADDW    X,#00003H
+        CALL    ?C?cpu3232ix
+        JRULT   ?ELSE_0037
+?LAB_0019:
+                        ;$@$C_SOURCE_LINE(390)
+        JRA     ?EASY_0001?CheckAddress
+?ELSE_0037:
+                        ;$@$C_SOURCE_LINE(384)
+        LD      A,(003H,SP)                        ; [ DataAddress ]
+        TNZ     A
+        JRMI    ?ELSE_0038
+        CALL    ?C?mv4_pg2bc
+?DATASTART_0011:
+        DB      000H
+        DB      000H
+        DB      007H
+        DB      0FFH
+?DATAEND_0011:
+        LDW     X,SP
+        ADDW    X,#00003H
+        CALL    ?C?cpu3232ix
+        JRULT   ?ELSE_0038
+?LAB_0020:
+?EASY_0000?CheckAddress:
+                        ;$@$C_SOURCE_LINE(385)
+        LD      A,#001H
+        JRA     ?EPILOG_0006
+?ELSE_0038:
+                        ;$@$C_SOURCE_LINE(388)
+        CALL    ?C?mv4_pg2bc
+?DATASTART_0012:
+        DB      000H
+        DB      000H
+        DB      048H
+        DB      000H
+?DATAEND_0012:
+        LDW     X,SP
+        ADDW    X,#00003H
+        CALL    ?C?cpu3232ix
+        JRUGT   ?NXT_0055
+        CALL    ?C?mv4_pg2bc
+?DATASTART_0013:
+        DB      000H
+        DB      000H
+        DB      048H
+        DB      0FFH
+?DATAEND_0013:
+        LDW     X,SP
+        ADDW    X,#00003H
+        CALL    ?C?cpu3232ix
+        JRULT   ?NXT_0055
+?LAB_0021:
+                        ;$@$C_SOURCE_LINE(390)
+        JRA     ?EASY_0000?CheckAddress
+?NXT_0055:
+        LD      A,#000H
+?EPILOG_0006:
+        RET     
+
+; END OF ?CheckAddress
+;; ; 
+; ; u8 WriteBuffer(u8 FAR* DataAddress, u8 DataCount){
+; ;   u8 i;
+; ;   
+; ;   //for Flash
+; ;   if (((u32)DataAddress >= FLASH_START) && (((u32)DataAddress + DataCount - 1) <= FLASH_END))
+; ;     return WriteBufferFlash(DataAddress, DataCount, FLASH_MEMTYPE_PROG);
+; ;     
+; ;   //for EEPROM
+; ;   if (((u32)DataAddress >= EEPROM_START) && (((u32)DataAddress + DataCount - 1) <= EEPROM_END))
+; ;     return WriteBufferFlash(DataAddress, DataCount, FLASH_MEMTYPE_DATA);
+; ;     
+; ;   //for RAM
+; ;   if (((u32)DataAddress >= RAM_START) && (((u32)DataAddress + DataCount - 1) <= RAM_END))
+; ;   {
+; ;     for(i=0; i<DataCount; i++)
+; ;       DataAddress[i] = DataBuffer[i];
+; ;     return 1;
+; ;   }
+; ;   
+; ;   //for Option bytes
+; ;   if (((u32)DataAddress >= OPTION_START) && (((u32)DataAddress + DataCount - 1) <= OPTION_END))
+; ;   {
+; ;     for(i=0; i<DataCount; i++)
+; ;     {
+; ;        FLASH_ProgramOptionByte((u32)(&DataAddress[i]), DataBuffer[i]);
+; ;     }
+; ;     return 1;
+; ;   }
+; ;   
+; ;   //otherwise fail
+; ;   return 0;
+; ; }//WriteBuffer
+
+        RSEG  ?PR??WRITEBUFFER?MAIN
+?WriteBuffer:
+                        ;$@$C_ROUTINE(?WriteBuffer)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(393)
+        PUSH    A
+                        ;$@$C_SOURCE_LINE(397)
+        CALL    ?C?mv4_pg2bc
+?DATASTART_0021:
+        DB      000H
+        DB      000H
+        DB      080H
+        DB      000H
+?DATAEND_0021:
+        PUSH    ?CL
+        PUSH    ?CH
+        PUSH    ?BL
+        PUSH    ?BH
+        LD      A,(008H,SP)                        ; [ DataAddress ]
+        LD      ?BL,A
+        LDW     X,(009H,SP)                        ; [ DataAddress + 01H ]
+        LDW     ?CH,X
+        CLR     ?BH
+        CLR     ?BH
+        LDW     X,SP
+        INCW    X
+        CALL    ?C?cpu3232ix
+        ADD     SP,#004H
+        JRULT   ?NXT_0064
+        CLRW    X
+        DECW    X
+        PUSHW   X
+        PUSHW   X
+        LD      A,(00BH,SP)                        ; [ DataCount ]
+        CALL    ?C?uchartol
+        CALL    ?C?mv4_bc2sk
+        LD      A,(00CH,SP)                        ; [ DataAddress ]
+        LD      ?BL,A
+        LDW     X,(00DH,SP)                        ; [ DataAddress + 01H ]
+        LDW     ?CH,X
+        CLR     ?BH
+        CLR     ?BH
+        CALL    ?C?add3232
+        CALL    ?C?add3232
+        PUSH    ?CL
+        PUSH    ?CH
+        PUSH    ?BL
+        PUSH    ?BH
+        CALL    ?C?mv4_pg2bc
+?DATASTART_0022:
+        DB      000H
+        DB      002H
+        DB      0FFH
+        DB      0FFH
+?DATAEND_0022:
+        LDW     X,SP
+        INCW    X
+        CALL    ?C?cpu3232ix
+        ADD     SP,#004H
+        JRULT   ?NXT_0064
+?LAB_0026:
+                        ;$@$C_SOURCE_LINE(398)
+        LDW     X,#00000H
+        PUSHW   X
+        LD      A,(009H,SP)                        ; [ DataCount ]
+        PUSH    A
+        LD      A,(009H,SP)                        ; [ DataAddress + 02H ]
+        PUSH    A
+        LD      A,(009H,SP)                        ; [ DataAddress + 01H ]
+        PUSH    A
+        LD      A,(009H,SP)                        ; [ DataAddress ]
+        PUSH    A
+        CALL    ?WriteBufferFlash
+        ADD     SP,#006H
+        JP      ?EPILOG_0007
+?NXT_0064:
+                        ;$@$C_SOURCE_LINE(401)
+        CALL    ?C?mv4_pg2bc
+?DATASTART_0023:
+        DB      000H
+        DB      000H
+        DB      040H
+        DB      000H
+?DATAEND_0023:
+        PUSH    ?CL
+        PUSH    ?CH
+        PUSH    ?BL
+        PUSH    ?BH
+        LD      A,(008H,SP)                        ; [ DataAddress ]
+        LD      ?BL,A
+        LDW     X,(009H,SP)                        ; [ DataAddress + 01H ]
+        LDW     ?CH,X
+        CLR     ?BH
+        CLR     ?BH
+        LDW     X,SP
+        INCW    X
+        CALL    ?C?cpu3232ix
+        ADD     SP,#004H
+        JRULT   ?NXT_0065
+        CLRW    X
+        DECW    X
+        PUSHW   X
+        PUSHW   X
+        LD      A,(00BH,SP)                        ; [ DataCount ]
+        CALL    ?C?uchartol
+        CALL    ?C?mv4_bc2sk
+        LD      A,(00CH,SP)                        ; [ DataAddress ]
+        LD      ?BL,A
+        LDW     X,(00DH,SP)                        ; [ DataAddress + 01H ]
+        LDW     ?CH,X
+        CLR     ?BH
+        CLR     ?BH
+        CALL    ?C?add3232
+        CALL    ?C?add3232
+        PUSH    ?CL
+        PUSH    ?CH
+        PUSH    ?BL
+        PUSH    ?BH
+        CALL    ?C?mv4_pg2bc
+?DATASTART_0024:
+        DB      000H
+        DB      000H
+        DB      043H
+        DB      0FFH
+?DATAEND_0024:
+        LDW     X,SP
+        INCW    X
+        CALL    ?C?cpu3232ix
+        ADD     SP,#004H
+        JRULT   ?NXT_0065
+?LAB_0027:
+                        ;$@$C_SOURCE_LINE(402)
+        LDW     X,#00001H
+        PUSHW   X
+        LD      A,(009H,SP)                        ; [ DataCount ]
+        PUSH    A
+        LD      A,(009H,SP)                        ; [ DataAddress + 02H ]
+        PUSH    A
+        LD      A,(009H,SP)                        ; [ DataAddress + 01H ]
+        PUSH    A
+        LD      A,(009H,SP)                        ; [ DataAddress ]
+        PUSH    A
+        CALL    ?WriteBufferFlash
+        ADD     SP,#006H
+        JP      ?EPILOG_0007
+?NXT_0065:
+                        ;$@$C_SOURCE_LINE(405)
+        LD      A,(004H,SP)                        ; [ DataAddress ]
+        LD      ?BL,A
+        LDW     X,(005H,SP)                        ; [ DataAddress + 01H ]
+        LDW     ?CH,X
+        CLR     ?BH
+        CLR     ?BH
+        LD      A,?BH
+        TNZ     A
+        JRMI    ?NXT_0066
+        CLRW    X
+        DECW    X
+        PUSHW   X
+        PUSHW   X
+        LD      A,(00BH,SP)                        ; [ DataCount ]
+        CALL    ?C?uchartol
+        CALL    ?C?mv4_bc2sk
+        LD      A,(00CH,SP)                        ; [ DataAddress ]
+        LD      ?BL,A
+        LDW     X,(00DH,SP)                        ; [ DataAddress + 01H ]
+        LDW     ?CH,X
+        CLR     ?BH
+        CLR     ?BH
+        CALL    ?C?add3232
+        CALL    ?C?add3232
+        PUSH    ?CL
+        PUSH    ?CH
+        PUSH    ?BL
+        PUSH    ?BH
+        CALL    ?C?mv4_pg2bc
+?DATASTART_0025:
+        DB      000H
+        DB      000H
+        DB      007H
+        DB      0FFH
+?DATAEND_0025:
+        LDW     X,SP
+        INCW    X
+        CALL    ?C?cpu3232ix
+        ADD     SP,#004H
+        JRULT   ?NXT_0066
+?LAB_0028:
+                        ;$@$C_SOURCE_LINE(407)
+        LD      A,#000H
+        LD      (001H,SP),A                        ; [ i ]
+?FOR_0006:
+        LD      A,(001H,SP)                        ; [ i ]
+        CP      A,(007H,SP)                        ; [ DataCount ]
+        JRUGE   ?NXT_0067
+                        ;$@$C_SOURCE_LINE(408)
+        CLRW    X
+        LD      A,(001H,SP)                        ; [ i ]
+        LD      XL,A
+        LD      A,(DataBuffer + 00H,X)
+        PUSH    A
+        CLRW    X
+        LD      A,(002H,SP)                        ; [ i ]
+        LD      XL,A
+        PUSHW   X
+        LD      A,(007H,SP)                        ; [ DataAddress ]
+        LD      ?BL,A
+        LDW     X,(008H,SP)                        ; [ DataAddress + 01H ]
+        LDW     ?CH,X
+        POPW    X
+        ADDW    X,?CH.w
+        LDW     ?CH.w,X
+        CLRW    X
+        CLRW    X
+        POP     A
+        LDF     ([?BL.e],X),A
+?NXT_0068:
+                        ;$@$C_SOURCE_LINE(407)
+        LD      A,(001H,SP)                        ; [ i ]
+        INC     (001H,SP)                          ; [ i ]
+        JRA     ?FOR_0006
+?NXT_0067:
+                        ;$@$C_SOURCE_LINE(409)
+        LD      A,#001H
+        JP      ?EPILOG_0007
+?NXT_0066:
+                        ;$@$C_SOURCE_LINE(413)
+        CALL    ?C?mv4_pg2bc
+?DATASTART_0026:
+        DB      000H
+        DB      000H
+        DB      048H
+        DB      000H
+?DATAEND_0026:
+        PUSH    ?CL
+        PUSH    ?CH
+        PUSH    ?BL
+        PUSH    ?BH
+        LD      A,(008H,SP)                        ; [ DataAddress ]
+        LD      ?BL,A
+        LDW     X,(009H,SP)                        ; [ DataAddress + 01H ]
+        LDW     ?CH,X
+        CLR     ?BH
+        CLR     ?BH
+        LDW     X,SP
+        INCW    X
+        CALL    ?C?cpu3232ix
+        ADD     SP,#004H
+        JRUGE   ?LAB_0030
+        JP      ?NXT_0069
+?LAB_0030:
+        CLRW    X
+        DECW    X
+        PUSHW   X
+        PUSHW   X
+        LD      A,(00BH,SP)                        ; [ DataCount ]
+        CALL    ?C?uchartol
+        CALL    ?C?mv4_bc2sk
+        LD      A,(00CH,SP)                        ; [ DataAddress ]
+        LD      ?BL,A
+        LDW     X,(00DH,SP)                        ; [ DataAddress + 01H ]
+        LDW     ?CH,X
+        CLR     ?BH
+        CLR     ?BH
+        CALL    ?C?add3232
+        CALL    ?C?add3232
+        PUSH    ?CL
+        PUSH    ?CH
+        PUSH    ?BL
+        PUSH    ?BH
+        CALL    ?C?mv4_pg2bc
+?DATASTART_0027:
+        DB      000H
+        DB      000H
+        DB      048H
+        DB      0FFH
+?DATAEND_0027:
+        LDW     X,SP
+        INCW    X
+        CALL    ?C?cpu3232ix
+        ADD     SP,#004H
+        JRULT   ?NXT_0069
+?LAB_0029:
+                        ;$@$C_SOURCE_LINE(415)
+        LD      A,#000H
+        LD      (001H,SP),A                        ; [ i ]
+?FOR_0007:
+        LD      A,(001H,SP)                        ; [ i ]
+        CP      A,(007H,SP)                        ; [ DataCount ]
+        JRUGE   ?NXT_0070
+                        ;$@$C_SOURCE_LINE(417)
+        CLRW    X
+        LD      A,(001H,SP)                        ; [ i ]
+        LD      XL,A
+        LD      A,(DataBuffer + 00H,X)
+        PUSH    A
+        CLRW    X
+        LD      A,(002H,SP)                        ; [ i ]
+        LD      XL,A
+        PUSHW   X
+        LD      A,(007H,SP)                        ; [ DataAddress ]
+        LD      ?BL,A
+        LDW     X,(008H,SP)                        ; [ DataAddress + 01H ]
+        LDW     ?CH,X
+        POPW    X
+        ADDW    X,?CH.w
+        LDW     ?CH.w,X
+        PUSH    ?CL
+        PUSH    ?CH
+        PUSH    ?BL
+        POP     A
+        LD      ?BL,A
+        POP     A
+        LD      ?CH,A
+        POP     A
+        LD      ?CL,A
+        CLR     ?BH
+        CLR     ?BH
+        CLR     ?BH
+        LDW     X,?CH.w
+        POP     A
+        CALL    ?FLASH_ProgramOptionByte
+?NXT_0071:
+                        ;$@$C_SOURCE_LINE(415)
+        LD      A,(001H,SP)                        ; [ i ]
+        INC     (001H,SP)                          ; [ i ]
+        JRA     ?FOR_0007
+?NXT_0070:
+                        ;$@$C_SOURCE_LINE(419)
+        LD      A,#001H
+        JRA     ?EPILOG_0007
+?NXT_0069:
+                        ;$@$C_SOURCE_LINE(423)
+        LD      A,#000H
+?EPILOG_0007:
+        ADD     SP,#001H
+        RET     
+
+; END OF ?WriteBuffer
+;; ; 
+; ; u8 WriteBufferFlash(u8 FAR* DataAddress, u8 DataCount, FLASH_MemType_TypeDef MemType){
+; ;   u32 Address = (u32) DataAddress;
+; ;   u8 * DataPointer = DataBuffer;
+; ;   u32 Offset;
+; ;   //set offset according memory type
+; ;   if(MemType == FLASH_MEMTYPE_PROG)
+; ;     Offset = FLASH_START;
+; ;   else
+; ;     Offset = EEPROM_START;
+; ;   //program beginning bytes before words
+; ;   while((Address % 4) && (DataCount))
+; ;   {
+; ;     *((PointerAttr u8*) Address) = *DataPointer;
+; ; 		while( (FLASH->IAPSR & (FLASH_IAPSR_EOP | FLASH_IAPSR_WR_PG_DIS)) == 0);
+; ; 		Address++;
+; ;     DataPointer++;
+; ;     DataCount--;
+; ; 	}
+; ;   //program beginning words before blocks
+; ; 	while((Address % BLOCK_BYTES) && (DataCount >= 4))
+; ;   {
+; ; 		FLASH->CR2 |= (u8)0x40;
+; ; 		FLASH->NCR2 &= (u8)~0x40;
+; ; 		*((PointerAttr u8*)Address) = (u8)*DataPointer  ; 	 /* Write one byte - from lowest address*/
+; ; 		*((PointerAttr u8*)(Address + 1)) = *(DataPointer + 1); /* Write one byte*/
+; ; 		*((PointerAttr u8*)(Address + 2)) = *(DataPointer + 2); /* Write one byte*/
+; ; 		*((PointerAttr u8*)(Address + 3)) = *(DataPointer + 3); /* Write one byte - from higher address*/
+; ;     while( (FLASH->IAPSR & (FLASH_IAPSR_EOP | FLASH_IAPSR_WR_PG_DIS)) == 0);
+; ; 		Address    += 4;
+; ;     DataPointer+= 4;
+; ;     DataCount  -= 4;
+; ;   }
+; ;   //program blocks
+; ;   while(DataCount >= BLOCK_BYTES)
+; ;   {
+; ;     Mem_ProgramBlock((Address - Offset)/BLOCK_BYTES, MemType, DataPointer);
+; ;     Address    += BLOCK_BYTES;
+; ;     DataPointer+= BLOCK_BYTES;    
+; ;     DataCount  -= BLOCK_BYTES;
+; ;   }
+; ;   
+; ;   //program remaining words (after blocks)
+; ;   while(DataCount >= 4)
+; ;   {
+; ; 		FLASH->CR2 |= (u8)0x40;
+; ; 		FLASH->NCR2 &= (u8)~0x40;
+; ; 		*((PointerAttr u8*)Address) = (u8)*DataPointer  ; 	 /* Write one byte - from lowest address*/
+; ; 		*((PointerAttr u8*)(Address + 1)) = *(DataPointer + 1); /* Write one byte*/
+; ; 		*((PointerAttr u8*)(Address + 2)) = *(DataPointer + 2); /* Write one byte*/
+; ; 		*((PointerAttr u8*)(Address + 3)) = *(DataPointer + 3); /* Write one byte - from higher address*/
+; ;     while( (FLASH->IAPSR & (FLASH_IAPSR_EOP | FLASH_IAPSR_WR_PG_DIS)) == 0);
+; ; 		Address    += 4;
+; ;     DataPointer+= 4;
+; ;     DataCount  -= 4;
+; ;   }
+; ;   
+; ;   //program remaining bytes (after words)
+; ;   while(DataCount)
+; ;   {
+; ;     *((PointerAttr u8*) Address) = *DataPointer;
+; ;     while( (FLASH->IAPSR & (FLASH_IAPSR_EOP | FLASH_IAPSR_WR_PG_DIS)) == 0);
+; ; 		Address++;
+; ;     DataPointer++;
+; ;     DataCount--;
+; ;   }
+; ;   
+; ;   return 1;
+; ; }//WriteBufferFlash
+
+        RSEG  ?PR??WRITEBUFFERFLASH?MAIN
+?WriteBufferFlash:
+                        ;$@$C_ROUTINE(?WriteBufferFlash)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(426)
+        SUB     SP,#00AH
+                        ;$@$C_SOURCE_LINE(427)
+        LD      A,(00DH,SP)                        ; [ DataAddress ]
+        LD      ?BL,A
+        LDW     X,(00EH,SP)                        ; [ DataAddress + 01H ]
+        LDW     ?CH,X
+        CLR     ?BH
+        CLR     ?BH
+        CLR     A
+        CALL    ?C?mv4_bc2isa
+                        ;$@$C_SOURCE_LINE(428)
+        LDW     X,#DataBuffer
+        LDW     (005H,SP),X                        ; [ DataPointer ]
+                        ;$@$C_SOURCE_LINE(431)
+        LDW     X,(011H,SP)                        ; [ MemType ]
+        JRNE    ?ELSE_0049
+                        ;$@$C_SOURCE_LINE(432)
+        LDW     X,#00000H
+        LDW     (007H,SP),X                        ; [ Offset ]
+        LDW     X,#08000H
+        LDW     (009H,SP),X                        ; [ Offset + 02H ]
+        JRA     ?NXT_0082
+?ELSE_0049:
+                        ;$@$C_SOURCE_LINE(434)
+        LDW     X,#00000H
+        LDW     (007H,SP),X                        ; [ Offset ]
+        LDW     X,#04000H
+        LDW     (009H,SP),X                        ; [ Offset + 02H ]
+?NXT_0082:
+?WHILE_0011:
+                        ;$@$C_SOURCE_LINE(436)
+        LD      A,#003H
+        AND     A,(004H,SP)                        ; [ Address + 03H ]
+        TNZ     A
+        JREQ    ?NXT_0083
+        TNZ     (010H,SP)                          ; [ DataCount ]
+        JREQ    ?NXT_0083
+?LAB_0033:
+                        ;$@$C_SOURCE_LINE(438)
+        LDW     X,(005H,SP)                        ; [ DataPointer ]
+        LD      A,(X)
+        PUSH    A
+        LDW     X,(004H,SP)                        ; [ Address + 02H ]
+        POP     A
+        LD      (X),A
+?WHILE_0012:
+                        ;$@$C_SOURCE_LINE(439)
+        LD      A,#005H
+        AND     A,0505FH
+        TNZ     A
+        JREQ    ?WHILE_0012
+?NXT_0084:
+                        ;$@$C_SOURCE_LINE(440)
+        LDW     X,SP
+        ADDW    X,#00001H
+        LD      A,#001H
+        CALL    ?C?accix328
+                        ;$@$C_SOURCE_LINE(441)
+        LDW     X,(005H,SP)                        ; [ DataPointer ]
+        INCW    X
+        LDW     (005H,SP),X                        ; [ DataPointer ]
+                        ;$@$C_SOURCE_LINE(442)
+        DEC     (010H,SP)                          ; [ DataCount ]
+        JRA     ?WHILE_0011
+?NXT_0083:
+?WHILE_0013:
+                        ;$@$C_SOURCE_LINE(445)
+        LD      A,#07FH
+        AND     A,(004H,SP)                        ; [ Address + 03H ]
+        TNZ     A
+        JRNE    ?LAB_0035
+        JP      ?NXT_0085
+?LAB_0035:
+        LD      A,#004H
+        CP      A,(010H,SP)                        ; [ DataCount ]
+        JRULE   ?LAB_0036
+        JP      ?NXT_0085
+?LAB_0036:
+?LAB_0034:
+                        ;$@$C_SOURCE_LINE(447)
+        LD      A,#040H
+        OR      A,0505BH
+        LD      ?BH,A
+        MOV     0505BH,?BH
+                        ;$@$C_SOURCE_LINE(448)
+        LD      A,#0BFH
+        AND     A,0505CH
+        LD      ?BH,A
+        MOV     0505CH,?BH
+                        ;$@$C_SOURCE_LINE(449)
+        LDW     X,(005H,SP)                        ; [ DataPointer ]
+        LD      A,(X)
+        PUSH    A
+        LDW     X,(004H,SP)                        ; [ Address + 02H ]
+        POP     A
+        LD      (X),A
+                        ;$@$C_SOURCE_LINE(450)
+        LDW     X,(005H,SP)                        ; [ DataPointer ]
+        ADDW    X,#00001H
+        LD      A,(X)
+        PUSH    A
+        CALL    ?C?mv4_pg2sk1
+?DATASTART_0037:
+        DB      001H
+?DATAEND_0037:
+        LDW     X,SP
+        ADDW    X,#00006H
+        CALL    ?C?addix32
+        POP     A
+        LD      [?CH.w],A
+                        ;$@$C_SOURCE_LINE(451)
+        LDW     X,(005H,SP)                        ; [ DataPointer ]
+        ADDW    X,#00002H
+        LD      A,(X)
+        PUSH    A
+        CALL    ?C?mv4_pg2sk1
+?DATASTART_0038:
+        DB      002H
+?DATAEND_0038:
+        LDW     X,SP
+        ADDW    X,#00006H
+        CALL    ?C?addix32
+        POP     A
+        LD      [?CH.w],A
+                        ;$@$C_SOURCE_LINE(452)
+        LDW     X,(005H,SP)                        ; [ DataPointer ]
+        ADDW    X,#00003H
+        LD      A,(X)
+        PUSH    A
+        CALL    ?C?mv4_pg2sk1
+?DATASTART_0039:
+        DB      003H
+?DATAEND_0039:
+        LDW     X,SP
+        ADDW    X,#00006H
+        CALL    ?C?addix32
+        POP     A
+        LD      [?CH.w],A
+?WHILE_0014:
+                        ;$@$C_SOURCE_LINE(453)
+        LD      A,#005H
+        AND     A,0505FH
+        TNZ     A
+        JREQ    ?WHILE_0014
+?NXT_0086:
+                        ;$@$C_SOURCE_LINE(454)
+        LDW     X,(003H,SP)                        ; [ Address + 02H ]
+        PUSHW   X
+        LDW     X,(003H,SP)                        ; [ Address ]
+        PUSHW   X
+        CALL    ?C?mv4_pg2bc1
+?DATASTART_0040:
+        DB      004H
+?DATAEND_0040:
+        CALL    ?C?add3232
+        CLR     A
+        CALL    ?C?mv4_bc2isa
+                        ;$@$C_SOURCE_LINE(455)
+        LDW     X,(005H,SP)                        ; [ DataPointer ]
+        ADDW    X,#00004H
+        LDW     (005H,SP),X                        ; [ DataPointer ]
+                        ;$@$C_SOURCE_LINE(456)
+        LD      A,#0FCH
+        ADD     A,(010H,SP)                        ; [ DataCount ]
+        LD      ?BH,A
+        LD      A,?BH
+        LD      (010H,SP),A                        ; [ DataCount ]
+        JP      ?WHILE_0013
+?NXT_0085:
+?WHILE_0015:
+                        ;$@$C_SOURCE_LINE(459)
+        CLRW    X
+        LD      A,(010H,SP)                        ; [ DataCount ]
+        LD      XL,A
+        PUSHW   X
+        LDW     X,#00080H
+        POPW    Y
+        LDW     ?BH.w,Y
+        CPW     X,?BH.w
+        JRSGT   ?NXT_0087
+                        ;$@$C_SOURCE_LINE(461)
+        LDW     X,(005H,SP)                        ; [ DataPointer ]
+        PUSHW   X
+        LDW     X,(013H,SP)                        ; [ MemType ]
+        PUSHW   X
+        LDW     X,(007H,SP)                        ; [ Address + 02H ]
+        PUSHW   X
+        LDW     X,(007H,SP)                        ; [ Address ]
+        PUSHW   X
+        LDW     X,SP
+        ADDW    X,#0000FH
+        CALL    ?C?subix32
+        LD      A,#007H
+        CALL    ?C?srl328
+        LDW     X,?CH.w
+        CALL    ?Mem_ProgramBlock
+        ADD     SP,#004H
+                        ;$@$C_SOURCE_LINE(462)
+        LDW     X,(003H,SP)                        ; [ Address + 02H ]
+        PUSHW   X
+        LDW     X,(003H,SP)                        ; [ Address ]
+        PUSHW   X
+        CALL    ?C?mv4_pg2bc1
+?DATASTART_0041:
+        DB      080H
+?DATAEND_0041:
+        CALL    ?C?add3232
+        CLR     A
+        CALL    ?C?mv4_bc2isa
+                        ;$@$C_SOURCE_LINE(463)
+        LDW     X,(005H,SP)                        ; [ DataPointer ]
+        ADDW    X,#00080H
+        LDW     (005H,SP),X                        ; [ DataPointer ]
+                        ;$@$C_SOURCE_LINE(464)
+        LD      A,#080H
+        ADD     A,(010H,SP)                        ; [ DataCount ]
+        LD      ?BH,A
+        LD      A,?BH
+        LD      (010H,SP),A                        ; [ DataCount ]
+        JRA     ?WHILE_0015
+?NXT_0087:
+?WHILE_0016:
+                        ;$@$C_SOURCE_LINE(468)
+        LD      A,#004H
+        CP      A,(010H,SP)                        ; [ DataCount ]
+        JRULE   ?LAB_0037
+        JP      ?NXT_0088
+?LAB_0037:
+                        ;$@$C_SOURCE_LINE(470)
+        LD      A,#040H
+        OR      A,0505BH
+        LD      ?BH,A
+        MOV     0505BH,?BH
+                        ;$@$C_SOURCE_LINE(471)
+        LD      A,#0BFH
+        AND     A,0505CH
+        LD      ?BH,A
+        MOV     0505CH,?BH
+                        ;$@$C_SOURCE_LINE(472)
+        LDW     X,(005H,SP)                        ; [ DataPointer ]
+        LD      A,(X)
+        PUSH    A
+        LDW     X,(004H,SP)                        ; [ Address + 02H ]
+        POP     A
+        LD      (X),A
+                        ;$@$C_SOURCE_LINE(473)
+        LDW     X,(005H,SP)                        ; [ DataPointer ]
+        ADDW    X,#00001H
+        LD      A,(X)
+        PUSH    A
+        CALL    ?C?mv4_pg2sk1
+?DATASTART_0042:
+        DB      001H
+?DATAEND_0042:
+        LDW     X,SP
+        ADDW    X,#00006H
+        CALL    ?C?addix32
+        POP     A
+        LD      [?CH.w],A
+                        ;$@$C_SOURCE_LINE(474)
+        LDW     X,(005H,SP)                        ; [ DataPointer ]
+        ADDW    X,#00002H
+        LD      A,(X)
+        PUSH    A
+        CALL    ?C?mv4_pg2sk1
+?DATASTART_0043:
+        DB      002H
+?DATAEND_0043:
+        LDW     X,SP
+        ADDW    X,#00006H
+        CALL    ?C?addix32
+        POP     A
+        LD      [?CH.w],A
+                        ;$@$C_SOURCE_LINE(475)
+        LDW     X,(005H,SP)                        ; [ DataPointer ]
+        ADDW    X,#00003H
+        LD      A,(X)
+        PUSH    A
+        CALL    ?C?mv4_pg2sk1
+?DATASTART_0044:
+        DB      003H
+?DATAEND_0044:
+        LDW     X,SP
+        ADDW    X,#00006H
+        CALL    ?C?addix32
+        POP     A
+        LD      [?CH.w],A
+?WHILE_0017:
+                        ;$@$C_SOURCE_LINE(476)
+        LD      A,#005H
+        AND     A,0505FH
+        TNZ     A
+        JREQ    ?WHILE_0017
+?NXT_0089:
+                        ;$@$C_SOURCE_LINE(477)
+        LDW     X,(003H,SP)                        ; [ Address + 02H ]
+        PUSHW   X
+        LDW     X,(003H,SP)                        ; [ Address ]
+        PUSHW   X
+        CALL    ?C?mv4_pg2bc1
+?DATASTART_0045:
+        DB      004H
+?DATAEND_0045:
+        CALL    ?C?add3232
+        CLR     A
+        CALL    ?C?mv4_bc2isa
+                        ;$@$C_SOURCE_LINE(478)
+        LDW     X,(005H,SP)                        ; [ DataPointer ]
+        ADDW    X,#00004H
+        LDW     (005H,SP),X                        ; [ DataPointer ]
+                        ;$@$C_SOURCE_LINE(479)
+        LD      A,#0FCH
+        ADD     A,(010H,SP)                        ; [ DataCount ]
+        LD      ?BH,A
+        LD      A,?BH
+        LD      (010H,SP),A                        ; [ DataCount ]
+        JP      ?WHILE_0016
+?NXT_0088:
+?WHILE_0018:
+                        ;$@$C_SOURCE_LINE(483)
+        TNZ     (010H,SP)                          ; [ DataCount ]
+        JREQ    ?NXT_0090
+                        ;$@$C_SOURCE_LINE(485)
+        LDW     X,(005H,SP)                        ; [ DataPointer ]
+        LD      A,(X)
+        PUSH    A
+        LDW     X,(004H,SP)                        ; [ Address + 02H ]
+        POP     A
+        LD      (X),A
+?WHILE_0019:
+                        ;$@$C_SOURCE_LINE(486)
+        LD      A,#005H
+        AND     A,0505FH
+        TNZ     A
+        JREQ    ?WHILE_0019
+?NXT_0091:
+                        ;$@$C_SOURCE_LINE(487)
+        LDW     X,SP
+        ADDW    X,#00001H
+        LD      A,#001H
+        CALL    ?C?accix328
+                        ;$@$C_SOURCE_LINE(488)
+        LDW     X,(005H,SP)                        ; [ DataPointer ]
+        INCW    X
+        LDW     (005H,SP),X                        ; [ DataPointer ]
+                        ;$@$C_SOURCE_LINE(489)
+        DEC     (010H,SP)                          ; [ DataCount ]
+        JRA     ?WHILE_0018
+?NXT_0090:
+                        ;$@$C_SOURCE_LINE(492)
+        LD      A,#001H
+?EPILOG_0008:
+        ADD     SP,#00AH
+        RET     
+
+; END OF ?WriteBufferFlash
+;; ; 
+; ; void DeInitBootloader(void){
+; ;   if(RoutinesInRAM)
+; ;   {
+; ;     /* Lock program memory */
+; ;     FLASH->IAPSR = ~0x02;
+; ;     /* Lock data memory */
+; ;     FLASH->IAPSR = ~0x08;
+; ;   }
+; ; 	
+; ;   /* DeInit I2C */	
+; ; 	I2C->CR1 = 0x00;
+; ;   I2C->CR2 = 0x00;
+; ;   I2C->FREQR = 0x00;
+; ;   I2C->OARL = 0x00;
+; ;   I2C->OARH = 0x00;
+; ;   I2C->ITR = 0x00;
+; ;   I2C->CCRL = 0x00;
+; ;   I2C->CCRH = 0x00;
+; ;   I2C->TRISER = 0x02;
+; ; 	
+; ; }//DeInitBootloader
+
+        RSEG  ?PR??DEINITBOOTLOADER?MAIN
+?DeInitBootloader:
+                        ;$@$C_ROUTINE(?DeInitBootloader)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(496)
+        TNZ     RoutinesInRAM
+        JREQ    ?NXT_0093
+                        ;$@$C_SOURCE_LINE(499)
+        MOV     0505FH,#0FDH
+                        ;$@$C_SOURCE_LINE(501)
+        MOV     0505FH,#0F7H
+?NXT_0093:
+                        ;$@$C_SOURCE_LINE(505)
+        MOV     05210H,#000H
+                        ;$@$C_SOURCE_LINE(506)
+        MOV     05211H,#000H
+                        ;$@$C_SOURCE_LINE(507)
+        MOV     05212H,#000H
+                        ;$@$C_SOURCE_LINE(508)
+        MOV     05213H,#000H
+                        ;$@$C_SOURCE_LINE(509)
+        MOV     05214H,#000H
+                        ;$@$C_SOURCE_LINE(510)
+        MOV     0521AH,#000H
+                        ;$@$C_SOURCE_LINE(511)
+        MOV     0521BH,#000H
+                        ;$@$C_SOURCE_LINE(512)
+        MOV     0521CH,#000H
+                        ;$@$C_SOURCE_LINE(513)
+        MOV     0521DH,#002H
+?EPILOG_0009:
+        RET     
+
+; END OF ?DeInitBootloader
+;; ; 
+; ; void protocol_init (void) {
+; ; 	
+; ; 	#ifdef I2C_protocol
+; ; 	#ifdef SPI_Protocol
+; ; 	#ifdef UART1_Protocol
+; ; 	#ifdef UART2_Protocol
+; ; 	#ifdef UART3_Protocol
+; ; 	/* --------------  Initialize the UART peripheral ---------------- */
+; ; 		
+; ; 		/* Set Rx/Tx for UART3 uses*/
+; ; 	
+; ; 		/* Pull-Up */
+; ;     GPIOD->CR1 |= (u8)0x40;
+; ; 		GPIOC->CR1 |= (u8)0x02;		
+; ; 		
+; ; 		/* UART3 Enable */
+; ; 		UART3->CR1 &= (u8)(~0x20); 
+; ;                  
+; ; 		/* Set 9bit data + Parity Control bit with Even parity */
+; ;     UART3->CR1 |= (u8)  0x14;
+; ; 		
+; ; 		/* UART RXTX enable */
+; ; 		UART3->CR2 |= (u8)  0x0C;
+; ; 		
+; ; 		//Force BR to 9600 
+; ;     UART3->BRR2 = 0x02;
+; ; 		UART3->BRR1 = 0x68;
+; ;   #endif
+; ; }
+
+        RSEG  ?PR??PROTOCOL_INIT?MAIN
+?protocol_init:
+                        ;$@$C_ROUTINE(?protocol_init)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(602)
+        LD      A,#040H
+        OR      A,05012H
+        LD      ?BH,A
+        MOV     05012H,?BH
+                        ;$@$C_SOURCE_LINE(603)
+        LD      A,#002H
+        OR      A,0500DH
+        LD      ?BH,A
+        MOV     0500DH,?BH
+                        ;$@$C_SOURCE_LINE(606)
+        LD      A,#0DFH
+        AND     A,05244H
+        LD      ?BH,A
+        MOV     05244H,?BH
+                        ;$@$C_SOURCE_LINE(609)
+        LD      A,#014H
+        OR      A,05244H
+        LD      ?BH,A
+        MOV     05244H,?BH
+                        ;$@$C_SOURCE_LINE(612)
+        LD      A,#00CH
+        OR      A,05245H
+        LD      ?BH,A
+        MOV     05245H,?BH
+                        ;$@$C_SOURCE_LINE(615)
+        MOV     05243H,#002H
+                        ;$@$C_SOURCE_LINE(616)
+        MOV     05242H,#068H
+?EPILOG_0010:
+        RET     
+
+; END OF ?protocol_init
+;; ; 
+; ; void Transmit(u8 Data){
+; ; 	#ifdef SPI_Protocol
+; ; 	#if defined(UART1_Protocol) || defined(UART2_Protocol) || defined(UART3_Protocol)
+; ;     u8 sr;
+; ; 	#endif
+; ; 	#ifdef I2C_protocol
+; ; 	#ifdef SPI_Protocol
+; ; 	#ifdef UART1_Protocol
+; ; 	#ifdef UART2_Protocol
+; ; 	#ifdef UART3_Protocol
+; ; 	//wait for Tx empty
+; ; 	sr = UART3->SR;
+; ;   while(!(sr & 0x80/*TxNE*/)) sr = UART3->SR;
+; ;   //send data
+; ;    UART3->DR = Data;
+; ;   //wait for transmission complete
+; ;   sr = UART3->SR;
+; ;   while(!(sr & 0x40/*TxNE*/)) sr = UART3->SR;
+; ; 	#endif
+; ; }//Transmit
+
+        RSEG  ?PR??TRANSMIT?MAIN
+?Transmit:
+                        ;$@$C_ROUTINE(?Transmit)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(620)
+        PUSH    A
+        PUSH    A
+                        ;$@$C_SOURCE_LINE(671)
+        LD      A,05240H
+        LD      (001H,SP),A                        ; [ sr ]
+?WHILE_0022:
+                        ;$@$C_SOURCE_LINE(672)
+        CLRW    X
+        LD      A,(001H,SP)                        ; [ sr ]
+        LD      XL,A
+        LDW     ?BH.w,X
+        BTJT    ?BL,#007H,?NXT_0100
+        LDW     X,#?NXT_0100
+        JREQ    ?NXT_0101
+        JRA     ?NXT_0102
+?NXT_0101:
+?NXT_0102:
+        LD      A,05240H
+        LD      (001H,SP),A                        ; [ sr ]
+        JRA     ?WHILE_0022
+?NXT_0100:
+                        ;$@$C_SOURCE_LINE(674)
+        LD      A,(002H,SP)                        ; [ Data ]
+        LD      05241H,A
+                        ;$@$C_SOURCE_LINE(676)
+        LD      A,05240H
+        LD      (001H,SP),A                        ; [ sr ]
+?WHILE_0023:
+                        ;$@$C_SOURCE_LINE(677)
+        LD      A,(001H,SP)                        ; [ sr ]
+        LD      ?BH,A
+        BTJT    ?BH,#006H,?NXT_0103
+        LDW     X,#?NXT_0103
+        JREQ    ?NXT_0104
+        JRA     ?NXT_0105
+?NXT_0104:
+?NXT_0105:
+        LD      A,05240H
+        LD      (001H,SP),A                        ; [ sr ]
+        JRA     ?WHILE_0023
+?NXT_0103:
+?EPILOG_0011:
+        POPW    X
+        RET     
+
+; END OF ?Transmit
+;; ; 
+; ; u8 Receive(u8* ReceivedData){
+; ; 	
+; ; 	#ifdef SPI_Protocol
+; ; 	#if defined(UART1_Protocol) || defined(UART2_Protocol) || defined(UART3_Protocol)
+; ; 		u8 sr;						// working copy of SPI_SR register
+; ; 	#endif
+; ; 	#ifdef I2C_protocol
+; ; 	#ifdef SPI_Protocol
+; ; 	#ifdef UART1_Protocol
+; ; 	#ifdef UART2_Protocol
+; ; 	#ifdef UART3_Protocol
+; ;   //wait for Rx full
+; ; 	sr = UART3->SR;
+; ;   while(!(sr & 0x20 /*RXNE*/)) sr = UART3->SR ;
+; ;   //check if overrun or parity error
+; ; 	if((sr & 0x08/*OR*/)||(sr & 0x01/*PE*/))
+; ;   {
+; ;     //receive data to clear error
+; ;     *ReceivedData = UART3->DR ;
+; ;     //send NACK to host
+; ;     Transmit(NACK);
+; ;     //and return error
+; ;     return 0;
+; ;   }
+; ;   //receive data
+; ;   *ReceivedData = UART3->DR;
+; ;   //and return no error
+; ;   return 1;
+; ; 	
+; ; 	#endif
+; ; }//Receive
+
+        RSEG  ?PR??RECEIVE?MAIN
+?Receive:
+                        ;$@$C_ROUTINE(?Receive)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(681)
+        PUSHW   X
+        PUSH    A
+                        ;$@$C_SOURCE_LINE(776)
+        LD      A,05240H
+        LD      (001H,SP),A                        ; [ sr ]
+?WHILE_0025:
+                        ;$@$C_SOURCE_LINE(777)
+        LD      A,(001H,SP)                        ; [ sr ]
+        LD      ?BH,A
+        BTJT    ?BH,#005H,?NXT_0110
+        LDW     X,#?NXT_0110
+        JREQ    ?NXT_0111
+        JRA     ?NXT_0112
+?NXT_0111:
+?NXT_0112:
+        LD      A,05240H
+        LD      (001H,SP),A                        ; [ sr ]
+        JRA     ?WHILE_0025
+?NXT_0110:
+                        ;$@$C_SOURCE_LINE(779)
+        LD      A,#008H
+        AND     A,(001H,SP)                        ; [ sr ]
+        TNZ     A
+        JRNE    ?LAB_0039
+        LD      A,#001H
+        AND     A,(001H,SP)                        ; [ sr ]
+        TNZ     A
+        JREQ    ?NXT_0113
+?LAB_0039:
+                        ;$@$C_SOURCE_LINE(782)
+        LDW     X,(002H,SP)                        ; [ ReceivedData ]
+        LD      A,05241H
+        LD      (X),A
+                        ;$@$C_SOURCE_LINE(784)
+        LD      A,#01FH
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(786)
+        LD      A,#000H
+        JRA     ?EPILOG_0012
+?NXT_0113:
+                        ;$@$C_SOURCE_LINE(789)
+        LDW     X,(002H,SP)                        ; [ ReceivedData ]
+        LD      A,05241H
+        LD      (X),A
+                        ;$@$C_SOURCE_LINE(791)
+        LD      A,#001H
+?EPILOG_0012:
+        ADD     SP,#003H
+        RET     
+
+; END OF ?Receive
+;; ; 
+; ; u8 Master_ident(u8 IDENT_byte){
+; ; 	u8 master_ident;
+; ; 	Receive(&master_ident);
+; ;   if (master_ident == IDENT_byte) 
+; ; 	{
+; ; 		return 1;	
+; ;   } 
+; ; 	return 0;
+; ; }//Master_ident
+
+        RSEG  ?PR??MASTER_IDENT?MAIN
+?Master_ident:
+                        ;$@$C_ROUTINE(?Master_ident)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(796)
+        PUSH    A
+        PUSH    A
+                        ;$@$C_SOURCE_LINE(798)
+        LDW     X,SP
+        ADDW    X,#00001H
+        CALL    ?Receive
+                        ;$@$C_SOURCE_LINE(799)
+        LD      A,(001H,SP)                        ; [ master_ident ]
+        CP      A,(002H,SP)                        ; [ IDENT_byte ]
+        JRNE    ?NXT_0115
+                        ;$@$C_SOURCE_LINE(801)
+        LD      A,#001H
+        JRA     ?EPILOG_0013
+?NXT_0115:
+                        ;$@$C_SOURCE_LINE(803)
+        LD      A,#000H
+?EPILOG_0013:
+        POPW    X
+        RET     
+
+; END OF ?Master_ident
+;; ; 
+; ; u8 ReceiveAddress(void){
+; ;   u8 result = 1;
+; ;   
+; ;   //receive address (4 bytes : Byte3: MSB , Byte6: LSB)
+; ;   if(!Receive(ReceivedData++))
+; ;     result = 0;
+; ;   if(!Receive(ReceivedData++))
+; ;     result = 0;
+; ;   if(!Receive(ReceivedData++))
+; ;     result = 0;
+; ;   if(!Receive(ReceivedData++))
+; ;     result = 0;
+; ;     
+; ;   //receive checksum (from 4 bytes : Byte3: MSB - Byte6: LSB)
+; ;   if(!Receive(ReceivedData++))
+; ;     result = 0;
+; ;   
+; ;   //check checksum
+; ;   if(*(--ReceivedData) ^ *(--ReceivedData) ^ *(--ReceivedData) ^ *(--ReceivedData) ^ *(--ReceivedData))
+; ;     result = 0;
+; ;   //set back data pointer
+; ;   ReceivedData += 5;
+; ;   
+; ;   //check if address is valid
+; ;   //if(!CheckAddress(*((u32*) &DataBuffer[N_ADDR_4]) ))
+; ;     //result = 0;
+; ;   
+; ;   //if some error occured
+; ;   if (!result)
+; ;     return 0;
+; ;   
+; ;   //confirm correct reception
+; ;   Transmit(ACK);
+; ;   return 1;
+; ; }//ReceiveAddress
+
+        RSEG  ?PR??RECEIVEADDRESS?MAIN
+?ReceiveAddress:
+                        ;$@$C_ROUTINE(?ReceiveAddress)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(806)
+        PUSH    A
+                        ;$@$C_SOURCE_LINE(807)
+        LD      A,#001H
+        LD      (001H,SP),A                        ; [ result ]
+                        ;$@$C_SOURCE_LINE(810)
+        LDW     X,ReceivedData
+        PUSHW   X
+        LDW     X,ReceivedData
+        INCW    X
+        LDW     ReceivedData,X
+        POPW    X
+        CALL    ?Receive
+        TNZ     A
+        JRNE    ?NXT_0124
+                        ;$@$C_SOURCE_LINE(811)
+        LD      A,#000H
+        LD      (001H,SP),A                        ; [ result ]
+?NXT_0124:
+                        ;$@$C_SOURCE_LINE(812)
+        LDW     X,ReceivedData
+        PUSHW   X
+        LDW     X,ReceivedData
+        INCW    X
+        LDW     ReceivedData,X
+        POPW    X
+        CALL    ?Receive
+        TNZ     A
+        JRNE    ?NXT_0125
+                        ;$@$C_SOURCE_LINE(813)
+        LD      A,#000H
+        LD      (001H,SP),A                        ; [ result ]
+?NXT_0125:
+                        ;$@$C_SOURCE_LINE(814)
+        LDW     X,ReceivedData
+        PUSHW   X
+        LDW     X,ReceivedData
+        INCW    X
+        LDW     ReceivedData,X
+        POPW    X
+        CALL    ?Receive
+        TNZ     A
+        JRNE    ?NXT_0126
+                        ;$@$C_SOURCE_LINE(815)
+        LD      A,#000H
+        LD      (001H,SP),A                        ; [ result ]
+?NXT_0126:
+                        ;$@$C_SOURCE_LINE(816)
+        LDW     X,ReceivedData
+        PUSHW   X
+        LDW     X,ReceivedData
+        INCW    X
+        LDW     ReceivedData,X
+        POPW    X
+        CALL    ?Receive
+        TNZ     A
+        JRNE    ?NXT_0127
+                        ;$@$C_SOURCE_LINE(817)
+        LD      A,#000H
+        LD      (001H,SP),A                        ; [ result ]
+?NXT_0127:
+                        ;$@$C_SOURCE_LINE(820)
+        LDW     X,ReceivedData
+        PUSHW   X
+        LDW     X,ReceivedData
+        INCW    X
+        LDW     ReceivedData,X
+        POPW    X
+        CALL    ?Receive
+        TNZ     A
+        JRNE    ?NXT_0128
+                        ;$@$C_SOURCE_LINE(821)
+        LD      A,#000H
+        LD      (001H,SP),A                        ; [ result ]
+?NXT_0128:
+                        ;$@$C_SOURCE_LINE(824)
+        LDW     X,ReceivedData
+        DECW    X
+        LDW     ReceivedData,X
+        LDW     X,ReceivedData
+        CLRW    Y
+        LD      A,(X)
+        LD      YL,A
+        PUSHW   Y
+        LDW     X,ReceivedData
+        DECW    X
+        LDW     ReceivedData,X
+        LDW     X,ReceivedData
+        CLRW    Y
+        LD      A,(X)
+        LD      YL,A
+        PUSHW   Y
+        LDW     X,ReceivedData
+        DECW    X
+        LDW     ReceivedData,X
+        LDW     X,ReceivedData
+        CLRW    Y
+        LD      A,(X)
+        LD      YL,A
+        PUSHW   Y
+        LDW     X,ReceivedData
+        DECW    X
+        LDW     ReceivedData,X
+        LDW     X,ReceivedData
+        CLRW    Y
+        LD      A,(X)
+        LD      YL,A
+        PUSHW   Y
+        LDW     X,ReceivedData
+        DECW    X
+        LDW     ReceivedData,X
+        LDW     X,ReceivedData
+        CLRW    Y
+        LD      A,(X)
+        LD      YL,A
+        LDW     ?BH.w,Y
+        POPW    X
+        LDW     ?CH.w,X
+        LD      A,?CL
+        XOR     A,?BL
+        PUSH    A
+        LD      A,?CH
+        XOR     A,?BH
+        LD      ?BH,A
+        POP     A
+        LD      ?BL,A
+        POPW    X
+        LDW     ?CH.w,X
+        LD      A,?CL
+        XOR     A,?BL
+        PUSH    A
+        LD      A,?CH
+        XOR     A,?BH
+        LD      ?BH,A
+        POP     A
+        LD      ?BL,A
+        POPW    X
+        LDW     ?CH.w,X
+        LD      A,?CL
+        XOR     A,?BL
+        PUSH    A
+        LD      A,?CH
+        XOR     A,?BH
+        LD      ?BH,A
+        POP     A
+        LD      ?BL,A
+        POPW    X
+        LDW     ?CH.w,X
+        LD      A,?CL
+        XOR     A,?BL
+        PUSH    A
+        LD      A,?CH
+        XOR     A,?BH
+        LD      ?BH,A
+        POP     A
+        LD      ?BL,A
+        LDW     X,?BH.w
+        JREQ    ?NXT_0129
+?NXT_0130:
+                        ;$@$C_SOURCE_LINE(825)
+        LD      A,#000H
+        LD      (001H,SP),A                        ; [ result ]
+?NXT_0129:
+                        ;$@$C_SOURCE_LINE(827)
+        LDW     X,ReceivedData
+        ADDW    X,#00005H
+        LDW     ReceivedData,X
+                        ;$@$C_SOURCE_LINE(834)
+        TNZ     (001H,SP)                          ; [ result ]
+        JRNE    ?NXT_0131
+                        ;$@$C_SOURCE_LINE(835)
+        LD      A,#000H
+        JRA     ?EPILOG_0014
+?NXT_0131:
+                        ;$@$C_SOURCE_LINE(838)
+        LD      A,#079H
+        CALL    ?Transmit
+                        ;$@$C_SOURCE_LINE(839)
+        LD      A,#001H
+?EPILOG_0014:
+        ADD     SP,#001H
+        RET     
+
+; END OF ?ReceiveAddress
+;; ; 
+; ; u8 ReceiveCount(u8 max, u8 enablechecksum){
+; ;   bool result = 1;
+; ;   
+; ;   //receive count
+; ;   if(!Receive(ReceivedData))
+; ;     result = 0;
+; ;     
+; ;   //check maximum value
+; ;   if(!((*ReceivedData++) <= max))
+; ;     result = 0;
+; ;  
+; ;  
+; ;  //receive checksum if enabled
+; ;   if (enablechecksum)
+; ;   {
+; ;     //receive checksum
+; ;     if(!Receive(ReceivedData++))
+; ;       result = 0;
+; ;       
+; ;     //check checksum
+; ;     if((*(--ReceivedData) ^ *(--ReceivedData)) != 0xFF)
+; ;       result = 0;
+; ;     //set back data pointer
+; ;     ReceivedData += 2;
+; ;   }
+; ; 	
+; ; 	//confirm correct reception - if required
+; ;   if (enablechecksum)
+; ;     Transmit(ACK);
+; ;   
+; ;   return result;
+; ; }//ReceiveCount
+
+        RSEG  ?PR??RECEIVECOUNT?MAIN
+?ReceiveCount:
+                        ;$@$C_ROUTINE(?ReceiveCount)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(842)
+        PUSH    A
+        PUSHW   X
+                        ;$@$C_SOURCE_LINE(843)
+        LDW     X,#00001H
+        LDW     (001H,SP),X                        ; [ result ]
+                        ;$@$C_SOURCE_LINE(846)
+        LDW     X,ReceivedData
+        CALL    ?Receive
+        TNZ     A
+        JRNE    ?NXT_0138
+                        ;$@$C_SOURCE_LINE(847)
+        LDW     X,#00000H
+        LDW     (001H,SP),X                        ; [ result ]
+?NXT_0138:
+                        ;$@$C_SOURCE_LINE(850)
+        LDW     X,ReceivedData
+        LDW     ?BH.w,X
+        LDW     X,ReceivedData
+        INCW    X
+        LDW     ReceivedData,X
+        LD      A,(003H,SP)                        ; [ max ]
+        CP      A,[?BH.w]
+        JRUGE   ?NXT_0139
+                        ;$@$C_SOURCE_LINE(851)
+        LDW     X,#00000H
+        LDW     (001H,SP),X                        ; [ result ]
+?NXT_0139:
+                        ;$@$C_SOURCE_LINE(855)
+        TNZ     (006H,SP)                          ; [ enablechecksum ]
+        JREQ    ?NXT_0140
+                        ;$@$C_SOURCE_LINE(858)
+        LDW     X,ReceivedData
+        PUSHW   X
+        LDW     X,ReceivedData
+        INCW    X
+        LDW     ReceivedData,X
+        POPW    X
+        CALL    ?Receive
+        TNZ     A
+        JRNE    ?NXT_0141
+                        ;$@$C_SOURCE_LINE(859)
+        LDW     X,#00000H
+        LDW     (001H,SP),X                        ; [ result ]
+?NXT_0141:
+                        ;$@$C_SOURCE_LINE(862)
+        LDW     X,ReceivedData
+        DECW    X
+        LDW     ReceivedData,X
+        LDW     X,ReceivedData
+        CLRW    Y
+        LD      A,(X)
+        LD      YL,A
+        PUSHW   Y
+        LDW     X,ReceivedData
+        DECW    X
+        LDW     ReceivedData,X
+        LDW     X,ReceivedData
+        CLRW    Y
+        LD      A,(X)
+        LD      YL,A
+        LDW     ?BH.w,Y
+        POPW    X
+        LDW     ?CH.w,X
+        LD      A,?CL
+        XOR     A,?BL
+        PUSH    A
+        LD      A,?CH
+        XOR     A,?BH
+        LD      ?BH,A
+        POP     A
+        LD      ?BL,A
+        LDW     X,#000FFH
+        CPW     X,?BH.w
+        JREQ    ?NXT_0142
+                        ;$@$C_SOURCE_LINE(863)
+        LDW     X,#00000H
+        LDW     (001H,SP),X                        ; [ result ]
+?NXT_0142:
+                        ;$@$C_SOURCE_LINE(865)
+        LDW     X,ReceivedData
+        ADDW    X,#00002H
+        LDW     ReceivedData,X
+?NXT_0140:
+                        ;$@$C_SOURCE_LINE(869)
+        TNZ     (006H,SP)                          ; [ enablechecksum ]
+        JREQ    ?NXT_0143
+                        ;$@$C_SOURCE_LINE(870)
+        LD      A,#079H
+        CALL    ?Transmit
+?NXT_0143:
+                        ;$@$C_SOURCE_LINE(872)
+        LD      A,(002H,SP)                        ; [ result + 01H ]
+?EPILOG_0015:
+        ADD     SP,#003H
+        RET     
+
+; END OF ?ReceiveCount
+;; ; 
+; ; void unlock_PROG(void){
+; ;   //Unlock PROG memory
+; ;   FLASH->PUKR = 0x56;
+; ;   FLASH->PUKR = 0xAE;
+; ;   }
+
+        RSEG  ?PR??UNLOCK_PROG?MAIN
+?unlock_PROG:
+                        ;$@$C_ROUTINE(?unlock_PROG)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(877)
+        MOV     05062H,#056H
+                        ;$@$C_SOURCE_LINE(878)
+        MOV     05062H,#0AEH
+?EPILOG_0016:
+        RET     
+
+; END OF ?unlock_PROG
+;; ; 	
+; ; void unlock_DATA(void) {
+; ;  //Unlock DATA memory
+; ; 	FLASH->DUKR = 0xAE; /* Warning: keys are reversed on data memory !!! */
+; ;   FLASH->DUKR = 0x56;
+; ; }
+
+        RSEG  ?PR??UNLOCK_DATA?MAIN
+?unlock_DATA:
+                        ;$@$C_ROUTINE(?unlock_DATA)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(883)
+        MOV     05064H,#0AEH
+                        ;$@$C_SOURCE_LINE(884)
+        MOV     05064H,#056H
+?EPILOG_0017:
+        RET     
+
+; END OF ?unlock_DATA
+;; ; #ifdef _COSMIC_
+; ; 
+; ; #ifdef _IAR_
+; ; 
+; ; #ifdef _RAISONANCE_
+; ; void Mem_ProgramBlock(u16 BlockNum, FLASH_MemType_TypeDef MemType, u8 *Buffer) inram
+; ; #else
+; ; {
+; ;     u16 Count = 0;
+; ;     u32 StartAddress = 0;
+; ;     u16 timeout = (u16)0x6000;
+; ;  
+; ;  /* Set Start address wich refers to mem_type */
+; ;     if (MemType == FLASH_MEMTYPE_PROG)
+; ;     {
+; ;         StartAddress = FLASH_START;
+; ;     }
+; ;     else
+; ;     {
+; ;         StartAddress = EEPROM_START;
+; ;     }
+; ; 
+; ;     /* Point to the first block address */
+; ;     StartAddress = StartAddress + ((u32)BlockNum * BLOCK_SIZE);
+; ; 
+; ;     /* Standard programming mode */ 
+; ;     FLASH->CR2 |= (u8)0x01;
+; ;     FLASH->NCR2 &= (u8)~0x01;
+; ;     
+; ;     /* Copy data bytes from RAM to FLASH memory */
+; ;     for (Count = 0; Count < BLOCK_SIZE; Count++)
+; ;     {
+; ;         *((PointerAttr u8*)StartAddress + Count) = ((u8)(Buffer[Count]));
+; ;     }
+; ; 
+; ;  #if defined (STM8S208) || defined(STM8S207) || defined(STM8S105)
+; ;     if (MemType == FLASH_MEMTYPE_DATA)
+; ;     {
+; ;         /* Waiting until High voltage flag is cleared*/
+; ;         while ((FLASH->IAPSR & 0x40) != 0x00 || (timeout == 0x00))
+; ;         {
+; ;             timeout--;
+; ;         }
+; ;     }
+; ;  #endif /* STM8S208, STM8S207, STM8S105 */
+; ; }
+
+        RSEG  ?PR??MEM_PROGRAMBLOCK?MAIN
+?Mem_ProgramBlock:
+                        ;$@$C_ROUTINE(?Mem_ProgramBlock)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(895)
+        PUSHW   X
+        SUB     SP,#008H
+                        ;$@$C_SOURCE_LINE(900)
+        LDW     X,#00000H
+        LDW     (001H,SP),X                        ; [ Count ]
+                        ;$@$C_SOURCE_LINE(901)
+        CLRW    X
+        LDW     (003H,SP),X                        ; [ StartAddress ]
+        LDW     (005H,SP),X                        ; [ StartAddress + 02H ]
+                        ;$@$C_SOURCE_LINE(902)
+        LDW     X,#06000H
+        LDW     (007H,SP),X                        ; [ timeout ]
+                        ;$@$C_SOURCE_LINE(905)
+        LDW     X,(00DH,SP)                        ; [ MemType ]
+        JRNE    ?ELSE_0084
+                        ;$@$C_SOURCE_LINE(907)
+        LDW     X,#00000H
+        LDW     (003H,SP),X                        ; [ StartAddress ]
+        LDW     X,#08000H
+        LDW     (005H,SP),X                        ; [ StartAddress + 02H ]
+        JRA     ?NXT_0149
+?ELSE_0084:
+                        ;$@$C_SOURCE_LINE(911)
+        LDW     X,#00000H
+        LDW     (003H,SP),X                        ; [ StartAddress ]
+        LDW     X,#04000H
+        LDW     (005H,SP),X                        ; [ StartAddress + 02H ]
+?NXT_0149:
+                        ;$@$C_SOURCE_LINE(915)
+        LDW     X,(005H,SP)                        ; [ StartAddress + 02H ]
+        PUSHW   X
+        LDW     X,(005H,SP)                        ; [ StartAddress ]
+        PUSHW   X
+        CALL    ?C?mv4_pg2sk1
+?DATASTART_0047:
+        DB      080H
+?DATAEND_0047:
+        LDW     X,(011H,SP)                        ; [ BlockNum ]
+        LDW     ?CH,X
+        CLRW    X
+        LDW     ?BH,X
+        CALL    ?C?mulu3232
+        CALL    ?C?add3232
+        LD      A,#002H
+        CALL    ?C?mv4_bc2isa
+                        ;$@$C_SOURCE_LINE(918)
+        LD      A,#001H
+        OR      A,0505BH
+        LD      ?BH,A
+        MOV     0505BH,?BH
+                        ;$@$C_SOURCE_LINE(919)
+        LD      A,#0FEH
+        AND     A,0505CH
+        LD      ?BH,A
+        MOV     0505CH,?BH
+                        ;$@$C_SOURCE_LINE(922)
+        LDW     X,#00000H
+        LDW     (001H,SP),X                        ; [ Count ]
+?FOR_0009:
+                        ;$@$C_SOURCE_LINE(924)
+        LDW     X,(00FH,SP)                        ; [ Buffer ]
+        LDW     ?BH.w,X
+        LDW     X,(001H,SP)                        ; [ Count ]
+        LD      A,([?BH.w],X)
+        PUSH    A
+        LDW     X,(006H,SP)                        ; [ StartAddress + 02H ]
+        LDW     ?CH.w,X
+        LDW     X,(002H,SP)                        ; [ Count ]
+        POP     A
+        LD      ([?CH.w],X),A
+?NXT_0151:
+                        ;$@$C_SOURCE_LINE(922)
+        LDW     X,(001H,SP)                        ; [ Count ]
+        INCW    X
+        LDW     (001H,SP),X                        ; [ Count ]
+        DECW    X
+        LDW     X,#00080H
+        CPW     X,(001H,SP)                        ; [ Count ]
+        JRUGT   ?FOR_0009
+?NXT_0150:
+                        ;$@$C_SOURCE_LINE(928)
+        LDW     X,#00001H
+        CPW     X,(00DH,SP)                        ; [ MemType ]
+        JRNE    ?NXT_0152
+?WHILE_0027:
+                        ;$@$C_SOURCE_LINE(931)
+        LD      A,#040H
+        AND     A,0505FH
+        TNZ     A
+        JRNE    ?LAB_0041
+        LDW     X,(007H,SP)                        ; [ timeout ]
+        JRNE    ?NXT_0153
+?LAB_0041:
+                        ;$@$C_SOURCE_LINE(933)
+        LDW     X,(007H,SP)                        ; [ timeout ]
+        DECW    X
+        LDW     (007H,SP),X                        ; [ timeout ]
+        JRA     ?WHILE_0027
+?NXT_0153:
+?NXT_0152:
+?EPILOG_0018:
+        ADD     SP,#00AH
+        RET     
+
+; END OF ?Mem_ProgramBlock
+;; ; 
+; ; #ifdef _COSMIC_
+; ; 
+; ; void FLASH_ProgramOptionByte(u16 Address, u8 Data){
+; ; 	u8 flash_iapsr;	
+; ;   /* Enable write access to option bytes */
+; ;   FLASH->CR2 |= (u8)0x80;
+; ;   FLASH->NCR2 &= (u8)(~0x80);
+; ; 
+; ;   /* Program option byte and his complement */
+; ;   *((NEAR u8*)Address) = Data;
+; ;   *((NEAR u8*)(Address + 1)) = (u8)(~Data);
+; ; 
+; ; 	#if defined (STM8S208) || defined(STM8S207) || defined(STM8S105)
+; ; 	  flash_iapsr = FLASH->IAPSR ;
+; ; 		while (!(flash_iapsr & 0x41)) flash_iapsr = FLASH->IAPSR ;
+; ; 	#else /*STM8S103, STM8S903*/
+; ; 
+; ;   /* Disable write access to option bytes */
+; ;   FLASH->CR2 &= (u8)(~0x80);
+; ;   FLASH->NCR2 |= (u8)0x80;
+; ; }
+
+        RSEG  ?PR??FLASH_PROGRAMOPTIONBYTE?MAIN
+?FLASH_ProgramOptionByte:
+                        ;$@$C_ROUTINE(?FLASH_ProgramOptionByte)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(943)
+        PUSHW   X
+        PUSH    A
+        PUSH    A
+                        ;$@$C_SOURCE_LINE(946)
+        LD      A,#080H
+        OR      A,0505BH
+        LD      ?BH,A
+        MOV     0505BH,?BH
+                        ;$@$C_SOURCE_LINE(947)
+        LD      A,#07FH
+        AND     A,0505CH
+        LD      ?BH,A
+        MOV     0505CH,?BH
+                        ;$@$C_SOURCE_LINE(950)
+        LDW     X,(003H,SP)                        ; [ Address ]
+        LD      A,(002H,SP)                        ; [ Data ]
+        LD      (X),A
+                        ;$@$C_SOURCE_LINE(951)
+        CLRW    X
+        LD      A,(002H,SP)                        ; [ Data ]
+        LD      XL,A
+        CPLW    X
+        LD      A,XL
+        LDW     X,(003H,SP)                        ; [ Address ]
+        ADDW    X,#00001H
+        LD      (X),A
+                        ;$@$C_SOURCE_LINE(954)
+        LD      A,0505FH
+        LD      (001H,SP),A                        ; [ flash_iapsr ]
+?WHILE_0029:
+                        ;$@$C_SOURCE_LINE(955)
+        LD      A,#041H
+        AND     A,(001H,SP)                        ; [ flash_iapsr ]
+        TNZ     A
+        JRNE    ?NXT_0156
+?NXT_0157:
+        LD      A,0505FH
+        LD      (001H,SP),A                        ; [ flash_iapsr ]
+        JRA     ?WHILE_0029
+?NXT_0156:
+                        ;$@$C_SOURCE_LINE(962)
+        LD      A,#07FH
+        AND     A,0505BH
+        LD      ?BH,A
+        MOV     0505BH,?BH
+                        ;$@$C_SOURCE_LINE(963)
+        LD      A,#080H
+        OR      A,0505CH
+        LD      ?BH,A
+        MOV     0505CH,?BH
+?EPILOG_0019:
+        ADD     SP,#004H
+        RET     
+
+; END OF ?FLASH_ProgramOptionByte
+;; ; 
+; ; 
+; ; u32 CLK_GetClockFreq(void)
+; ; {
+; ; 	uc8 HSIDivFactor[4] = {1, 2, 4, 8}; /* Holds the different HSI Dividor factors */
+; ; 	u32 clockfrequency = 0;
+; ; 	u8 tmp = 0, presc = 0;
+; ; 	tmp = (u8)(CLK->CKDIVR & 0x18);
+; ; 	tmp = (u8)(tmp >> 3);
+; ; 	presc = HSIDivFactor[tmp];
+; ; 	clockfrequency = 16000000 / presc;
+; ; 	return((u32)clockfrequency);
+; ; }
+
+        RSEG  ?PR??CLK_GETCLOCKFREQ?MAIN
+?CLK_GetClockFreq:
+                        ;$@$C_ROUTINE(?CLK_GetClockFreq)
+                        ;$@$C_SOURCE_FILE(..\..\src\main.c)
+                        ;$@$C_SOURCE_LINE(967)
+        SUB     SP,#00AH
+                        ;$@$C_SOURCE_LINE(969)
+        PUSH    #004H
+        LDW     Y,#HIGH(?STR?MAIN?BASE)
+        LDW     X,SP
+        ADDW    X,#00002H
+        CALL    ?C?memcpy
+                        ;$@$C_SOURCE_LINE(970)
+        CLRW    X
+        LDW     (005H,SP),X                        ; [ clockfrequency ]
+        LDW     (007H,SP),X                        ; [ clockfrequency + 02H ]
+                        ;$@$C_SOURCE_LINE(971)
+        LD      A,#000H
+        LD      (009H,SP),A                        ; [ tmp ]
+        LD      A,#000H
+        LD      (00AH,SP),A                        ; [ presc ]
+                        ;$@$C_SOURCE_LINE(972)
+        CLRW    X
+        LD      A,050C6H
+        LD      XL,A
+        LD      A,XL
+        AND     A,#018H
+        PUSH    A
+        LD      A,XH
+        AND     A,#000H
+        LD      ?BH,A
+        POP     A
+        LD      ?BL,A
+        LD      A,?BL
+        LD      (009H,SP),A                        ; [ tmp ]
+                        ;$@$C_SOURCE_LINE(973)
+        CLRW    X
+        LD      A,(009H,SP)                        ; [ tmp ]
+        LD      XL,A
+        SRLW    X
+        SRLW    X
+        SRLW    X
+        LD      A,XL
+        LD      (009H,SP),A                        ; [ tmp ]
+                        ;$@$C_SOURCE_LINE(974)
+        CLRW    X
+        LD      A,(009H,SP)                        ; [ tmp ]
+        LD      XL,A
+        LDW     Y,SP
+        ADDW    Y,#00001H
+        LDW     ?BH.w,Y
+        ADDW    X,?BH.w
+        LD      A,(X)
+        LD      (00AH,SP),A                        ; [ presc ]
+                        ;$@$C_SOURCE_LINE(975)
+        LD      A,(00AH,SP)                        ; [ presc ]
+        CALL    ?C?uchartol
+        CALL    ?C?mv4_bc2sk
+        CALL    ?C?mv4_pg2bc
+?DATASTART_0049:
+        DB      000H
+        DB      0F4H
+        DB      024H
+        DB      000H
+?DATAEND_0049:
+        CALL    ?C?divs3232
+        LD      A,#004H
+        CALL    ?C?mv4_bc2isa
+                        ;$@$C_SOURCE_LINE(976)
+        LD      A,#004H
+        CALL    ?C?mv4_isa2bc
+?EPILOG_0020:
+        ADD     SP,#00AH
+        RET     
+
+; END OF ?CLK_GetClockFreq
+;; ; //**************************************************************************
+; ; 
+; 
+
+         END
