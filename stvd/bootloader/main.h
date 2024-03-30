@@ -44,7 +44,7 @@
 /*********************************************************/
 
 //user application start (user interrupt table address)
-#define MAIN_USER_RESET_ADDR 0x9000ul
+#define MAIN_USER_RESET_ADDR 0x8C00ul
 
 // bootloader enable pin definition
 /* #define BL_ENABLE_PORT  GPIOD */
