@@ -43,23 +43,24 @@ start 00000000 end 00000033 length    51 section .info.
 ...
 ```
 ### Segment Totals
-|Segment|Purpose|
-|-|-|
-|.text|Machine code (or program) section in flash ROM|
-|.const|Constant and literal data in flash ROM|
-|.eeprom|Data stored in EEPROM|
-|.bsct, initialized|(`@tiny`)Initialized data from page0 aka _short range memory_|
-|.bsct, from|...and where the data comes from in flash ROM|
-|.ubsct|(`@tiny`) Uninitialized data in page0|
-|.bit|Bitwise variables (?? but stored where??)
-|.data|(`@near`) Initialized data out of page0 aka _long range memory_ (will be copied to RAM)|
-|.fdata|`@far` large variables|
-|.bss|(`@near`) Uninitialized data out of page0 aka _long range memory_ (will be copied to RAM)|
-|.FLASH_CODE, initialized<br/>aka `-ic` code|Machine code specifically copied from flash ROM to RAM by setting the `-ic` linker option|
-|.FLASH_CODE, from|...and where the machine code comes from in flash|
-|.info|Contains component version and options use to compile and link the program|
-|.init|
-|.debug|Function information etc for use by debuggers|
+|Segment|Resource|Purpose|
+|-|-|-|
+|.text|ROM|Machine code (or program) section in flash ROM|
+|.const|ROM|Constant and literal data in flash ROM|
+|.eeprom|EEPROM|Data stored in EEPROM|
+|.bsct, initialized|RAM|(`@tiny`)Initialized data from page0 aka _short range memory_|
+|.bsct, from|ROM|...and where the data comes from in flash ROM|
+|.ubsct|ROM & RAM|(`@tiny`) Uninitialized data in page0|
+|.bit|ROM & RAM|Bitwise variables (?? but stored where??)
+|.data|ROM & RAM|(`@near`) Initialized data out of page0 aka _long range memory_ (will be copied to RAM)|
+|.fdata|ROM & RAM|`@far` large variables|
+|.bss|ROM & RAM|(`@near`) Uninitialized data out of page0 aka _long range memory_ (will be copied to RAM)|
+|.FLASH_CODE, initialized<br/>aka `-ic` code|RAM|Machine code specifically copied from flash ROM to RAM by setting the `-ic` linker option|
+|.FLASH_CODE, from|ROM|...and where the machine code comes from in flash|
+|.info|Host|Contains component version and options use to compile and link the program|
+|.init|Host|
+|.debug|Host|Function information etc for use by debuggers|
+|.share|ROM & RAM|Do not know!|
 
 #### So What Does This Mean?
 Using the example from above...
