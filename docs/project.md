@@ -1,4 +1,34 @@
 # HC-12-Expanded Project Guide
+> **NOTE** Much of what is below is not longer relevant and will be removed.
+
+## **New** Plan
+ST Microelectronics provides a large amount of useful documentation, application notes and sample code so the current _plan-of-record_ is:
+- Create a custom bootloader as per [AN2659]
+- Use the ST Microelectronics p[Flasher-stm8m] to flash user software via the custom bootloader
+- Create a simple custom application to confirm that a user application can be flashed using the bootloader
+
+Silicon Labs also provide some documentation and example code and the intention is to use this to create the final user application as follows:
+- Use the [Wireless Development Suite (WDS)](SD3) to generate custom configuration for the appropriate receive settings
+- Use the [WDS] samples to create a receiver application
+  - Starting from the _Si446x_StandardPacketRX_ sample.
+- Port the [WDS] sample code (which is targetted at a Silicon Labs EZRadio/ESRadioPro development board) to use the `stm8s`.
+
+Prove that the process above works and receive some real signals!
+
+> The long-term aim is to create a transmitter/receive application but a _receive-only_ application will be created first.
+
+## **New** Development Notes
+- Follow [AN2659]
+- Map the user application to start ROM at 0x8C00
+- Map the user application to start RAM at 0x????
+- Follow the standard layout/usage of the `stm8s` and `4463` chips:
+  - The [HC-12] SET is used to trigger the custom bootloader (pull low)
+  - The standard [stm8s] and [4463] SPI interfaces are used
+  - The standard UART1 interface of the [stm8s] provides the aplication load/update interface
+  - Receive signals are streamed out from the UART1 interface
+  - The [4463] generates a _frame-receive_ interrupt to the [stm8s]
+  - The [4463] provides a `CTS` line to the [stm8s].
+- Following the coding standards and layout of the `stm8s` Standard Peripheral Library.
 
 ## Notes
 - Everything below has been attempted using an [HC-12] v2.3.  However note that there are many cloned [HC-12] boards around, and mine might be one of them!
@@ -136,3 +166,6 @@ Some projects patch the standard [HC-12] firmware but this project will not do t
 [AS179-92LF]: https://www.mouser.co.uk/datasheet/2/472/AS179_92LF_200176J-3365297.pdf
 
 [stm8s-discovery]: https://www.st.com/en/evaluation-tools/stm8s-discovery.html
+
+[AN2659]: https://www.st.com/resource/en/application_note/an2659-stm8-inapplication-programming-iap-using-a-customized-userbootloader-stmicroelectronics.pdf
+[Flasher-stm8s]: https://www.st.com/en/development-tools/flasher-stm8.html
