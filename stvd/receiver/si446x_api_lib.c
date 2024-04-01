@@ -10,8 +10,17 @@
  */
 
 #include "stm8s.h"
+#include "si446x_api_lib.h"
+#include "radio_hal.h"
 
-#if 0
+#if defined(STM8S003) || defined(STM8S105)
+union si446x_cmd_reply_union Si446xCmd;
+uint8_t Pro2Cmd[16];
+
+#ifdef SI446X_PATCH_CMDS
+uint8_t Si446xPatchCommands[][8] = { SI446X_PATCH_CMDS };
+#endif
+#else
 SEGMENT_VARIABLE( Si446xCmd, union si446x_cmd_reply_union, SEG_XDATA );
 SEGMENT_VARIABLE( Pro2Cmd[16], uint8_t, SEG_XDATA );
 
@@ -43,7 +52,7 @@ void si446x_reset(void)
  * This function is used to initialize after power-up the radio chip.
  * Before this function @si446x_reset should be called.
  */
-void si446x_power_up(uint8_t BOOT_OPTIONS, uint8_t XTAL_OPTIONS, U32 XO_FREQ)
+void si446x_power_up(uint8_t BOOT_OPTIONS, uint8_t XTAL_OPTIONS, uint32_t XO_FREQ)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_POWER_UP;
     Pro2Cmd[1] = BOOT_OPTIONS;
@@ -120,11 +129,11 @@ void si446x_part_info(void)
                               Pro2Cmd );
 
     Si446xCmd.PART_INFO.CHIPREV         = Pro2Cmd[0];
-    Si446xCmd.PART_INFO.PART            = ((U16)Pro2Cmd[1] << 8) & 0xFF00;
-    Si446xCmd.PART_INFO.PART           |= (U16)Pro2Cmd[2] & 0x00FF;
+    Si446xCmd.PART_INFO.PART            = ((uint16_t)Pro2Cmd[1] << 8) & 0xFF00;
+    Si446xCmd.PART_INFO.PART           |= (uint16_t)Pro2Cmd[2] & 0x00FF;
     Si446xCmd.PART_INFO.PBUILD          = Pro2Cmd[3];
-    Si446xCmd.PART_INFO.ID              = ((U16)Pro2Cmd[4] << 8) & 0xFF00;
-    Si446xCmd.PART_INFO.ID             |= (U16)Pro2Cmd[5] & 0x00FF;
+    Si446xCmd.PART_INFO.ID              = ((uint16_t)Pro2Cmd[4] << 8) & 0xFF00;
+    Si446xCmd.PART_INFO.ID             |= (uint16_t)Pro2Cmd[5] & 0x00FF;
     Si446xCmd.PART_INFO.CUSTOMER        = Pro2Cmd[6];
     Si446xCmd.PART_INFO.ROMID           = Pro2Cmd[7];
 }
@@ -135,7 +144,7 @@ void si446x_part_info(void)
  * @param CONDITION Start TX condition.
  * @param TX_LEN    Payload length (exclude the PH generated CRC).
  */
-void si446x_start_tx(uint8_t CHANNEL, uint8_t CONDITION, U16 TX_LEN)
+void si446x_start_tx(uint8_t CHANNEL, uint8_t CONDITION, uint16_t TX_LEN)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_START_TX;
     Pro2Cmd[1] = CHANNEL;
@@ -161,7 +170,7 @@ void si446x_start_tx(uint8_t CHANNEL, uint8_t CONDITION, U16 TX_LEN)
  * @param NEXT_STATE2 Next state when a valid packet received.
  * @param NEXT_STATE3 Next state when invalid packet received (e.g. CRC error).
  */
-void si446x_start_rx(uint8_t CHANNEL, uint8_t CONDITION, U16 RX_LEN, uint8_t NEXT_STATE1, uint8_t NEXT_STATE2, uint8_t NEXT_STATE3)
+void si446x_start_rx(uint8_t CHANNEL, uint8_t CONDITION, uint16_t RX_LEN, uint8_t NEXT_STATE1, uint8_t NEXT_STATE2, uint8_t NEXT_STATE3)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_START_RX;
     Pro2Cmd[1] = CHANNEL;
@@ -488,12 +497,12 @@ void si446x_get_adc_reading(uint8_t ADC_EN)
                               SI446X_CMD_REPLY_COUNT_GET_ADC_READING,
                               Pro2Cmd );
 
-    Si446xCmd.GET_ADC_READING.GPIO_ADC         = ((U16)Pro2Cmd[0] << 8) & 0xFF00;
-    Si446xCmd.GET_ADC_READING.GPIO_ADC        |=  (U16)Pro2Cmd[1] & 0x00FF;
-    Si446xCmd.GET_ADC_READING.BATTERY_ADC      = ((U16)Pro2Cmd[2] << 8) & 0xFF00;
-    Si446xCmd.GET_ADC_READING.BATTERY_ADC     |=  (U16)Pro2Cmd[3] & 0x00FF;
-    Si446xCmd.GET_ADC_READING.TEMP_ADC         = ((U16)Pro2Cmd[4] << 8) & 0xFF00;
-    Si446xCmd.GET_ADC_READING.TEMP_ADC        |=  (U16)Pro2Cmd[5] & 0x00FF;
+    Si446xCmd.GET_ADC_READING.GPIO_ADC         = ((uint16_t)Pro2Cmd[0] << 8) & 0xFF00;
+    Si446xCmd.GET_ADC_READING.GPIO_ADC        |=  (uint16_t)Pro2Cmd[1] & 0x00FF;
+    Si446xCmd.GET_ADC_READING.BATTERY_ADC      = ((uint16_t)Pro2Cmd[2] << 8) & 0xFF00;
+    Si446xCmd.GET_ADC_READING.BATTERY_ADC     |=  (uint16_t)Pro2Cmd[3] & 0x00FF;
+    Si446xCmd.GET_ADC_READING.TEMP_ADC         = ((uint16_t)Pro2Cmd[4] << 8) & 0xFF00;
+    Si446xCmd.GET_ADC_READING.TEMP_ADC        |=  (uint16_t)Pro2Cmd[5] & 0x00FF;
 }
 
 /*!
@@ -504,7 +513,7 @@ void si446x_get_adc_reading(uint8_t ADC_EN)
  * @param LEN               Length value.
  * @param DIFF_LEN          Difference length.
  */
-void si446x_get_packet_info(uint8_t FIELD_NUMBER_MASK, U16 LEN, S16 DIFF_LEN )
+void si446x_get_packet_info(uint8_t FIELD_NUMBER_MASK, uint16_t LEN, S16 DIFF_LEN )
 {
     Pro2Cmd[0] = SI446X_CMD_ID_PACKET_INFO;
     Pro2Cmd[1] = FIELD_NUMBER_MASK;
@@ -512,7 +521,7 @@ void si446x_get_packet_info(uint8_t FIELD_NUMBER_MASK, U16 LEN, S16 DIFF_LEN )
     Pro2Cmd[3] = (uint8_t)(LEN);
     // the different of the byte, althrough it is signed, but to command hander
     // it can treat it as unsigned
-    Pro2Cmd[4] = (uint8_t)((U16)DIFF_LEN >> 8);
+    Pro2Cmd[4] = (uint8_t)((uint16_t)DIFF_LEN >> 8);
     Pro2Cmd[5] = (uint8_t)(DIFF_LEN);
 
     radio_comm_SendCmdGetResp( SI446X_CMD_ARG_COUNT_PACKET_INFO,
@@ -520,8 +529,8 @@ void si446x_get_packet_info(uint8_t FIELD_NUMBER_MASK, U16 LEN, S16 DIFF_LEN )
                               SI446X_CMD_REPLY_COUNT_PACKET_INFO,
                               Pro2Cmd );
 
-    Si446xCmd.PACKET_INFO.LENGTH = ((U16)Pro2Cmd[0] << 8) & 0xFF00;
-    Si446xCmd.PACKET_INFO.LENGTH |= (U16)Pro2Cmd[1] & 0x00FF;
+    Si446xCmd.PACKET_INFO.LENGTH = ((uint16_t)Pro2Cmd[0] << 8) & 0xFF00;
+    Si446xCmd.PACKET_INFO.LENGTH |= (uint16_t)Pro2Cmd[1] & 0x00FF;
 }
 
 /*!
@@ -564,8 +573,8 @@ void si446x_get_modem_status( uint8_t MODEM_CLR_PEND )
     Si446xCmd.GET_MODEM_STATUS.LATCH_RSSI   = Pro2Cmd[3];
     Si446xCmd.GET_MODEM_STATUS.ANT1_RSSI    = Pro2Cmd[4];
     Si446xCmd.GET_MODEM_STATUS.ANT2_RSSI    = Pro2Cmd[5];
-    Si446xCmd.GET_MODEM_STATUS.AFC_FREQ_OFFSET =  ((U16)Pro2Cmd[6] << 8) & 0xFF00;
-    Si446xCmd.GET_MODEM_STATUS.AFC_FREQ_OFFSET |= (U16)Pro2Cmd[7] & 0x00FF;
+    Si446xCmd.GET_MODEM_STATUS.AFC_FREQ_OFFSET =  ((uint16_t)Pro2Cmd[6] << 8) & 0xFF00;
+    Si446xCmd.GET_MODEM_STATUS.AFC_FREQ_OFFSET |= (uint16_t)Pro2Cmd[7] & 0x00FF;
 }
 
 /*!
@@ -833,8 +842,8 @@ void si446x_get_modem_status_fast_clear_read( void )
     Si446xCmd.GET_MODEM_STATUS.LATCH_RSSI   = Pro2Cmd[3];
     Si446xCmd.GET_MODEM_STATUS.ANT1_RSSI    = Pro2Cmd[4];
     Si446xCmd.GET_MODEM_STATUS.ANT2_RSSI    = Pro2Cmd[5];
-    Si446xCmd.GET_MODEM_STATUS.AFC_FREQ_OFFSET = ((U16)Pro2Cmd[6] << 8) & 0xFF00;
-    Si446xCmd.GET_MODEM_STATUS.AFC_FREQ_OFFSET |= (U16)Pro2Cmd[7] & 0x00FF;
+    Si446xCmd.GET_MODEM_STATUS.AFC_FREQ_OFFSET = ((uint16_t)Pro2Cmd[6] << 8) & 0xFF00;
+    Si446xCmd.GET_MODEM_STATUS.AFC_FREQ_OFFSET |= (uint16_t)Pro2Cmd[7] & 0x00FF;
 }
 
 /*!

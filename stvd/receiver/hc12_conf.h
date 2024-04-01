@@ -11,4 +11,4 @@
 #define NSEL_GPIOX          GPIOA
 #define NSEL_GPIO_PIN       GPIO_PIN_3
 #define NIRQ_GPIOX          GPIOC
-#define NIRQ_GPIO_PIN       GPIO_PIN4
+#define NIRQ_GPIO_PIN       GPIO_PIN_4

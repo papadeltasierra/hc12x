@@ -37,8 +37,8 @@ extern SEGMENT_VARIABLE(radioCmd[16u], uint8_t, SEG_XDATA);
 
   uint8_t radio_comm_GetResp(uint8_t byteCount, uint8_t* pData);
   void radio_comm_SendCmd(uint8_t byteCount, uint8_t* pData);
-  void radio_comm_ReadData(uint8_t cmd, BIT pollCts, uint8_t byteCount, uint8_t* pData);
-  void radio_comm_WriteData(uint8_t cmd, BIT pollCts, uint8_t byteCount, uint8_t* pData);
+  void radio_comm_ReadData(uint8_t cmd, BitStatus pollCts, uint8_t byteCount, uint8_t* pData);
+  void radio_comm_WriteData(uint8_t cmd, BitStatus pollCts, uint8_t byteCount, uint8_t* pData);
 
 uint8_t radio_comm_PollCTS(void);
 uint8_t radio_comm_SendCmdGetResp(uint8_t cmdByteCount, uint8_t* pCmdData, \

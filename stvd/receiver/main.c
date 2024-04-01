@@ -17,15 +17,17 @@
 #include "stm8s.h"
 #include "stm8s_uart_mapping.h"
 #include "hc12_conf.h"
+#include "radio.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
-?? static void GPIO_Config(void);
-?? static void CLK_Config(void);
+static void CLK_Config(void);
+static void GPIO_Config(void);
 static void UART_Config(void);
+static void SPI_Config(void);
 void Delay(uint32_t nCount);
 /* Private functions ---------------------------------------------------------*/
 
@@ -123,7 +125,7 @@ void DemoApp_Pollhandler()
   // Check if radio packet received
   if (TRUE == gRadio_CheckReceived())
   {
-#if defined (STM8S0003) || defined(STM8S105)
+#if defined (STM8S003) || defined(STM8S105)
     // Just stream the data out over the UART.
 #else
     // Check if the radio packet contains "BUTTON" string
@@ -209,8 +211,8 @@ void DemoApp_Pollhandler()
       vHmi_ChangeLedState(eHmi_Led4_c, eHmi_LedBlinkOnce_c);
       break;
     }
-  }
 #endif
+  }
 }
 
 /**
@@ -222,7 +224,7 @@ void DemoApp_Pollhandler()
 void vInitializeHW()
 {
   // Initialize the MCU peripherals
-  !!PDS: Here
+  // !!PDS: Here
   vPlf_McuInit();
 
 #if ! defined(STM8S003) && !defined(STM8S105)
@@ -230,15 +232,15 @@ void vInitializeHW()
   vCio_InitIO();
 #endif
 
-  !!PDS: what is this for?
+  // !!PDS: what is this for?
   // Start Timer2 peripheral with overflow interrupt
-  vTmr_StartTmr2(eTmr_SysClkDiv12_c, wwTmr_Tmr2Periode.U16, TRUE, bTmr_TxXCLK_00_c);
+  // vTmr_StartTmr2(eTmr_SysClkDiv12_c, wwTmr_Tmr2Periode.uint16_t, TRUE, bTmr_TxXCLK_00_c);
 
   // Initialize the Radio
   vRadio_Init();
 
   // Enable configured interrupts
-  mIsr_EnableAllIt();
+  // mIsr_EnableAllIt();
 }
 
 /** \fn void MCU_Init(void)
@@ -252,10 +254,10 @@ void vInitializeHW()
 void vPlf_McuInit(void)
 {
 #if defined(STM8S003) || defined(STM8S105)
-  UART_Config();
+  UART(Config());
 
 #else
-  U16 wDelay = 0xFFFF;
+  uint16_t wDelay = 0xFFFF;
 
   /* disable watchdog */
   PCA0MD &= (~M_WDTE);

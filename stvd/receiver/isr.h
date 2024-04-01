@@ -38,7 +38,7 @@ INTERRUPT_PROTO(vIsr_PcaTimerIsr, INTERRUPT_PCA0);
 /*                          External variables                            */
 /*------------------------------------------------------------------------*/
 
-extern volatile BIT wIsr_Timer2Tick;
+extern volatile BitStatus wIsr_Timer2Tick;
 
 
 #endif /* ISR_H_ */

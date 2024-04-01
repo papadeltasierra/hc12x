@@ -14,7 +14,7 @@ Toolset=STM8 Cosmic
 
 [Config.0]
 ConfigName=Debug
-Target=receiver.elf
+Target=$(ProjectSFile).elf
 OutputFolder=Debug
 Debug=$(TargetFName)
 
@@ -54,7 +54,7 @@ Settings.1.7=Root.Config.1.Settings.7
 Settings.1.8=Root.Config.1.Settings.8
 
 [Root.Config.0.Settings.0]
-String.6.0=2024,3,31,16,8,5
+String.6.0=2024,4,1,16,52,3
 String.100.0=ST Assembler Linker
 String.100.1=ST7 Cosmic
 String.100.2=STM8 Cosmic
@@ -66,14 +66,14 @@ String.103.0=
 String.104.0=Hstm8
 String.105.0=Lib
 String.106.0=Debug
-String.107.0=receiver.elf
+String.107.0=$(ProjectSFile).elf
 Int.108=0
 
 [Root.Config.0.Settings.1]
 String.6.0=2024,3,31,16,8,5
 String.100.0=$(TargetFName)
 String.101.0=
-String.103.0=.\;
+String.103.0=.\;..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc;
 
 [Root.Config.0.Settings.2]
 String.2.0=
@@ -82,10 +82,10 @@ String.100.0=STM8S003F3P
 
 [Root.Config.0.Settings.3]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -customDbg -customDebCompat -customOpt-no -customLst -l +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
+String.3.0=cxstm8 +mods0 -customUser+split -customDebCompat -customOpt-no -customC-pp -customLst -l -dSTM8S003 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
-String.6.0=2024,3,31,16,8,5
+String.6.0=2024,4,1,16,52,36
 
 [Root.Config.0.Settings.4]
 String.2.0=Assembling $(InputFile)...
@@ -97,29 +97,32 @@ String.6.0=2024,3,31,16,8,5
 [Root.Config.0.Settings.5]
 String.2.0=Running Pre-Link step
 String.6.0=2024,3,31,16,8,5
+String.8.0=
 
 [Root.Config.0.Settings.6]
 String.2.0=Running Linker
-String.3.0=clnk -customMapFile -customMapFile-m $(OutputPath)$(TargetSName).map -fakeRunConv  -fakeInteger  -fakeSemiAutoGen  $(ToolsetLibOpts)  -o $(OutputPath)$(TargetSName).sm8 -fakeOutFile$(ProjectSFile).elf -customCfgFile $(OutputPath)$(TargetSName).lkf -fakeVectFilestm8_interrupt_vector.c    -fakeStartupcrtsi0.sm8 
-String.3.1=cvdwarf $(OutputPath)$(TargetSName).sm8 -fakeVectAddr0x8000
+String.3.0=clnk $(ToolsetLibOpts) -o $(OutputPath)$(TargetSName).sm8 -fakeInteger -fakeOutFile$(ProjectSFile).elf -fakeRunConv -fakeStartupcrtsi0.sm8 -fakeSemiAutoGen -fakeVectFilestm8_interrupt_vector.c -fakeVectAddr0x8000 -customMapFile -customMapFile-m$(OutputPath)$(TargetSName).map -customMapAddress -customCfgFile$(OutputPath)$(TargetSName).lkf 
+String.3.1=cvdwarf $(OutputPath)$(TargetSName).sm8
 String.4.0=$(OutputPath)$(TargetFName)
-String.5.0=$(OutputPath)$(TargetSName).map $(OutputPath)$(TargetSName).st7 $(OutputPath)$(TargetSName).s19
-String.6.0=2024,3,31,16,8,5
+String.5.0=$(OutputPath)$(ProjectSFile).elf $(OutputPath)$(TargetSName).map
+String.6.0=2024,4,1,16,52,3
+String.100.0=
 String.101.0=crtsi.st7
-String.102.0=+seg .const -b 0x8080 -m 0x1f80  -n .const -it 
-String.102.1=+seg .text -a .const  -n .text 
-String.102.2=+seg .eeprom -b 0x4000 -m 0x80  -n .eeprom 
-String.102.3=+seg .bsct -b 0x0 -m 0x100  -n .bsct 
-String.102.4=+seg .ubsct -a .bsct  -n .ubsct 
-String.102.5=+seg .bit -a .ubsct  -n .bit -id 
-String.102.6=+seg .share -a .bit  -n .share -is 
-String.102.7=+seg .data -b 0x100 -m 0x100  -n .data 
-String.102.8=+seg .bss -a .data  -n .bss 
+String.102.0=+seg .const -b 0x8080 -m 0x1f80 -n .const -it -k
+String.102.1=+seg .text -a .const -n .text
+String.102.2=+seg .eeprom -b 0x4000 -m 0x80 -n .eeprom
+String.102.3=+seg .bsct -b 0x0 -m 0x100 -n .bsct
+String.102.4=+seg .ubsct -a .bsct -n .ubsct
+String.102.5=+seg .bit -a .ubsct -n .bit -id
+String.102.6=+seg .share -a .bit -n .share -is
+String.102.7=+seg .data -b 0x100 -m 0x100 -n .data
+String.102.8=+seg .bss -a .data -n .bss
 String.103.0=Code,Constants[0x8080-0x9fff]=.const,.text
 String.103.1=Eeprom[0x4000-0x407f]=.eeprom
 String.103.2=Zero Page[0x0-0xff]=.bsct,.ubsct,.bit,.share
 String.103.3=Ram[0x100-0x1ff]=.data,.bss
 String.104.0=0x3ff
+String.105.0=libis0.sm8;libm0.sm8
 Int.0=0
 Int.1=0
 
@@ -152,7 +155,7 @@ Int.108=0
 String.6.0=2024,3,31,16,8,5
 String.100.0=$(TargetFName)
 String.101.0=
-String.103.0=.\;
+String.103.0=.\;..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc;
 
 [Root.Config.1.Settings.2]
 String.2.0=
@@ -161,7 +164,7 @@ String.100.0=STM8S003F3P
 
 [Root.Config.1.Settings.3]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
+String.3.0=cxstm8 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc"  +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2024,3,31,16,8,5
@@ -179,7 +182,7 @@ String.6.0=2024,3,31,16,8,5
 
 [Root.Config.1.Settings.6]
 String.2.0=Running Linker
-String.3.0=clnk -fakeRunConv  -fakeInteger  -fakeSemiAutoGen  $(ToolsetLibOpts)  -o $(OutputPath)$(TargetSName).sm8 -fakeOutFile$(ProjectSFile).elf -customCfgFile $(OutputPath)$(TargetSName).lkf -fakeVectFilestm8_interrupt_vector.c    -fakeStartupcrtsi0.sm8 
+String.3.0=clnk -fakeRunConv -fakeInteger -fakeSemiAutoGen $(ToolsetLibOpts) -o $(OutputPath)$(TargetSName).sm8 -fakeOutFile$(ProjectSFile).elf -customCfgFile $(OutputPath)$(TargetSName).lkf -fakeVectFilestm8_interrupt_vector.c -fakeStartupcrtsi0.sm8 
 String.3.1=cvdwarf $(OutputPath)$(TargetSName).sm8 -fakeVectAddr0x8000
 String.4.0=$(OutputPath)$(TargetFName)
 String.5.0=$(OutputPath)$(TargetSName).map $(OutputPath)$(TargetSName).st7 $(OutputPath)$(TargetSName).s19
@@ -239,10 +242,10 @@ Int.1=0
 
 [Root.Source Files.Config.0.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -customDbg -customDebCompat -customOpt-no -customLst -l +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
+String.3.0=cxstm8 +mods0 -customUser+split -customDebCompat -customOpt-no -customC-pp -customLst -l -dSTM8S003 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
-String.6.0=2024,3,31,16,8,5
+String.6.0=2024,4,1,16,52,36
 
 [Root.Source Files.Config.0.Settings.2]
 String.2.0=Assembling $(InputFile)...
@@ -266,7 +269,7 @@ Int.1=0
 
 [Root.Source Files.Config.1.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
+String.3.0=cxstm8 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc"  +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2024,3,31,16,8,5
@@ -288,6 +291,31 @@ String.6.0=2024,3,31,16,8,5
 [Root.Source Files.main.c]
 ElemType=File
 PathName=main.c
+Next=Root.Source Files.radio.c
+
+[Root.Source Files.radio.c]
+ElemType=File
+PathName=radio.c
+Next=Root.Source Files.radio_comm.c
+
+[Root.Source Files.radio_comm.c]
+ElemType=File
+PathName=radio_comm.c
+Next=Root.Source Files.radio_hal.c
+
+[Root.Source Files.radio_hal.c]
+ElemType=File
+PathName=radio_hal.c
+Next=Root.Source Files.sample_code_func.c
+
+[Root.Source Files.sample_code_func.c]
+ElemType=File
+PathName=sample_code_func.c
+Next=Root.Source Files.si446x_api_lib.c
+
+[Root.Source Files.si446x_api_lib.c]
+ElemType=File
+PathName=si446x_api_lib.c
 Next=Root.Source Files.stm8_interrupt_vector.c
 
 [Root.Source Files.stm8_interrupt_vector.c]
@@ -297,6 +325,7 @@ PathName=stm8_interrupt_vector.c
 [Root.Include Files]
 ElemType=Folder
 PathName=Include Files
+Child=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h
 Config.0=Root.Include Files.Config.0
 Config.1=Root.Include Files.Config.1
 
@@ -320,10 +349,10 @@ Int.1=0
 
 [Root.Include Files.Config.0.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -customDbg -customDebCompat -customOpt-no -customLst -l +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
+String.3.0=cxstm8 +mods0 -customUser+split -customDebCompat -customOpt-no -customC-pp -customLst -l -dSTM8S003 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
-String.6.0=2024,3,31,16,8,5
+String.6.0=2024,4,1,16,52,36
 
 [Root.Include Files.Config.0.Settings.2]
 String.2.0=Assembling $(InputFile)...
@@ -347,7 +376,7 @@ Int.1=0
 
 [Root.Include Files.Config.1.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
+String.3.0=cxstm8 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc"  +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2024,3,31,16,8,5
@@ -365,3 +394,182 @@ String.3.0=
 String.4.0=
 String.5.0=
 String.6.0=2024,3,31,16,8,5
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_adc1.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_adc1.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_adc1.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_adc2.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_adc2.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_adc2.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_awu.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_awu.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_awu.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_beep.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_beep.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_beep.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_can.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_can.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_can.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_clk.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_clk.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_clk.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_exti.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_exti.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_exti.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_flash.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_flash.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_flash.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_gpio.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_gpio.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_gpio.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_i2c.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_i2c.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_i2c.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_itc.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_itc.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_itc.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_iwdg.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_iwdg.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_iwdg.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_rst.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_rst.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_rst.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_spi.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_spi.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_spi.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim1.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim1.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim1.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim2.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim2.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim2.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim3.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim3.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim3.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim4.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim4.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim4.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim5.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim5.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim5.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim6.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim6.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim6.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart1.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart1.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart1.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart2.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart2.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart2.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart3.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart3.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart3.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart4.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart4.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart4.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_wwdg.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_wwdg.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_wwdg.h
+Next=Root.Include Files.application_defs.h
+
+[Root.Include Files.application_defs.h]
+ElemType=File
+PathName=application_defs.h
+Next=Root.Include Files.hc12_conf.h
+
+[Root.Include Files.hc12_conf.h]
+ElemType=File
+PathName=hc12_conf.h
+Next=Root.Include Files.isr.h
+
+[Root.Include Files.isr.h]
+ElemType=File
+PathName=isr.h
+Next=Root.Include Files.radio.h
+
+[Root.Include Files.radio.h]
+ElemType=File
+PathName=radio.h
+Next=Root.Include Files.radio_comm.h
+
+[Root.Include Files.radio_comm.h]
+ElemType=File
+PathName=radio_comm.h
+Next=Root.Include Files.radio_config.h
+
+[Root.Include Files.radio_config.h]
+ElemType=File
+PathName=radio_config.h
+Next=Root.Include Files.radio_hal.h
+
+[Root.Include Files.radio_hal.h]
+ElemType=File
+PathName=radio_hal.h
+Next=Root.Include Files.sample_code_func.h
+
+[Root.Include Files.sample_code_func.h]
+ElemType=File
+PathName=sample_code_func.h
+Next=Root.Include Files.si446x_api_lib.h
+
+[Root.Include Files.si446x_api_lib.h]
+ElemType=File
+PathName=si446x_api_lib.h
+Next=Root.Include Files.stm8s_uart_mapping.h
+
+[Root.Include Files.stm8s_uart_mapping.h]
+ElemType=File
+PathName=stm8s_uart_mapping.h

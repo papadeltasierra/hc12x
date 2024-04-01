@@ -34,7 +34,7 @@ void radio_hal_DeassertShutdown(void);
 #endif
 void radio_hal_ClearNsel(void);
 void radio_hal_SetNsel(void);
-BIT radio_hal_NirqLevel(void);
+BitStatus radio_hal_NirqLevel(void);
 
 void radio_hal_SpiWriteByte(uint8_t byteToWrite);
 uint8_t radio_hal_SpiReadByte(void);
@@ -44,10 +44,10 @@ void radio_hal_SpiReadData(uint8_t byteCount, uint8_t* pData);
 
 #if 0
 #ifdef DRIVERS_EXTENDED_SUPPORT
-  BIT radio_hal_Gpio0Level(void);
-  BIT radio_hal_Gpio1Level(void);
-  BIT radio_hal_Gpio2Level(void);
-  BIT radio_hal_Gpio3Level(void);
+  BitStatus radio_hal_Gpio0Level(void);
+  BitStatus radio_hal_Gpio1Level(void);
+  BitStatus radio_hal_Gpio2Level(void);
+  BitStatus radio_hal_Gpio3Level(void);
 #endif
 #endif
 

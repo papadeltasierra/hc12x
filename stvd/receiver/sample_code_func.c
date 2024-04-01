@@ -27,7 +27,7 @@
     void vSampleCode_ShowPbOnBuzzer(void)
     {
       SEGMENT_VARIABLE(boPbPushTrack, uint8_t , SEG_DATA);
-      SEGMENT_VARIABLE(woPbPushTime, U16 , SEG_DATA);
+      SEGMENT_VARIABLE(woPbPushTime, uint16_t , SEG_DATA);
       SEGMENT_VARIABLE(bPbLedCnt, uint8_t , SEG_DATA);
 
       gHmi_PbIsPushed(&boPbPushTrack, &woPbPushTime);
@@ -53,7 +53,7 @@
  *
  * @return  None.
  */
-BIT gSampleCode_StringCompare(uint8_t* pbiPacketContent, uint8_t* pbiString, uint8_t lenght)
+BitStatus gSampleCode_StringCompare(uint8_t* pbiPacketContent, uint8_t* pbiString, uint8_t lenght)
 {
   while ((*pbiPacketContent++ == *pbiString++) && (lenght > 0u))
   {

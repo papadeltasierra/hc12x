@@ -13,7 +13,10 @@
                  *              I N C L U D E              *
                  * ======================================= */
 
-#include "stm8s"
+#include "stm8s.h"
+#include "stm8s_gpio.h"
+#include "stm8s_spi.h"
+#include "hc12_conf.h"
 
 
                 /* ======================================= *
@@ -50,7 +53,6 @@ void radio_hal_DeassertShutdown(void)
   PWRDN = 0;
 #endif
 }
-#endif
 
 void radio_hal_ClearNsel(void)
 {
@@ -62,9 +64,9 @@ void radio_hal_SetNsel(void)
     GPIO_WriteHigh(NSEL_GPIOX, NSEL_GPIO_PIN);
 }
 
-BIT radio_hal_NirqLevel(void)
+BitStatus radio_hal_NirqLevel(void)
 {
-    return GPIO_ReadInputPin(NIQR_GPIOX, NIRQ_GPIO_PIN)
+    return GPIO_ReadInputPin(NIRQ_GPIOX, NIRQ_GPIO_PIN);
 }
 
 void radio_hal_SpiWriteByte(uint8_t byteToWrite)
@@ -89,9 +91,9 @@ void radio_hal_SpiReadData(uint8_t byteCount, uint8_t* pData)
 
 #if 0
 #ifdef RADIO_DRIVER_EXTENDED_SUPPORT
-BIT radio_hal_Gpio0Level(void)
+BitStatus radio_hal_Gpio0Level(void)
 {
-  BIT retVal = FALSE;
+  BitStatus retVal = FALSE;
 
 #ifdef SILABS_PLATFORM_DKMB
   retVal = FALSE;
@@ -115,9 +117,9 @@ BIT radio_hal_Gpio0Level(void)
   return retVal;
 }
 
-BIT radio_hal_Gpio1Level(void)
+BitStatus radio_hal_Gpio1Level(void)
 {
-  BIT retVal = FALSE;
+  BitStatus retVal = FALSE;
 
 #ifdef SILABS_PLATFORM_DKMB
   retVal = FSK_CLK_OUT;
@@ -138,9 +140,9 @@ BIT radio_hal_Gpio1Level(void)
   return retVal;
 }
 
-BIT radio_hal_Gpio2Level(void)
+BitStatus radio_hal_Gpio2Level(void)
 {
-  BIT retVal = FALSE;
+  BitStatus retVal = FALSE;
 
 #ifdef SILABS_PLATFORM_DKMB
   retVal = DATA_NFFS;
@@ -161,9 +163,9 @@ BIT radio_hal_Gpio2Level(void)
   return retVal;
 }
 
-BIT radio_hal_Gpio3Level(void)
+BitStatus radio_hal_Gpio3Level(void)
 {
-  BIT retVal = FALSE;
+  BitStatus retVal = FALSE;
 
 #if (defined SILABS_PLATFORM_RFSTICK) || (defined SILABS_PLATFORM_LCDBB) || (defined SILABS_PLATFORM_WMB930)
   retVal = RF_GPIO3;

@@ -8,14 +8,14 @@
  */
 
 
-#include "..\bsp.h"
+#include "stm8s.h"
 
 
 /*------------------------------------------------------------------------*/
 /*                          Global variables                              */
 /*------------------------------------------------------------------------*/
 
-volatile BIT wIsr_Timer2Tick; /**< Interrupt flag of a ms */
+volatile BitStatus wIsr_Timer2Tick; /**< Interrupt flag of a ms */
 
 
 /*------------------------------------------------------------------------*/

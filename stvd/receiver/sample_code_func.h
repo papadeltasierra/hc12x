@@ -31,7 +31,7 @@
 #endif
 
 #if ((defined SILABS_PLATFORM_COMPONENT_PB) && (defined SILABS_PLATFORM_COMPONENT_LED))
-BIT gSampleCode_StringCompare(uint8_t* pbiPacketContent, uint8_t* pbiString, uint8_t lenght);
+BitStatus gSampleCode_StringCompare(uint8_t* pbiPacketContent, uint8_t* pbiString, uint8_t lenght);
 #endif
 
 #endif /* SAMPLE_CODE_FUNC_H_ */

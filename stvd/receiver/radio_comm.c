@@ -24,7 +24,7 @@
                  *     G L O B A L   V A R I A B L E S     *
                  * ======================================= */
 
-BIT ctsWentHigh = 0;
+BitStatus ctsWentHigh = 0;
 
                 /* ======================================= *
                  *      L O C A L   F U N C T I O N S      *
@@ -45,7 +45,7 @@ BIT ctsWentHigh = 0;
 uint8_t radio_comm_GetResp(uint8_t byteCount, uint8_t* pData)
 {
   SEGMENT_VARIABLE(ctsVal = 0u, uint8_t, SEG_DATA);
-  SEGMENT_VARIABLE(errCnt = RADIO_CTS_TIMEOUT, U16, SEG_DATA);
+  SEGMENT_VARIABLE(errCnt = RADIO_CTS_TIMEOUT, uint16_t, SEG_DATA);
 
   while (errCnt != 0)      //wait until radio IC is ready with the data
   {
@@ -110,7 +110,7 @@ void radio_comm_SendCmd(uint8_t byteCount, uint8_t* pData)
  * @param byteCount     Number of bytes to get from the radio chip.
  * @param pData         Pointer to where to put the data.
  */
-void radio_comm_ReadData(uint8_t cmd, BIT pollCts, uint8_t byteCount, uint8_t* pData)
+void radio_comm_ReadData(uint8_t cmd, BitStatus pollCts, uint8_t byteCount, uint8_t* pData)
 {
     if(pollCts)
     {
@@ -135,7 +135,7 @@ void radio_comm_ReadData(uint8_t cmd, BIT pollCts, uint8_t byteCount, uint8_t* p
  * @param byteCount     Number of bytes to get from the radio chip
  * @param pData         Pointer to where to put the data
  */
-void radio_comm_WriteData(uint8_t cmd, BIT pollCts, uint8_t byteCount, uint8_t* pData)
+void radio_comm_WriteData(uint8_t cmd, BitStatus pollCts, uint8_t byteCount, uint8_t* pData)
 {
     if(pollCts)
     {

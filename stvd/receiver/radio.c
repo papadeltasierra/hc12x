@@ -7,7 +7,10 @@
  * @n http://www.silabs.com
  */
 
-#include "..\bsp.h"
+#include "stm8s.h"
+#include "radio.h"
+#include "radio_config.h"
+#incuklde "si446x_api_lib.h"
 
 /*****************************************************************************
  *  Local Macros & Definitions
@@ -16,6 +19,16 @@
 /*****************************************************************************
  *  Global Variables
  *****************************************************************************/
+#if defined(STM8S003) || defined(STM8S105) 
+uint8_t Radio_Configuration_Data_Array[] = RADIO_CONFIGURATION_DATA_ARRAY;
+
+const tRadioConfiguration RadioConfiguration = RADIO_CONFIGURATION_DATA;
+
+const tRadioConfiguration *pRadioConfiguration = &RadioConfiguration;
+
+
+uint8_t fixRadioPacket[RADIO_MAX_PACKET_LENGTH];
+#else
 const SEGMENT_VARIABLE(Radio_Configuration_Data_Array[], uint8_t, SEG_CODE) = \
               RADIO_CONFIGURATION_DATA_ARRAY;
 
@@ -27,7 +40,7 @@ const SEGMENT_VARIABLE_SEGMENT_POINTER(pRadioConfiguration, tRadioConfiguration,
 
 
 SEGMENT_VARIABLE(fixRadioPacket[RADIO_MAX_PACKET_LENGTH], uint8_t, SEG_XDATA);
-
+#endif
 /*****************************************************************************
  *  Local Function Declarations
  *****************************************************************************/
@@ -41,7 +54,12 @@ void vRadio_PowerUp(void);
  */
 void vRadio_PowerUp(void)
 {
-  SEGMENT_VARIABLE(wDelay,  U16, SEG_XDATA) = 0u;
+#if defined (STM8S003) || defined(STM8S105)
+  uint16_t wDelay = 0u;
+#else	
+	// !!PDS: Trying to make these global not stack??
+  SEGMENT_VARIABLE(wDelay,  uint16_t, SEG_XDATA) = 0u;
+#endif	
 
   /* Hardware reset the chip */
   si446x_reset();
@@ -60,7 +78,7 @@ void vRadio_PowerUp(void)
  */
 void vRadio_Init(void)
 {
-  U16 wDelay;
+  uint16_t wDelay;
 
   /* Power Up the radio chip */
   vRadio_PowerUp();
@@ -87,7 +105,7 @@ void vRadio_Init(void)
  *  @note
  *
  */
-BIT gRadio_CheckReceived(void)
+BitStatus gRadio_CheckReceived(void)
 {
   if (RF_NIRQ == FALSE)
   {
