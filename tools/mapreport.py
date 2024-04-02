@@ -18,8 +18,8 @@ RGX_SEGDATA = re.compile(
 with open(sys.argv[1], "r") as mapfile:
     mapdata = mapfile.read()
 
-ROM_SEGMENTS = [".text", ".const", ".bsct", ".init"]
-RAM_SEGMENTS = [".ubsct", ".bit", ".data", ".bsct", ".bss", ".share"]
+ROM_SEGMENTS = [".text", ".const", ".init"]
+COPY_ROM_TO_RAM_SEGMENTS = [".ubsct", ".bit", ".data", ".bsct", ".bss", ".share"]
 EEPROM_SEGMENTS = [".eeprom"]
 HOST_SEGMENTS = [".debug", ".info."]
 
@@ -62,16 +62,15 @@ for key, segValue in segmap.items():
         rom += segValue[LENGTH]
         romMin = min(romMin, segValue[START])
         romMax = max(romMax, segValue[END])
-    elif key in RAM_SEGMENTS:
-        ram += segValue[LENGTH]
-        ramMin = min(ramMin, segValue[START])
-        ramMax = max(ramMax, segValue[END])
+    elif key in COPY_ROM_TO_RAM_SEGMENTS:
+        if segValue[LENGTH] != 0:
+            print("Segment expected to have zero length: %s, %d" % (key, segment[LENGTH]))
     elif key in EEPROM_SEGMENTS:
         eeprom += segValue[LENGTH]
         eepromMin = min(eepromMin, segValue[START])
         eepromMax = max(eepromMax, segValue[END])
     elif key not in HOST_SEGMENTS:
-        print("Unexpected segment: %s: %s" % (key, segValue[LENGTH]))
+        print("Unexpected segment: %s: %d" % (key, segValue[LENGTH]))
 
 print("Resource: start     end      length  waste")
 print("ROM:      %8.8X, %8.8X, %5d, %5d" % (romMin, romMax, rom, (romMax - romMin - rom)))
