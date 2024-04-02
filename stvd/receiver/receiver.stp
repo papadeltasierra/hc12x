@@ -73,7 +73,7 @@ Int.108=0
 String.6.0=2024,3,31,16,8,5
 String.100.0=$(TargetFName)
 String.101.0=
-String.103.0=.\;..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc;
+String.103.0=.\;..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc;..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template;..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src;
 
 [Root.Config.0.Settings.2]
 String.2.0=
@@ -82,10 +82,10 @@ String.100.0=STM8S003F3P
 
 [Root.Config.0.Settings.3]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 +mods0 -customUser+split -customDebCompat -customOpt-no -customC-pp -customLst -l -dSTM8S003 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 +mods0 -customUser+split -customDebCompat -customOpt-no -customC-pp -customLst -l -dSTM8S003 -dRADIO_DRIVER_EXTENDED_SUPPORT -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template" -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
-String.6.0=2024,4,1,16,52,36
+String.6.0=2024,4,2,18,43,3
 
 [Root.Config.0.Settings.4]
 String.2.0=Assembling $(InputFile)...
@@ -155,7 +155,7 @@ Int.108=0
 String.6.0=2024,3,31,16,8,5
 String.100.0=$(TargetFName)
 String.101.0=
-String.103.0=.\;..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc;
+String.103.0=.\;..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc;..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template;..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src;
 
 [Root.Config.1.Settings.2]
 String.2.0=
@@ -164,7 +164,7 @@ String.100.0=STM8S003F3P
 
 [Root.Config.1.Settings.3]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc"  +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
+String.3.0=cxstm8 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template"  -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc"  +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2024,3,31,16,8,5
@@ -217,7 +217,7 @@ String.6.0=2024,3,31,16,8,5
 [Root.Source Files]
 ElemType=Folder
 PathName=Source Files
-Child=Root.Source Files.main.c
+Child=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_clk.c
 Next=Root.Include Files
 Config.0=Root.Source Files.Config.0
 Config.1=Root.Source Files.Config.1
@@ -242,10 +242,10 @@ Int.1=0
 
 [Root.Source Files.Config.0.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 +mods0 -customUser+split -customDebCompat -customOpt-no -customC-pp -customLst -l -dSTM8S003 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 +mods0 -customUser+split -customDebCompat -customOpt-no -customC-pp -customLst -l -dSTM8S003 -dRADIO_DRIVER_EXTENDED_SUPPORT -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template" -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
-String.6.0=2024,4,1,16,52,36
+String.6.0=2024,4,2,18,43,3
 
 [Root.Source Files.Config.0.Settings.2]
 String.2.0=Assembling $(InputFile)...
@@ -269,7 +269,7 @@ Int.1=0
 
 [Root.Source Files.Config.1.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc"  +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
+String.3.0=cxstm8 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template"  -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc"  +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2024,3,31,16,8,5
@@ -287,6 +287,26 @@ String.3.0=
 String.4.0=
 String.5.0=
 String.6.0=2024,3,31,16,8,5
+
+[Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_clk.c]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_clk.c
+Next=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_gpio.c
+
+[Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_gpio.c]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_gpio.c
+Next=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_spi.c
+
+[Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_spi.c]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_spi.c
+Next=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c
+
+[Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c
+Next=Root.Source Files.main.c
 
 [Root.Source Files.main.c]
 ElemType=File
@@ -306,11 +326,6 @@ Next=Root.Source Files.radio_hal.c
 [Root.Source Files.radio_hal.c]
 ElemType=File
 PathName=radio_hal.c
-Next=Root.Source Files.sample_code_func.c
-
-[Root.Source Files.sample_code_func.c]
-ElemType=File
-PathName=sample_code_func.c
 Next=Root.Source Files.si446x_api_lib.c
 
 [Root.Source Files.si446x_api_lib.c]
@@ -349,10 +364,10 @@ Int.1=0
 
 [Root.Include Files.Config.0.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 +mods0 -customUser+split -customDebCompat -customOpt-no -customC-pp -customLst -l -dSTM8S003 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 +mods0 -customUser+split -customDebCompat -customOpt-no -customC-pp -customLst -l -dSTM8S003 -dRADIO_DRIVER_EXTENDED_SUPPORT -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template" -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
-String.6.0=2024,4,1,16,52,36
+String.6.0=2024,4,2,18,43,3
 
 [Root.Include Files.Config.0.Settings.2]
 String.2.0=Assembling $(InputFile)...
@@ -376,7 +391,7 @@ Int.1=0
 
 [Root.Include Files.Config.1.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc"  +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
+String.3.0=cxstm8 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template"  -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc"  +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2024,3,31,16,8,5
@@ -523,6 +538,11 @@ Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics
 [Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_wwdg.h]
 ElemType=File
 PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_wwdg.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template\stm8s_conf.h
+
+[Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template\stm8s_conf.h]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template\stm8s_conf.h
 Next=Root.Include Files.application_defs.h
 
 [Root.Include Files.application_defs.h]
@@ -568,6 +588,11 @@ Next=Root.Include Files.si446x_api_lib.h
 [Root.Include Files.si446x_api_lib.h]
 ElemType=File
 PathName=si446x_api_lib.h
+Next=Root.Include Files.si446x_cmd.h
+
+[Root.Include Files.si446x_cmd.h]
+ElemType=File
+PathName=si446x_cmd.h
 Next=Root.Include Files.stm8s_uart_mapping.h
 
 [Root.Include Files.stm8s_uart_mapping.h]

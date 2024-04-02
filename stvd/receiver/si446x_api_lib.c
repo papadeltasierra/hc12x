@@ -12,6 +12,8 @@
 #include "stm8s.h"
 #include "si446x_api_lib.h"
 #include "radio_hal.h"
+#include "radio_comm.h"
+#include "si446x_cmd.h"
 
 #if defined(STM8S003) || defined(STM8S105)
 union si446x_cmd_reply_union Si446xCmd;
@@ -71,8 +73,13 @@ void si446x_power_up(uint8_t BOOT_OPTIONS, uint8_t XTAL_OPTIONS, uint32_t XO_FRE
  */
 uint8_t si446x_configuration_init(const uint8_t* pSetPropCmd)
 {
+#if defined(STM8S003) || defined(STM8S105)	
+  static uint8_t col;
+  static uint8_t numOfBytes;
+#else
   SEGMENT_VARIABLE(col, uint8_t, SEG_DATA);
   SEGMENT_VARIABLE(numOfBytes, uint8_t, SEG_DATA);
+#endif
 
   /* While cycle as far as the pointer points to a command */
   while (*pSetPropCmd != 0x00)
@@ -250,6 +257,8 @@ void si446x_gpio_pin_cfg(uint8_t GPIO0, uint8_t GPIO1, uint8_t GPIO2, uint8_t GP
     Si446xCmd.GPIO_PIN_CFG.GEN_CONFIG   = Pro2Cmd[6];
 }
 
+// !!PDS: Does not seem to be being used.
+#if 0
 /*!
  * Send SET_PROPERTY command to the radio.
  *
@@ -282,6 +291,7 @@ void si446x_set_property( uint8_t GROUP, uint8_t NUM_PROPS, uint8_t START_PROP, 
 
     radio_comm_SendCmd( cmdIndex, Pro2Cmd );
 }
+#endif
 
 /*!
  * Issue a change state command to the radio.

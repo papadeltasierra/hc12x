@@ -1,5 +1,8 @@
 # Reading a COSMIC Map File
 > Work in progress!
+>
+> There is an issue with identifying named segments and where they are located!
+> Do we have to guess based on address range?
 
 ## References
 - [ST Community; .bsct and .ubsct segments][ST490093]

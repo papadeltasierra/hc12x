@@ -15,6 +15,8 @@
 
 #include "stm8s.h"
 #include "hc12_conf.h"
+#include "radio_comm.h"
+#include "radio_hal.h"
 
                 /* ======================================= *
                  *          D E F I N I T I O N S          *
@@ -44,8 +46,14 @@ BitStatus ctsWentHigh = 0;
  */
 uint8_t radio_comm_GetResp(uint8_t byteCount, uint8_t* pData)
 {
+#if defined(STM8S003) || defined(STM8S105)	
+	// !!PDS: Want these to be global?
+  static uint8_t ctsVal = 0u;
+  static uint16_t errCnt = RADIO_CTS_TIMEOUT;
+#else
   SEGMENT_VARIABLE(ctsVal = 0u, uint8_t, SEG_DATA);
   SEGMENT_VARIABLE(errCnt = RADIO_CTS_TIMEOUT, uint16_t, SEG_DATA);
+#endif	
 
   while (errCnt != 0)      //wait until radio IC is ready with the data
   {
@@ -158,7 +166,7 @@ void radio_comm_WriteData(uint8_t cmd, BitStatus pollCts, uint8_t byteCount, uin
  */
 uint8_t radio_comm_PollCTS(void)
 {
-    while(!GPIO_ReadInputPin(POR_GPIOX, POR_GIPO_PIN))
+    while(!GPIO_ReadInputPin(CTS_GPIOX, CTS_GPIO_PIN))
     {
         /* Wait...*/
     }

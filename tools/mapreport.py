@@ -64,7 +64,7 @@ for key, segValue in segmap.items():
         romMax = max(romMax, segValue[END])
     elif key in COPY_ROM_TO_RAM_SEGMENTS:
         if segValue[LENGTH] != 0:
-            print("Segment expected to have zero length: %s, %d" % (key, segment[LENGTH]))
+            print("Segment expected to have zero length: %s, %d" % (key, segValue[LENGTH]))
     elif key in EEPROM_SEGMENTS:
         eeprom += segValue[LENGTH]
         eepromMin = min(eepromMin, segValue[START])

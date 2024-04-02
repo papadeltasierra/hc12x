@@ -30,6 +30,18 @@ Prove that the process above works and receive some real signals!
   - The [4463] provides a `CTS` line to the [stm8s].
 - Following the coding standards and layout of the `stm8s` Standard Peripheral Library.
 
+## **New** Application hierarchy
+```
+main
++-si466x_api_lib.c
+  +-radio_hal.c
++-radio.c
+  +-radio_comm.c
+    +-radio_hal.c
+```
+
+
+
 ## Notes
 - Everything below has been attempted using an [HC-12] v2.3.  However note that there are many cloned [HC-12] boards around, and mine might be one of them!
 - The common [Putty] serial console does not seem to work when connected to the [HC-12].  This might be a settings issue on my part but every command I send it responses `ERROR`.

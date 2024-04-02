@@ -13,8 +13,8 @@
 #define _SI446X_API_LIB_H_
 
 #if defined(STM8S003) || defined(STM8S105)
-union si446x_cmd_reply_union Si446xCmd;
-uint8_t Pro2Cmd[16];
+extern union si446x_cmd_reply_union Si446xCmd;
+extern uint8_t Pro2Cmd[16];
 #else
 extern SEGMENT_VARIABLE( Si446xCmd, union si446x_cmd_reply_union, SEG_XDATA );
 extern SEGMENT_VARIABLE( Pro2Cmd[16], uint8_t, SEG_XDATA );

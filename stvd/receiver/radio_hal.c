@@ -41,7 +41,8 @@ void radio_hal_AssertShutdown(void)
 #if (defined SILABS_PLATFORM_RFSTICK) || (defined SILABS_PLATFORM_LCDBB) || (defined SILABS_PLATFORM_WMB)
   RF_PWRDN = 1;
 #else
-  PWRDN = 1;
+  // !!PDS: PWRDN = 1;
+	// Should we be toggling SDN here?
 #endif
 }
 
@@ -50,7 +51,8 @@ void radio_hal_DeassertShutdown(void)
 #if (defined SILABS_PLATFORM_RFSTICK) || (defined SILABS_PLATFORM_LCDBB) || (defined SILABS_PLATFORM_WMB)
   RF_PWRDN = 0;
 #else
-  PWRDN = 0;
+  // PWRDN = 0;
+	// Should we be toggling SDN here?
 #endif
 }
 

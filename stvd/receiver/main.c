@@ -67,14 +67,6 @@ void main(void)
   /* SPI configuration -----------------------------------------*/
   SPI_Config();
 
-
-
-
-
-
-
-
-
 #if 0
   // Initialize the Hardware and Radio
   vInitializeHW();
@@ -254,7 +246,7 @@ void vInitializeHW()
 void vPlf_McuInit(void)
 {
 #if defined(STM8S003) || defined(STM8S105)
-  UART(Config());
+  UART_Config();
 
 #else
   uint16_t wDelay = 0xFFFF;
@@ -467,8 +459,13 @@ static void CLK_Config(void)
   */
 static void UART_Config(void)
 {
-  UART(Init(UART_BAUDRATE, UART(WORDLENGTH), UART(STOPBITS), UART(PARITY,
-                   UART(SYNCMODE), UART(MODE)));
+  UART(Init(
+		UART_BAUDRATE, 
+		UART_WORDLENGTH, 
+		UART_STOPBITS, 
+		UART_PARITY,
+		UART_SYNCMODE, 
+		UART_MODE));
 
   /*
    * Enable the UART Receive interrupt: this interrupt is generated when the UART
@@ -481,7 +478,7 @@ static void UART_Config(void)
 
   /* Enable the UART Transmit complete interrupt: this interrupt is generated
      when the UART transmit Shift Register is empty */
-  UART(ITConfig(UART(IT_TXE), ENABLE));
+  // !!PDS: Do we use this?? UART(ITConfig(UART(IT_TXE), ENABLE));
 
   /* Enable UART */
   UART(Cmd(ENABLE));
@@ -539,3 +536,24 @@ static void SPI_Config(void)
            SPI_NSS_HARD,
            (uint8_t)0x07);
 }
+
+#ifdef USE_FULL_ASSERT
+
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *   where the assert_param error has occurred.
+  * @param file: pointer to the source file name
+  * @param line: assert_param error line source number
+  * @retval None
+  */
+void assert_failed(uint8_t* file, uint32_t line)
+{ 
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+
+  /* Infinite loop */
+  while (1)
+  {
+  }
+}
+#endif

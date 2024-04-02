@@ -28,10 +28,8 @@
                  *  F U N C T I O N   P R O T O T Y P E S  *
                  * ======================================= */
 
-#if 0
 void radio_hal_AssertShutdown(void);
 void radio_hal_DeassertShutdown(void);
-#endif
 void radio_hal_ClearNsel(void);
 void radio_hal_SetNsel(void);
 BitStatus radio_hal_NirqLevel(void);

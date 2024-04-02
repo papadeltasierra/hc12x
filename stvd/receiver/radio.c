@@ -10,7 +10,8 @@
 #include "stm8s.h"
 #include "radio.h"
 #include "radio_config.h"
-#incuklde "si446x_api_lib.h"
+#include "si446x_cmd.h"
+#include "si446x_api_lib.h"
 
 /*****************************************************************************
  *  Local Macros & Definitions
@@ -107,7 +108,9 @@ void vRadio_Init(void)
  */
 BitStatus gRadio_CheckReceived(void)
 {
-  if (RF_NIRQ == FALSE)
+	
+  // !!PDS: Need to understand how these work!!  if (RF_NIRQ == FALSE)
+	if (1)
   {
     /* Read ITs, clear pending ones */
     si446x_get_int_status(0u, 0u, 0u);
@@ -163,6 +166,8 @@ void vRadio_StartRX(uint8_t channel)
                   SI446X_CMD_START_RX_ARG_NEXT_STATE2_RXVALID_STATE_ENUM_RX,
                   SI446X_CMD_START_RX_ARG_NEXT_STATE3_RXINVALID_STATE_ENUM_RX );
 
+#if !defined(STM8S003) && !defined(STM8S105)
   /* Switch on LED1 to show RX state */
   vHmi_ChangeLedState(eHmi_Led1_c, eHmi_LedOn_c);
+#endif	
 }
