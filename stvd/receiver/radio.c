@@ -20,7 +20,7 @@
 /*****************************************************************************
  *  Global Variables
  *****************************************************************************/
-#if defined(STM8S003) || defined(STM8S105) 
+#if defined(STM8S003) || defined(STM8S105)
 uint8_t Radio_Configuration_Data_Array[] = RADIO_CONFIGURATION_DATA_ARRAY;
 
 const tRadioConfiguration RadioConfiguration = RADIO_CONFIGURATION_DATA;
@@ -53,14 +53,14 @@ void vRadio_PowerUp(void);
  *  @note
  *
  */
+@tiny static uint16_t wDelay = 0u;
 void vRadio_PowerUp(void)
 {
 #if defined (STM8S003) || defined(STM8S105)
-  uint16_t wDelay = 0u;
-#else	
+#else
 	// !!PDS: Trying to make these global not stack??
   SEGMENT_VARIABLE(wDelay,  uint16_t, SEG_XDATA) = 0u;
-#endif	
+#endif
 
   /* Hardware reset the chip */
   si446x_reset();
@@ -108,7 +108,7 @@ void vRadio_Init(void)
  */
 BitStatus gRadio_CheckReceived(void)
 {
-	
+
   // !!PDS: Need to understand how these work!!  if (RF_NIRQ == FALSE)
 	if (1)
   {
@@ -169,5 +169,5 @@ void vRadio_StartRX(uint8_t channel)
 #if !defined(STM8S003) && !defined(STM8S105)
   /* Switch on LED1 to show RX state */
   vHmi_ChangeLedState(eHmi_Led1_c, eHmi_LedOn_c);
-#endif	
+#endif
 }

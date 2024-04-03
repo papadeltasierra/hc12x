@@ -71,11 +71,11 @@ void si446x_power_up(uint8_t BOOT_OPTIONS, uint8_t XTAL_OPTIONS, uint32_t XO_FRE
  * This function is used to load all properties and commands with a list of NULL terminated commands.
  * Before this function @si446x_reset should be called.
  */
+@tiny static uint8_t col;
+@tiny static uint8_t numOfBytes;
 uint8_t si446x_configuration_init(const uint8_t* pSetPropCmd)
 {
-#if defined(STM8S003) || defined(STM8S105)	
-  static uint8_t col;
-  static uint8_t numOfBytes;
+#if defined(STM8S003) || defined(STM8S105)
 #else
   SEGMENT_VARIABLE(col, uint8_t, SEG_DATA);
   SEGMENT_VARIABLE(numOfBytes, uint8_t, SEG_DATA);

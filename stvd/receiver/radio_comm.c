@@ -44,16 +44,16 @@ BitStatus ctsWentHigh = 0;
  *
  * @return CTS value
  */
+@tiny static uint8_t ctsVal = 0u;
+@tiny static uint16_t errCnt = RADIO_CTS_TIMEOUT;
 uint8_t radio_comm_GetResp(uint8_t byteCount, uint8_t* pData)
 {
-#if defined(STM8S003) || defined(STM8S105)	
+#if defined(STM8S003) || defined(STM8S105)
 	// !!PDS: Want these to be global?
-  static uint8_t ctsVal = 0u;
-  static uint16_t errCnt = RADIO_CTS_TIMEOUT;
 #else
   SEGMENT_VARIABLE(ctsVal = 0u, uint8_t, SEG_DATA);
   SEGMENT_VARIABLE(errCnt = RADIO_CTS_TIMEOUT, uint16_t, SEG_DATA);
-#endif	
+#endif
 
   while (errCnt != 0)      //wait until radio IC is ready with the data
   {
