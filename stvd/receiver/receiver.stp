@@ -85,7 +85,7 @@ String.2.0=Compiling $(InputFile)...
 String.3.0=cxstm8 +mods0 -customUser+split -customDebCompat -customOpt-no -customC-pp -customLst -l -dSTM8S003 -dRADIO_DRIVER_EXTENDED_SUPPORT -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template" -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
-String.6.0=2024,4,2,18,43,3
+String.6.0=2024,4,3,19,14,22
 
 [Root.Config.0.Settings.4]
 String.2.0=Assembling $(InputFile)...
@@ -245,7 +245,7 @@ String.2.0=Compiling $(InputFile)...
 String.3.0=cxstm8 +mods0 -customUser+split -customDebCompat -customOpt-no -customC-pp -customLst -l -dSTM8S003 -dRADIO_DRIVER_EXTENDED_SUPPORT -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template" -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
-String.6.0=2024,4,2,18,43,3
+String.6.0=2024,4,3,19,14,22
 
 [Root.Source Files.Config.0.Settings.2]
 String.2.0=Assembling $(InputFile)...
@@ -367,7 +367,7 @@ String.2.0=Compiling $(InputFile)...
 String.3.0=cxstm8 +mods0 -customUser+split -customDebCompat -customOpt-no -customC-pp -customLst -l -dSTM8S003 -dRADIO_DRIVER_EXTENDED_SUPPORT -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template" -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
-String.6.0=2024,4,2,18,43,3
+String.6.0=2024,4,3,19,14,22
 
 [Root.Include Files.Config.0.Settings.2]
 String.2.0=Assembling $(InputFile)...
@@ -568,11 +568,11 @@ Next=Root.Include Files.radio_comm.h
 [Root.Include Files.radio_comm.h]
 ElemType=File
 PathName=radio_comm.h
-Next=Root.Include Files.radio_config.h
+Next=Root.Include Files.radio_config_wmbus.h
 
-[Root.Include Files.radio_config.h]
+[Root.Include Files.radio_config_wmbus.h]
 ElemType=File
-PathName=radio_config.h
+PathName=radio_config_wmbus.h
 Next=Root.Include Files.radio_hal.h
 
 [Root.Include Files.radio_hal.h]
