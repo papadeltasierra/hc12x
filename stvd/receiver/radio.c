@@ -9,7 +9,7 @@
 
 #include "stm8s.h"
 #include "radio.h"
-#include "radio_config.h"
+#include "radio_config_wmbus.h"
 #include "si446x_cmd.h"
 #include "si446x_api_lib.h"
 
