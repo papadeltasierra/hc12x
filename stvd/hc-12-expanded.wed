@@ -44,7 +44,7 @@ ptn_Child33=Bar-32
 
 [WorkState_v1_2.DockState.Bar-0]
 BarID=59419
-Bars=20
+Bars=22
 Bar#0=0
 Bar#1=59647
 Bar#2=0
@@ -64,7 +64,9 @@ Bar#15=124938
 Bar#16=0
 Bar#17=32768
 Bar#18=0
-Bar#19=0
+Bar#19=71256
+Bar#20=0
+Bar#21=0
 Style=0
 ExStyle=0
 PrevFloating=False
@@ -123,7 +125,7 @@ ResourceID=0
 
 [WorkState_v1_2.DockState.Bar-2]
 BarID=59422
-Bars=9
+Bars=12
 Bar#0=0
 Bar#1=5707
 Bar#2=5706
@@ -133,6 +135,9 @@ Bar#5=5721
 Bar#6=0
 Bar#7=32769
 Bar#8=0
+Bar#9=71256
+Bar#10=0
+Bar#11=0
 Style=0
 ExStyle=0
 PrevFloating=False
@@ -191,14 +196,15 @@ ResourceID=0
 
 [WorkState_v1_2.DockState.Bar-4]
 BarID=59420
-Bars=7
+Bars=8
 Bar#0=0
-Bar#1=5708
+Bar#1=5720
 Bar#2=0
-Bar#3=32770
+Bar#3=5708
 Bar#4=0
-Bar#5=5720
+Bar#5=32770
 Bar#6=0
+Bar#7=0
 Style=0
 ExStyle=0
 PrevFloating=False
@@ -732,10 +738,10 @@ MRUDockID=59420
 MRUDockLeftPos=1
 MRUDockTopPos=-2
 MRUDockRightPos=355
-MRUDockBottomPos=461
+MRUDockBottomPos=534
 MRUFloatStyle=8192
-MRUFloatXPos=15
-MRUFloatYPos=181
+MRUFloatXPos=131
+MRUFloatYPos=121
 Style=8068
 ExStyle=69393
 PrevFloating=False
@@ -746,10 +752,10 @@ LastAlignedDocking=0
 PctWidth=1000000
 MRUFloatCX=300
 MRUFloatCY=180
-MRUHorzDockCX=957
-MRUHorzDockCY=373
+MRUHorzDockCX=1919
+MRUHorzDockCY=508
 MRUVertDockCX=354
-MRUVertDockCY=463
+MRUVertDockCY=536
 MRUDockingState=0
 DockingStyle=61440
 TypeID=0
@@ -762,11 +768,11 @@ BarID=5721
 XPos=1
 YPos=5
 Docking=True
-MRUDockID=0
+MRUDockID=59422
 MRUDockLeftPos=1
 MRUDockTopPos=5
 MRUDockRightPos=1920
-MRUDockBottomPos=445
+MRUDockBottomPos=372
 MRUFloatStyle=4
 MRUFloatXPos=-1
 MRUFloatYPos=0
@@ -781,7 +787,7 @@ PctWidth=1000000
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=1919
-MRUHorzDockCY=440
+MRUHorzDockCY=367
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -851,7 +857,7 @@ PctWidth=500000
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=300
-MRUHorzDockCY=440
+MRUHorzDockCY=367
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -1061,7 +1067,7 @@ PctWidth=666665
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=300
-MRUHorzDockCY=440
+MRUHorzDockCY=367
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -1096,7 +1102,7 @@ PctWidth=750000
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=300
-MRUHorzDockCY=440
+MRUHorzDockCY=367
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -1131,7 +1137,7 @@ PctWidth=800000
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=300
-MRUHorzDockCY=440
+MRUHorzDockCY=367
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -1245,10 +1251,12 @@ ptn_Child2=ChildFrames
 
 [WorkState_v1_2.Frames.MainFrame]
 WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPHLAAAAAAEHAAAAAAEGEAAAAADBDAAAAA
-Title=ST Visual Develop - hc-12-expanded.stw - [stm8s_clk.c]
+Title=ST Visual Develop - hc-12-expanded.stw - [C:\Users\PDS\git\hc-12-expanded\stvd\bootloader\stm8_interrupt_vector.c]
 
 [WorkState_v1_2.Frames.ChildFrames]
 ptn_Child1=Document-0
+ptn_Child2=Document-1
+ptn_Child3=Document-2
 
 [WorkState_v1_2.Frames.ChildFrames.Document-0]
 ptn_Child1=ViewFrame-0
@@ -1257,6 +1265,28 @@ ptn_Child1=ViewFrame-0
 DocPathName=..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_clk.c
 DocumentString=
 DocTemplateIndex=0
-WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPEDAAAAAAEDAAAAAALKFAAAAANEBAAAAA
+WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPEDAAAAAAEDAAAAAALKFAAAAANEBAAAAA
+IsActiveChildFrame=False
+IsFrameVisible=True
+
+[WorkState_v1_2.Frames.ChildFrames.Document-1]
+ptn_Child1=ViewFrame-0
+
+[WorkState_v1_2.Frames.ChildFrames.Document-1.ViewFrame-0]
+DocPathName=bootloader\stm8_interrupt_vector.c
+DocumentString=
+DocTemplateIndex=0
+WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPKBAAAAAAKBAAAAAAFJFAAAAAHDBAAAAA
 IsActiveChildFrame=True
+IsFrameVisible=True
+
+[WorkState_v1_2.Frames.ChildFrames.Document-2]
+ptn_Child1=ViewFrame-0
+
+[WorkState_v1_2.Frames.ChildFrames.Document-2.ViewFrame-0]
+DocPathName=bootloader\main.c
+DocumentString=
+DocTemplateIndex=0
+WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPEDAAAAAAEDAAAAAALHFAAAAALNBAAAAA
+IsActiveChildFrame=False
 IsFrameVisible=True
