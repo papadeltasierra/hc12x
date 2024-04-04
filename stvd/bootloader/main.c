@@ -118,7 +118,7 @@ void main(void){
  LD XL,A
  LDW SP,X
  // JPF 09000H
- JPF 08C00H
+ JPF 08A00H
 #pragma ENDASM
 #endif
     }
