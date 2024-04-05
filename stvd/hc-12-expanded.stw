@@ -18,7 +18,7 @@ Dependencies=
 [Project3]
 Filename=receiver\receiver.stp
 Dependencies=
-[Options]
-ActiveProject=receiver
-ActiveConfig=Debug
-AddSortedElements=1
+
+[Project4]
+Filename=sample\sample.stp
+Dependencies=
