@@ -19,8 +19,8 @@ Prove that the process above works and receive some real signals!
 
 ## **New** Development Notes
 - Follow [AN2659]
-- Map the user application to start ROM at 0x8C00
-- Map the user application to start RAM at 0x????
+- Map the user application to start ROM at 0x8A00
+- No need to map RAM as this gets used by the Bootloader **OR** the application but not both so the full amount of RAM is available to both
 - Follow the standard layout/usage of the `stm8s` and `4463` chips:
   - The [HC-12] SET is used to trigger the custom bootloader (pull low)
   - The standard [stm8s] and [4463] SPI interfaces are used
