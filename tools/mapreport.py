@@ -49,14 +49,17 @@ class Resource:
 
     @property
     def end(self):
-        return self._end
+        if self.length > 0:
+            return self._end
+        else:
+            return self.start
 
     @property
     def max(self):
         if self.length > 0:
             return self._max
         else:
-            return self._end
+            return self._start
 
     @property
     def min(self):
@@ -71,6 +74,10 @@ class Resource:
             return self.max - self.min - self.length
         else:
             return 0
+
+    @property
+    def remains(self):
+        return self.end - self.start - self.length - self.waste
 
 resources: List[Resource] = []
 
@@ -113,7 +120,13 @@ def analyze(args: argparse.Namespace) -> None:
     resources.reverse()
     print("Resource:   start     end      length  waste remains")
     for resource in resources:
-        print("%-10s: %8.8X, %8.8X, %5d, %5d %5d" % (resource.desc, resource.min, resource.max, resource.length, (resource.max - resource.min - resource.length), (resource.end - resource.start - resource.length)))
+        print("%-10s: %8.8X, %8.8X, %5d, %5d %5d" % (
+            resource.desc,
+            resource.min,
+            resource.max,
+            resource.length,
+            resource.waste,
+            resource.remains))
 
 def parse_args(argv: List[str]) -> argparse.Namespace:
     """Parse command  line arguments"""
