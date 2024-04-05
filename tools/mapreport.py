@@ -1,4 +1,4 @@
-"""Small script to add up resource usage from map file."""
+"""Small script to add up resource usage fflash map file."""
 import sys
 import re
 from typing import List, Tuple
@@ -17,7 +17,7 @@ RGX_SEGDATA = re.compile(
     LENGTH +
     r">\d+)\s+segment\s+(?P<" + NAME + r">.+)",
     re.IGNORECASE)
-RGX_HEX_RANGE = re.compile(r"^(?P<start>0x[0-9a-f]+),(?P<end>0x[0-9a-f])$", re.IGNORECASE)
+RGX_HEX_RANGE = re.compile(r"^(?P<start>0x[0-9a-f]+),(?P<end>0x[0-9a-f]+)$", re.IGNORECASE)
 
 SEGMENTS_TO_IGNORE=[".debug", ".info."]
 
@@ -49,10 +49,7 @@ class Resource:
 
     @property
     def end(self):
-        if self.length > 0:
-            return self._end
-        else:
-            return self.start
+        return self._end
 
     @property
     def max(self):
@@ -109,6 +106,13 @@ def analyze(args: argparse.Namespace) -> None:
         if key in SEGMENTS_TO_IGNORE:
             continue
 
+        # Validate that the values exist in one of the address ranges.
+        for resource in resources:
+            if segValue[START] >= resource.start and segValue[END] <= resource.end:
+                break
+        else:
+            raise ValueError("Segment '%s' lies outside available resource ranges." % key)
+
         if segValue[LENGTH] == 0:
             continue
 
@@ -134,29 +138,35 @@ def parse_args(argv: List[str]) -> argparse.Namespace:
         """Validate and parse a headecimal string"""
         try:
             match = RGX_HEX_RANGE.match(arg)
-            assert match
-            return hex(match.group("start")), hex(match.group("end"))
+            if not match:
+                raise TypeError
+            start = int(match.group("start"), 16)
+            end = int(match.group("end"), 16)
+            if start > end:
+                parser.error("Start address '0x%8.8X' higher than end address '0x8.8X'." % (start, end))
+            return start, end
         except:
-            argparse.ArgumentTypeError("Expected a hexadecimal range e.g. '0x1234,0x5678'")
+            parser.error("Expected a hexadecimal range e.g. '0x1234,0x5678', not '%s'" % arg)
 
     parser = argparse.ArgumentParser("Create COSMIC linker mapfile report")
-    parser.add_argument("-t", "--tiny-ram", help="Starting address of RAM", type=hexrange, default=(0,0x0100))
-    parser.add_argument("-n", "--near-ram", help="Starting address of RAM", type=hexrange, default=(0x0100,0x0400))
-    parser.add_argument("-e", "--eeprom", help="Starting address of EEPROM", type=hexrange, default=(0x4000,0x407f))
-    parser.add_argument("-o", "--rom", help="Starting address of ROM", type=hexrange, default=(0x8000,0x9FFF))
+    parser.add_argument("-t", "--tiny", help="Starting address of RAM", type=hexrange, default=(0,0x0100))
+    parser.add_argument("-n", "--near", help="Starting address of RAM", type=hexrange, default=(0x0100,0x0400))
+    parser.add_argument("-e", "--eepflash", help="Starting address of EEPROM", type=hexrange, default=(0x4000,0x407f))
+    parser.add_argument("-o", "--flash", help="Starting address of Flash", type=hexrange, default=(0x8000,0x9FFF))
     parser.add_argument("mapfile", help="COSMIC linker mapfile.")
     args: argparse.Namespace = parser.parse_args(argv)
-    if ((args.rom < args.eeprom) or (args.eeprom < args.near_ram) or (args.near_ram < args.tiny_ram)):
-        argparse.ArgumentError("Expected RAM, EEPROM, ROM spaces in that order")
 
-    tiny_ram = Resource("RAM (tiny)", args.tiny_ram[0], args.tiny_ram[1])
-    near_ram = Resource("RAM (near)", args.near_ram[0], args.near_ram[1])
-    eeprom = Resource("EEPROM", args.eeprom[0], args.eeprom[1])
-    rom = Resource("ROM", args.rom[0], args.rom[1])
-    resources.append(rom)
-    resources.append(eeprom)
-    resources.append(near_ram)
-    resources.append(tiny_ram)
+    if ((args.tiny[1] > args.near[0]) or (args.near[1] > args.eepflash[0]) or (args.eepflash[1] > args.flash[0])):
+        parser.error("Overlapping RAM/EEPROM/Flash address ranges")
+
+    tiny = Resource("RAM (tiny)", args.tiny[0], args.tiny[1])
+    near = Resource("RAM (near)", args.near[0], args.near[1])
+    eepflash = Resource("EEPROM", args.eepflash[0], args.eepflash[1])
+    flash = Resource("Flash", args.flash[0], args.flash[1])
+    resources.append(flash)
+    resources.append(eepflash)
+    resources.append(near)
+    resources.append(tiny)
 
     return args
 
