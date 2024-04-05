@@ -151,20 +151,20 @@ def parse_args(argv: List[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser("Create COSMIC linker mapfile report")
     parser.add_argument("-t", "--tiny", help="Starting address of RAM", type=hexrange, default=(0,0x0100))
     parser.add_argument("-n", "--near", help="Starting address of RAM", type=hexrange, default=(0x0100,0x0400))
-    parser.add_argument("-e", "--eepflash", help="Starting address of EEPROM", type=hexrange, default=(0x4000,0x407f))
+    parser.add_argument("-e", "--eeprom", help="Starting address of EEPROM", type=hexrange, default=(0x4000,0x407f))
     parser.add_argument("-o", "--flash", help="Starting address of Flash", type=hexrange, default=(0x8000,0x9FFF))
     parser.add_argument("mapfile", help="COSMIC linker mapfile.")
     args: argparse.Namespace = parser.parse_args(argv)
 
-    if ((args.tiny[1] > args.near[0]) or (args.near[1] > args.eepflash[0]) or (args.eepflash[1] > args.flash[0])):
+    if ((args.tiny[1] > args.near[0]) or (args.near[1] > args.eeprom[0]) or (args.eeprom[1] > args.flash[0])):
         parser.error("Overlapping RAM/EEPROM/Flash address ranges")
 
     tiny = Resource("RAM (tiny)", args.tiny[0], args.tiny[1])
     near = Resource("RAM (near)", args.near[0], args.near[1])
-    eepflash = Resource("EEPROM", args.eepflash[0], args.eepflash[1])
+    eeprom = Resource("EEPROM", args.eeprom[0], args.eeprom[1])
     flash = Resource("Flash", args.flash[0], args.flash[1])
     resources.append(flash)
-    resources.append(eepflash)
+    resources.append(eeprom)
     resources.append(near)
     resources.append(tiny)
 
