@@ -10,28 +10,33 @@
 #define UART_STOPBITS UART(STOPBITS_1)
 #define UART_PARITY UART(PARITY_EVEN)
 #define UART_SYNCMODE UART(SYNCMODE_CLOCK_DISABLE)
-#define UART_MODE UART(MODE_TX_ENABLE)
+#define UART_MODE UART(MODE_TXRX_ENABLE)
 
 void printf(char *string)
 {
 	UART(Flag_TypeDef) flag_def = UART(FLAG_TXE);
 	while ((*string) != 0)
 	{
-		UART(SendData8(*string++));
+		UART(SendData9(*string++));
 		/* Loop until the end of transmission */
 		while (UART(GetFlagStatus(flag_def)) == RESET);
+		continue;
 	}
 }
 
 main()
 {
-  UART(Init(
-		UART_BAUDRATE, 
-		UART_WORDLENGTH, 
-		UART_STOPBITS, 
-		UART_PARITY,
-		UART_SYNCMODE, 
-		UART_MODE));
+  /*High speed internal clock prescaler: 1*/
+  CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);
+
+  UART2_Init(
+		19200,
+		UART2_WORDLENGTH_9D, 
+		UART2_STOPBITS_1, 
+		UART2_PARITY_EVEN,
+		UART2_SYNCMODE_CLOCK_DISABLE, 
+		UART2_MODE_TX_ENABLE);
+	
 
 	printf("Sample & bootloader installed successfully!\n");
 	
