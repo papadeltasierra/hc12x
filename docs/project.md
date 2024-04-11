@@ -76,9 +76,9 @@ The connections around the HC-12 are as follows:
 |D3|
 |D2|nSEL||nSEL|
 |D1|||SWIM<br/>Pad by 'TX' pin/label|
-|C7|SDI||SPI MISO|
-|C6|SDO||SPI MOSI|
-|C5|SCLK||SPI CLK|
+|C7MISO|SDI||SPI MISO|
+|C6/MOSI|SDO||SPI MOSI|
+|C5/SCK|SCLK||SPI CLK|
 |C4|nIRQ||Interrupt<br/>Packet received?|
 |C3|GPIO1|||
 |B4|GPIO0|||
