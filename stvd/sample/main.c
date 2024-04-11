@@ -38,7 +38,7 @@ main()
 		UART2_MODE_TX_ENABLE);
 	
 
-	printf("Sample & bootloader installed successfully!\n");
+	printf("Sample 2.0 & bootloader installed successfully!\r\n");
 	
 	while (1);
 }

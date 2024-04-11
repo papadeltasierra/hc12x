@@ -1,6 +1,12 @@
 [WorkState_v1-Edit.Breakpoints]
-Break0=TypeFile, sample\stm8_interrupt_vector.c, 17, 0, 1, 1,
-Break1=TypeFile, sample\main.c, 43, 0, 1, 1,
+Break0=TypeFile, bootloader\main.c, 345, 0, 1, 1,
+Break1=TypeFile, bootloader\main.c, 359, 0, 1, 1,
+Break2=TypeFile, bootloader\main.c, 354, 0, 1, 1,
+Break3=TypeFile, bootloader\main.c, 371, 0, 1, 1,
+Break4=TypeFile, bootloader\main.c, 364, 0, 1, 1,
+Break5=TypeFile, bootloader\main.c, 769, 0, 1, 1,
+Break6=TypeFile, bootloader\main.c, 324, 0, 1, 1,
+Break7=TypeFile, bootloader\main.c, 334, 0, 1, 1,
 
 [WorkState_v1_2]
 ptn_Child1=DockState
@@ -47,7 +53,7 @@ ptn_Child33=Bar-32
 
 [WorkState_v1_2.DockState.Bar-0]
 BarID=59419
-Bars=34
+Bars=22
 Bar#0=0
 Bar#1=59647
 Bar#2=0
@@ -70,18 +76,6 @@ Bar#18=0
 Bar#19=71256
 Bar#20=0
 Bar#21=0
-Bar#22=0
-Bar#23=0
-Bar#24=0
-Bar#25=0
-Bar#26=0
-Bar#27=0
-Bar#28=0
-Bar#29=0
-Bar#30=0
-Bar#31=0
-Bar#32=0
-Bar#33=0
 Style=0
 ExStyle=0
 PrevFloating=False
@@ -589,9 +583,9 @@ MRUWidth=23
 Docking=True
 MRUDockID=59419
 MRUDockLeftPos=925
-MRUDockTopPos=28
+MRUDockTopPos=31
 MRUDockRightPos=965
-MRUDockBottomPos=58
+MRUDockBottomPos=61
 MRUFloatStyle=8196
 MRUFloatXPos=-1
 MRUFloatYPos=0
@@ -751,7 +745,7 @@ MRUDockID=59420
 MRUDockLeftPos=1
 MRUDockTopPos=-2
 MRUDockRightPos=355
-MRUDockBottomPos=474
+MRUDockBottomPos=724
 MRUFloatStyle=8192
 MRUFloatXPos=131
 MRUFloatYPos=121
@@ -768,7 +762,7 @@ MRUFloatCY=180
 MRUHorzDockCX=1919
 MRUHorzDockCY=508
 MRUVertDockCX=354
-MRUVertDockCY=476
+MRUVertDockCY=726
 MRUDockingState=0
 DockingStyle=61440
 TypeID=0
@@ -785,7 +779,7 @@ MRUDockID=59422
 MRUDockLeftPos=1
 MRUDockTopPos=5
 MRUDockRightPos=1920
-MRUDockBottomPos=432
+MRUDockBottomPos=182
 MRUFloatStyle=4
 MRUFloatXPos=-1
 MRUFloatYPos=0
@@ -800,7 +794,7 @@ PctWidth=1000000
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=1919
-MRUHorzDockCY=427
+MRUHorzDockCY=177
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -870,7 +864,7 @@ PctWidth=500000
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=300
-MRUHorzDockCY=427
+MRUHorzDockCY=177
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -1080,7 +1074,7 @@ PctWidth=666665
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=300
-MRUHorzDockCY=427
+MRUHorzDockCY=177
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -1115,7 +1109,7 @@ PctWidth=750000
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=300
-MRUHorzDockCY=427
+MRUHorzDockCY=177
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -1150,7 +1144,7 @@ PctWidth=800000
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=300
-MRUHorzDockCY=427
+MRUHorzDockCY=177
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -1263,8 +1257,8 @@ ptn_Child1=MainFrame
 ptn_Child2=ChildFrames
 
 [WorkState_v1_2.Frames.MainFrame]
-WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPGNDAAAAAFOAAAAAADIHAAAAAEIDAAAAA
-Title=ST Visual Develop - hc-12-expanded.stw* - [main.c]
+WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAAADIPPPPAADIPPPPPPPPPPPPPPPPPPPPGNDAAAAAFOAAAAAADIHAAAAAEIDAAAAA
+Title=ST Visual Develop - hc-12-expanded.stw - [stm8s_conf.h]
 
 [WorkState_v1_2.Frames.ChildFrames]
 ptn_Child1=Document-0
@@ -1274,20 +1268,20 @@ ptn_Child2=Document-1
 ptn_Child1=ViewFrame-0
 
 [WorkState_v1_2.Frames.ChildFrames.Document-0.ViewFrame-0]
-DocPathName=sample\main.c
+DocPathName=bootloader\main.c
 DocumentString=
 DocTemplateIndex=0
-WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPIGAAAAAAIGAAAAAAEJFAAAAAOMBAAAAA
-IsActiveChildFrame=True
+WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPIGAAAAAAIGAAAAAAFMFAAAAAELBAAAAA
+IsActiveChildFrame=False
 IsFrameVisible=True
 
 [WorkState_v1_2.Frames.ChildFrames.Document-1]
 ptn_Child1=ViewFrame-0
 
 [WorkState_v1_2.Frames.ChildFrames.Document-1.ViewFrame-0]
-DocPathName=sample\stm8_interrupt_vector.c
+DocPathName=..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template\stm8s_conf.h
 DocumentString=
 DocTemplateIndex=0
-WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPAAAAAAAAAAAAAAAALHFAAAAAKCBAAAAA
-IsActiveChildFrame=False
+WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPKBAAAAAAKBAAAAAALHFAAAAAKGBAAAAA
+IsActiveChildFrame=True
 IsFrameVisible=True

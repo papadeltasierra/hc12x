@@ -13,11 +13,17 @@ ExternDep= main.c  "C:\Program Files (x86)\COSMIC\FSE_Compilers\CXSTM8\Hstm8\mod
 [Root.Source Files.main.c.Config.2]
 ExternDep= main.c  "C:\Program Files (x86)\COSMIC\FSE_Compilers\CXSTM8\Hstm8\mods0.h" main.h  stm8s.h stm8s_type.h
 
+[Root.Source Files.main.c.Config.3]
+ExternDep= main.c  "C:\Program Files (x86)\COSMIC\FSE_Compilers\CXSTM8\Hstm8\mods0.h" main.h  stm8s.h stm8s_type.h
+
 [Root.Source Files.stm8_interrupt_vector.c.Config.0]
 ExternDep= stm8_interrupt_vector.c  "C:\Program Files (x86)\COSMIC\FSE_Compilers\CXSTM8\Hstm8\mods0.h" main.h  stm8s.h stm8s_type.h
 
 [Root.Source Files.stm8_interrupt_vector.c.Config.1]
-ExternDep= stm8_interrupt_vector.c  "C:\Program Files (x86)\COSMIC\FSE_Compilers\CXSTM8\Hstm8\mods0.h"
+ExternDep= stm8_interrupt_vector.c  "C:\Program Files (x86)\COSMIC\FSE_Compilers\CXSTM8\Hstm8\mods0.h" main.h  stm8s.h stm8s_type.h
 
 [Root.Source Files.stm8_interrupt_vector.c.Config.2]
+ExternDep= stm8_interrupt_vector.c  "C:\Program Files (x86)\COSMIC\FSE_Compilers\CXSTM8\Hstm8\mods0.h" main.h  stm8s.h stm8s_type.h
+
+[Root.Source Files.stm8_interrupt_vector.c.Config.3]
 ExternDep= stm8_interrupt_vector.c  "C:\Program Files (x86)\COSMIC\FSE_Compilers\CXSTM8\Hstm8\mods0.h" main.h  stm8s.h stm8s_type.h

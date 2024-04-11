@@ -12,6 +12,7 @@ Toolset=STM8 Cosmic
 0=Config.0
 1=Config.1
 2=Config.2
+3=Config.3
 
 [Config.0]
 ConfigName=Debug
@@ -31,6 +32,12 @@ Target=$(ProjectSFile).elf
 OutputFolder=Debug_(Discovery)
 Debug=$(TargetFName)
 
+[Config.3]
+ConfigName=Release (Discovery)
+Target=$(ProjectSFile).elf
+OutputFolder=Release_(Discovery)
+Debug=$(TargetFName)
+
 [Root]
 ElemType=Project
 PathName=sample
@@ -38,6 +45,7 @@ Child=Root.Source Files
 Config.0=Root.Config.0
 Config.1=Root.Config.1
 Config.2=Root.Config.2
+Config.3=Root.Config.3
 
 [Root.Config.0]
 Settings.0.0=Root.Config.0.Settings.0
@@ -71,6 +79,17 @@ Settings.2.5=Root.Config.2.Settings.5
 Settings.2.6=Root.Config.2.Settings.6
 Settings.2.7=Root.Config.2.Settings.7
 Settings.2.8=Root.Config.2.Settings.8
+
+[Root.Config.3]
+Settings.3.0=Root.Config.3.Settings.0
+Settings.3.1=Root.Config.3.Settings.1
+Settings.3.2=Root.Config.3.Settings.2
+Settings.3.3=Root.Config.3.Settings.3
+Settings.3.4=Root.Config.3.Settings.4
+Settings.3.5=Root.Config.3.Settings.5
+Settings.3.6=Root.Config.3.Settings.6
+Settings.3.7=Root.Config.3.Settings.7
+Settings.3.8=Root.Config.3.Settings.8
 
 [Root.Config.0.Settings.0]
 String.6.0=2024,4,5,13,38,28
@@ -121,10 +140,10 @@ String.8.0=
 [Root.Config.0.Settings.6]
 String.2.0=Running Linker
 String.3.0=clnk $(ToolsetLibOpts) -o $(OutputPath)$(TargetSName).sm8 -fakeInteger -fakeOutFile$(ProjectSFile).elf -fakeRunConv -fakeStartupcrtsi0.sm8 -fakeSemiAutoGen -fakeVectFilestm8_interrupt_vector.c -customMapFile -customMapFile-m$(OutputPath)$(TargetSName).map -customMapAddress -customCfgFile$(OutputPath)$(TargetSName).lkf 
-String.3.1=cvdwarf $(OutputPath)$(TargetSName).sm8 -fakeVectAddr0x8000
+String.3.1=cvdwarf $(OutputPath)$(TargetSName).sm8 -fakeVectAddr0x8A00
 String.4.0=$(OutputPath)$(TargetFName)
 String.5.0=$(OutputPath)$(ProjectSFile).elf $(OutputPath)$(TargetSName).map
-String.6.0=2024,4,5,18,55,18
+String.6.0=2024,4,7,11,2,13
 String.100.0=
 String.101.0=crtsi.st7
 String.102.0=+seg .const -b 0x8080 -m 0x7f80 -n .const -it 
@@ -202,10 +221,10 @@ String.6.0=2024,4,5,13,9,32
 [Root.Config.1.Settings.6]
 String.2.0=Running Linker
 String.3.0=clnk -fakeRunConv -fakeInteger -fakeSemiAutoGen $(ToolsetLibOpts) -o $(OutputPath)$(TargetSName).sm8 -fakeOutFile$(ProjectSFile).elf -customCfgFile $(OutputPath)$(TargetSName).lkf -fakeVectFilestm8_interrupt_vector.c -fakeStartupcrtsi0.sm8 
-String.3.1=cvdwarf $(OutputPath)$(TargetSName).sm8 -fakeVectAddr0x8000
+String.3.1=cvdwarf $(OutputPath)$(TargetSName).sm8 -fakeVectAddr0x8A00
 String.4.0=$(OutputPath)$(TargetFName)
 String.5.0=$(OutputPath)$(TargetSName).map $(OutputPath)$(TargetSName).st7 $(OutputPath)$(TargetSName).s19
-String.6.0=2024,4,5,18,55,18
+String.6.0=2024,4,7,11,2,13
 String.101.0=crtsi.st7
 String.102.0=+seg .const -b 0x8080 -m 0x7f80 -n .const -it 
 String.102.1=+seg .text -a .const -n .text 
@@ -281,23 +300,23 @@ String.8.0=
 
 [Root.Config.2.Settings.6]
 String.2.0=Running Linker
-String.3.0=clnk $(ToolsetLibOpts) -o $(OutputPath)$(TargetSName).sm8 -fakeInteger -fakeOutFile$(ProjectSFile).elf -fakeRunConv -fakeStartupcrtsi0.sm8 -fakeSemiAutoGen -fakeVectFilestm8_interrupt_vector.c -customMapFile -customMapFile-m$(OutputPath)$(TargetSName).map -customMapAddress -customCfgFile$(OutputPath)$(TargetSName).lkf 
-String.3.1=cvdwarf $(OutputPath)$(TargetSName).sm8 -fakeVectAddr0x8000
+String.3.0=clnk $(ToolsetLibOpts) -o $(OutputPath)$(TargetSName).sm8 -fakeInteger -fakeOutFile$(ProjectSFile).elf -fakeRunConv -fakeStartupcrtsi0.sm8 -fakeSemiAutoGen -fakeVectFilestm8_interrupt_vector.c -fakeVectAddr0x8A00 -customMapFile -customMapFile-m$(OutputPath)$(TargetSName).map -customMapAddress -customCfgFile$(OutputPath)$(TargetSName).lkf 
+String.3.1=cvdwarf $(OutputPath)$(TargetSName).sm8
 String.4.0=$(OutputPath)$(TargetFName)
 String.5.0=$(OutputPath)$(ProjectSFile).elf $(OutputPath)$(TargetSName).map
-String.6.0=2024,4,5,18,55,18
+String.6.0=2024,4,9,14,29,12
 String.100.0=
 String.101.0=crtsi.st7
-String.102.0=+seg .const -b 0x8080 -m 0x7f80 -n .const -it 
-String.102.1=+seg .text -a .const -n .text 
-String.102.2=+seg .eeprom -b 0x4000 -m 0x400 -n .eeprom 
-String.102.3=+seg .bsct -b 0x0 -m 0x100 -n .bsct 
-String.102.4=+seg .ubsct -a .bsct -n .ubsct 
-String.102.5=+seg .bit -a .ubsct -n .bit -id 
-String.102.6=+seg .share -a .bit -n .share -is 
-String.102.7=+seg .data -b 0x100 -m 0x500 -n .data 
+String.102.0=+seg .const -b 0x8A80 -m 0x7580 -n .const -it
+String.102.1=+seg .text -a .const -n .text
+String.102.2=+seg .eeprom -b 0x4000 -m 0x400 -n .eeprom
+String.102.3=+seg .bsct -b 0x0 -m 0x100 -n .bsct
+String.102.4=+seg .ubsct -a .bsct -n .ubsct
+String.102.5=+seg .bit -a .ubsct -n .bit -id
+String.102.6=+seg .share -a .bit -n .share -is
+String.102.7=+seg .data -b 0x100 -m 0x500 -n .data
 String.102.8=+seg .bss -a .data -n .bss
-String.103.0=Code,Constants[0x8080-0xffff]=.const,.text
+String.103.0=Code,Constants[0x8A80-0xffff]=.const,.text
 String.103.1=Eeprom[0x4000-0x43ff]=.eeprom
 String.103.2=Zero Page[0x0-0xff]=.bsct,.ubsct,.bit,.share
 String.103.3=Ram[0x100-0x5ff]=.data,.bss
@@ -315,6 +334,89 @@ String.6.0=2024,4,5,13,9,32
 String.2.0=Performing Custom Build on $(InputFile)
 String.6.0=2024,4,5,13,9,32
 
+[Root.Config.3.Settings.0]
+String.6.0=2024,4,9,15,3,18
+String.100.0=ST Assembler Linker
+String.100.1=ST7 Cosmic
+String.100.2=STM8 Cosmic
+String.100.3=ST7 Metrowerks V1.1
+String.100.4=Raisonance
+String.101.0=STM8 Cosmic
+String.102.0=C:\Program Files (x86)\COSMIC\FSE_Compilers\CXSTM8
+String.103.0=
+String.104.0=Hstm8
+String.105.0=Lib
+String.106.0=Release_(Discovery)
+String.107.0=$(ProjectSFile).elf
+Int.108=0
+
+[Root.Config.3.Settings.1]
+String.6.0=2024,4,5,13,9,32
+String.100.0=$(TargetFName)
+String.101.0=
+String.102.0=
+String.103.0=.\;..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc;..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template;..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src;
+
+[Root.Config.3.Settings.2]
+String.2.0=
+String.6.0=2024,4,5,18,55,18
+String.100.0=STM8S105C6
+
+[Root.Config.3.Settings.3]
+String.2.0=Compiling $(InputFile)...
+String.3.0=cxstm8 +mods0 -customUser+split -customC-pp -dSTM8S105 -dSTM8S105C6 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template" -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
+String.5.0=$(IntermPath)$(InputName).ls
+String.6.0=2024,4,9,15,3,18
+
+[Root.Config.3.Settings.4]
+String.2.0=Assembling $(InputFile)...
+String.3.0=castm8 $(ToolsetIncOpts) -o$(IntermPath)$(InputName).$(ObjectExt) $(InputFile)
+String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
+String.5.0=$(IntermPath)$(InputName).ls
+String.6.0=2024,4,5,13,9,32
+
+[Root.Config.3.Settings.5]
+String.2.0=Running Pre-Link step
+String.6.0=2024,4,5,13,9,32
+String.8.0=
+
+[Root.Config.3.Settings.6]
+String.2.0=Running Linker
+String.3.0=clnk $(ToolsetLibOpts) -o $(OutputPath)$(TargetSName).sm8 -fakeInteger -fakeOutFile$(ProjectSFile).elf -fakeRunConv -fakeStartupcrtsi0.sm8 -fakeSemiAutoGen -fakeVectFilestm8_interrupt_vector.c -fakeVectAddr0x8A00 -customMapFile -customMapFile-m$(OutputPath)$(TargetSName).map -customMapAddress -customCfgFile$(OutputPath)$(TargetSName).lkf 
+String.3.1=cvdwarf $(OutputPath)$(TargetSName).sm8
+String.4.0=$(OutputPath)$(TargetFName)
+String.5.0=$(OutputPath)$(ProjectSFile).elf $(OutputPath)$(TargetSName).map
+String.6.0=2024,4,9,16,10,8
+String.100.0=
+String.101.0=crtsi.st7
+String.102.0=+seg .const -b 0x8A80 -m 0x7580 -n .const -it -k
+String.102.1=+seg .text -a .const -n .text
+String.102.2=+seg .eeprom -b 0x4000 -m 0x400 -n .eeprom
+String.102.3=+seg .bsct -b 0x0 -m 0x100 -n .bsct
+String.102.4=+seg .ubsct -a .bsct -n .ubsct
+String.102.5=+seg .bit -a .ubsct -n .bit -id
+String.102.6=+seg .share -a .bit -n .share -is
+String.102.7=+seg .data -b 0x100 -m 0x500 -n .data
+String.102.8=+seg .bss -a .data -n .bss
+String.103.0=Code,Constants[0x8A80-0xffff]=.const,.text
+String.103.1=Eeprom[0x4000-0x43ff]=.eeprom
+String.103.2=Zero Page[0x0-0xff]=.bsct,.ubsct,.bit,.share
+String.103.3=Ram[0x100-0x5ff]=.data,.bss
+String.104.0=0x7ff
+String.105.0=libis0.sm8;libm0.sm8
+Int.0=0
+Int.1=0
+
+[Root.Config.3.Settings.7]
+String.2.0=Running Post-Build step
+String.3.0=chex -o $(OutputPath)$(TargetSName).s19 $(OutputPath)$(TargetSName).sm8
+String.6.0=2024,4,5,13,9,32
+
+[Root.Config.3.Settings.8]
+String.2.0=Performing Custom Build on $(InputFile)
+String.6.0=2024,4,5,13,9,32
+
 [Root.Source Files]
 ElemType=Folder
 PathName=Source Files
@@ -323,6 +425,7 @@ Next=Root.Include Files
 Config.0=Root.Source Files.Config.0
 Config.1=Root.Source Files.Config.1
 Config.2=Root.Source Files.Config.2
+Config.3=Root.Source Files.Config.3
 
 [Root.Source Files.Config.0]
 Settings.0.0=Root.Source Files.Config.0.Settings.0
@@ -341,6 +444,12 @@ Settings.2.0=Root.Source Files.Config.2.Settings.0
 Settings.2.1=Root.Source Files.Config.2.Settings.1
 Settings.2.2=Root.Source Files.Config.2.Settings.2
 Settings.2.3=Root.Source Files.Config.2.Settings.3
+
+[Root.Source Files.Config.3]
+Settings.3.0=Root.Source Files.Config.3.Settings.0
+Settings.3.1=Root.Source Files.Config.3.Settings.1
+Settings.3.2=Root.Source Files.Config.3.Settings.2
+Settings.3.3=Root.Source Files.Config.3.Settings.3
 
 [Root.Source Files.Config.0.Settings.0]
 String.6.0=2024,4,5,13,9,32
@@ -423,6 +532,33 @@ String.4.0=
 String.5.0=
 String.6.0=2024,4,5,13,9,32
 
+[Root.Source Files.Config.3.Settings.0]
+String.6.0=2024,4,9,15,2,4
+String.8.0=Release_(Discovery)
+Int.0=0
+Int.1=0
+
+[Root.Source Files.Config.3.Settings.1]
+String.2.0=Compiling $(InputFile)...
+String.3.0=cxstm8 +mods0 -customUser+split -customC-pp -dSTM8S105 -dSTM8S105C6 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template" -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
+String.5.0=$(IntermPath)$(InputName).ls
+String.6.0=2024,4,9,15,3,18
+
+[Root.Source Files.Config.3.Settings.2]
+String.2.0=Assembling $(InputFile)...
+String.3.0=castm8 $(ToolsetIncOpts) -o$(IntermPath)$(InputName).$(ObjectExt) $(InputFile)
+String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
+String.5.0=$(IntermPath)$(InputName).ls
+String.6.0=2024,4,5,13,9,32
+
+[Root.Source Files.Config.3.Settings.3]
+String.2.0=Performing Custom Build on $(InputFile)
+String.3.0=
+String.4.0=
+String.5.0=
+String.6.0=2024,4,5,13,9,32
+
 [Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart2.c]
 ElemType=File
 PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart2.c
@@ -440,6 +576,7 @@ Next=Root.Source Files.main.c
 Config.0=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c.Config.0
 Config.1=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c.Config.1
 Config.2=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c.Config.2
+Config.3=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c.Config.3
 
 [Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c.Config.0]
 Settings.0.0=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c.Config.0.Settings.0
@@ -455,6 +592,11 @@ Settings.1.2=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelec
 Settings.2.0=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c.Config.2.Settings.0
 Settings.2.1=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c.Config.2.Settings.1
 Settings.2.2=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c.Config.2.Settings.2
+
+[Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c.Config.3]
+Settings.3.0=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c.Config.3.Settings.0
+Settings.3.1=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c.Config.3.Settings.1
+Settings.3.2=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c.Config.3.Settings.2
 
 [Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c.Config.0.Settings.0]
 String.6.0=2024,4,6,15,3,42
@@ -519,6 +661,27 @@ String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2024,4,6,15,12,35
 String.8.0=Debug_(Discovery)
 
+[Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c.Config.3.Settings.0]
+String.6.0=2024,4,9,15,3,45
+String.8.0=Release_(Discovery)
+Int.0=1
+Int.1=0
+
+[Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c.Config.3.Settings.1]
+String.2.0=Performing Custom Build on $(InputFile)
+String.3.0=
+String.4.0=
+String.5.0=
+String.6.0=2024,4,5,13,9,32
+
+[Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c.Config.3.Settings.2]
+String.2.0=Compiling $(InputFile)...
+String.3.0=cxstm8 +mods0 -customUser+split -customC-pp -dSTM8S105 -dSTM8S105C6 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template" -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
+String.5.0=$(IntermPath)$(InputName).ls
+String.6.0=2024,4,9,15,3,18
+String.8.0=Release_(Discovery)
+
 [Root.Source Files.main.c]
 ElemType=File
 PathName=main.c
@@ -535,6 +698,7 @@ Child=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronic
 Config.0=Root.Include Files.Config.0
 Config.1=Root.Include Files.Config.1
 Config.2=Root.Include Files.Config.2
+Config.3=Root.Include Files.Config.3
 
 [Root.Include Files.Config.0]
 Settings.0.0=Root.Include Files.Config.0.Settings.0
@@ -553,6 +717,12 @@ Settings.2.0=Root.Include Files.Config.2.Settings.0
 Settings.2.1=Root.Include Files.Config.2.Settings.1
 Settings.2.2=Root.Include Files.Config.2.Settings.2
 Settings.2.3=Root.Include Files.Config.2.Settings.3
+
+[Root.Include Files.Config.3]
+Settings.3.0=Root.Include Files.Config.3.Settings.0
+Settings.3.1=Root.Include Files.Config.3.Settings.1
+Settings.3.2=Root.Include Files.Config.3.Settings.2
+Settings.3.3=Root.Include Files.Config.3.Settings.3
 
 [Root.Include Files.Config.0.Settings.0]
 String.6.0=2024,4,5,13,9,32
@@ -629,6 +799,33 @@ String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2024,4,5,13,9,32
 
 [Root.Include Files.Config.2.Settings.3]
+String.2.0=Performing Custom Build on $(InputFile)
+String.3.0=
+String.4.0=
+String.5.0=
+String.6.0=2024,4,5,13,9,32
+
+[Root.Include Files.Config.3.Settings.0]
+String.6.0=2024,4,9,15,2,4
+String.8.0=Release_(Discovery)
+Int.0=0
+Int.1=0
+
+[Root.Include Files.Config.3.Settings.1]
+String.2.0=Compiling $(InputFile)...
+String.3.0=cxstm8 +mods0 -customUser+split -customC-pp -dSTM8S105 -dSTM8S105C6 -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template" -i"..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
+String.5.0=$(IntermPath)$(InputName).ls
+String.6.0=2024,4,9,15,3,18
+
+[Root.Include Files.Config.3.Settings.2]
+String.2.0=Assembling $(InputFile)...
+String.3.0=castm8 $(ToolsetIncOpts) -o$(IntermPath)$(InputName).$(ObjectExt) $(InputFile)
+String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
+String.5.0=$(IntermPath)$(InputName).ls
+String.6.0=2024,4,5,13,9,32
+
+[Root.Include Files.Config.3.Settings.3]
 String.2.0=Performing Custom Build on $(InputFile)
 String.3.0=
 String.4.0=

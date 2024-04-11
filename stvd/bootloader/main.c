@@ -103,14 +103,14 @@ void main(void){
  _asm("LD  XL, A  ");
  _asm("LDW SP, X  ");
  // _asm("JPF $9000");
- _asm("JPF $8C00");
+ _asm("JPF $8A00");
 #elif defined  _IAR_
  asm("LDW X,  SP ");
  asm("LD  A,  $FF");
  asm("LD  XL, A  ");
  asm("LDW SP, X  ");
  // asm("JPF $9000");
- asm("JPF $8C00");
+ asm("JPF $8A00");
 #else /*_RAISONANCE_*/
 #pragma ASM
  LDW X,SP
@@ -150,20 +150,20 @@ void main(void){
  _asm("LD  A,  $FF");
  _asm("LD  XL, A  ");
  _asm("LDW SP, X  ");
- _asm("JPF $9000");
+ _asm("JPF $8A00");
 #elif defined _IAR_
  asm("LDW X,  SP ");
  asm("LD  A,  $FF");
  asm("LD  XL, A  ");
  asm("LDW SP, X  ");
- asm("JPF $9000");
+ asm("JPF $8A00");
 #else /*_RAISONANCE_*/
 #pragma ASM
  LDW X,SP
  LD A,0FFH
  LD XL,A
  LDW SP,X
- JPF 09000H
+ JPF 08A00H
 #pragma ENDASM
 #endif
   }
