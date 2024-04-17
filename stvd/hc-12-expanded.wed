@@ -1,12 +1,6 @@
 [WorkState_v1-Edit.Breakpoints]
-Break0=TypeFile, bootloader\main.c, 345, 0, 1, 1,
-Break1=TypeFile, bootloader\main.c, 359, 0, 1, 1,
-Break2=TypeFile, bootloader\main.c, 354, 0, 1, 1,
-Break3=TypeFile, bootloader\main.c, 371, 0, 1, 1,
-Break4=TypeFile, bootloader\main.c, 364, 0, 1, 1,
-Break5=TypeFile, bootloader\main.c, 769, 0, 1, 1,
-Break6=TypeFile, bootloader\main.c, 324, 0, 1, 1,
-Break7=TypeFile, bootloader\main.c, 334, 0, 1, 1,
+Break0=TypeFile, dumpfirmware\stm8_interrupt_vector.c, 18, 0, 1, 1,
+Break1=TypeFile, dumpfirmware\main.c, 80, 0, 1, 1,
 
 [WorkState_v1_2]
 ptn_Child1=DockState
@@ -53,7 +47,7 @@ ptn_Child33=Bar-32
 
 [WorkState_v1_2.DockState.Bar-0]
 BarID=59419
-Bars=22
+Bars=25
 Bar#0=0
 Bar#1=59647
 Bar#2=0
@@ -76,6 +70,9 @@ Bar#18=0
 Bar#19=71256
 Bar#20=0
 Bar#21=0
+Bar#22=0
+Bar#23=0
+Bar#24=0
 Style=0
 ExStyle=0
 PrevFloating=False
@@ -583,9 +580,9 @@ MRUWidth=23
 Docking=True
 MRUDockID=59419
 MRUDockLeftPos=925
-MRUDockTopPos=31
+MRUDockTopPos=28
 MRUDockRightPos=965
-MRUDockBottomPos=61
+MRUDockBottomPos=58
 MRUFloatStyle=8196
 MRUFloatXPos=-1
 MRUFloatYPos=0
@@ -745,7 +742,7 @@ MRUDockID=59420
 MRUDockLeftPos=1
 MRUDockTopPos=-2
 MRUDockRightPos=355
-MRUDockBottomPos=724
+MRUDockBottomPos=515
 MRUFloatStyle=8192
 MRUFloatXPos=131
 MRUFloatYPos=121
@@ -762,7 +759,7 @@ MRUFloatCY=180
 MRUHorzDockCX=1919
 MRUHorzDockCY=508
 MRUVertDockCX=354
-MRUVertDockCY=726
+MRUVertDockCY=517
 MRUDockingState=0
 DockingStyle=61440
 TypeID=0
@@ -779,7 +776,7 @@ MRUDockID=59422
 MRUDockLeftPos=1
 MRUDockTopPos=5
 MRUDockRightPos=1920
-MRUDockBottomPos=182
+MRUDockBottomPos=391
 MRUFloatStyle=4
 MRUFloatXPos=-1
 MRUFloatYPos=0
@@ -794,7 +791,7 @@ PctWidth=1000000
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=1919
-MRUHorzDockCY=177
+MRUHorzDockCY=386
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -864,7 +861,7 @@ PctWidth=500000
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=300
-MRUHorzDockCY=177
+MRUHorzDockCY=386
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -1074,7 +1071,7 @@ PctWidth=666665
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=300
-MRUHorzDockCY=177
+MRUHorzDockCY=386
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -1109,7 +1106,7 @@ PctWidth=750000
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=300
-MRUHorzDockCY=177
+MRUHorzDockCY=386
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -1144,7 +1141,7 @@ PctWidth=800000
 MRUFloatCX=300
 MRUFloatCY=180
 MRUHorzDockCX=300
-MRUHorzDockCY=177
+MRUHorzDockCY=386
 MRUVertDockCX=300
 MRUVertDockCY=180
 MRUDockingState=0
@@ -1257,21 +1254,25 @@ ptn_Child1=MainFrame
 ptn_Child2=ChildFrames
 
 [WorkState_v1_2.Frames.MainFrame]
-WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAAADIPPPPAADIPPPPPPPPPPPPPPPPPPPPGNDAAAAAFOAAAAAADIHAAAAAEIDAAAAA
-Title=ST Visual Develop - hc-12-expanded.stw - [stm8s_conf.h]
+WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPGNDAAAAAFOAAAAAADIHAAAAAEIDAAAAA
+Title=ST Visual Develop - hc-12-expanded.stw - [dumper.c]
 
 [WorkState_v1_2.Frames.ChildFrames]
 ptn_Child1=Document-0
 ptn_Child2=Document-1
+ptn_Child3=Document-2
+ptn_Child4=Document-3
+ptn_Child5=Document-4
+ptn_Child6=Document-5
 
 [WorkState_v1_2.Frames.ChildFrames.Document-0]
 ptn_Child1=ViewFrame-0
 
 [WorkState_v1_2.Frames.ChildFrames.Document-0.ViewFrame-0]
-DocPathName=bootloader\main.c
+DocPathName=dumpfirmware\stm8_interrupt_vector.c
 DocumentString=
 DocTemplateIndex=0
-WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPIGAAAAAAIGAAAAAAFMFAAAAAELBAAAAA
+WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPKBAAAAAAKBAAAAAAGEFAAAAAAIBAAAAA
 IsActiveChildFrame=False
 IsFrameVisible=True
 
@@ -1279,9 +1280,53 @@ IsFrameVisible=True
 ptn_Child1=ViewFrame-0
 
 [WorkState_v1_2.Frames.ChildFrames.Document-1.ViewFrame-0]
-DocPathName=..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template\stm8s_conf.h
+DocPathName=dumpfirmware\dumper.c
 DocumentString=
 DocTemplateIndex=0
-WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPKBAAAAAAKBAAAAAALHFAAAAAKGBAAAAA
+WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPEDAAAAAAEDAAAAAAAGFAAAAAKJBAAAAA
 IsActiveChildFrame=True
+IsFrameVisible=True
+
+[WorkState_v1_2.Frames.ChildFrames.Document-2]
+ptn_Child1=ViewFrame-0
+
+[WorkState_v1_2.Frames.ChildFrames.Document-2.ViewFrame-0]
+DocPathName=dumpfirmware\main.c
+DocumentString=
+DocTemplateIndex=0
+WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPOEAAAAAAOEAAAAAAKHFAAAAAELBAAAAA
+IsActiveChildFrame=False
+IsFrameVisible=True
+
+[WorkState_v1_2.Frames.ChildFrames.Document-3]
+ptn_Child1=ViewFrame-0
+
+[WorkState_v1_2.Frames.ChildFrames.Document-3.ViewFrame-0]
+DocPathName=..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_clk.c
+DocumentString=
+DocTemplateIndex=0
+WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPOEAAAAAAOEAAAAAAPKFAAAAAHIBAAAAA
+IsActiveChildFrame=False
+IsFrameVisible=True
+
+[WorkState_v1_2.Frames.ChildFrames.Document-4]
+ptn_Child1=ViewFrame-0
+
+[WorkState_v1_2.Frames.ChildFrames.Document-4.ViewFrame-0]
+DocPathName=receiver\main.c
+DocumentString=
+DocTemplateIndex=0
+WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPIGAAAAAAIGAAAAAAJMFAAAAABKBAAAAA
+IsActiveChildFrame=False
+IsFrameVisible=True
+
+[WorkState_v1_2.Frames.ChildFrames.Document-5]
+ptn_Child1=ViewFrame-0
+
+[WorkState_v1_2.Frames.ChildFrames.Document-5.ViewFrame-0]
+DocPathName=..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_clk.h
+DocumentString=
+DocTemplateIndex=0
+WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPCIAAAAAACIAAAAAADOFAAAAALLBAAAAA
+IsActiveChildFrame=False
 IsFrameVisible=True

@@ -22,7 +22,11 @@ Dependencies=
 [Project4]
 Filename=sample\sample.stp
 Dependencies=
+
+[Project5]
+Filename=dumpfirmware\dumpfirmware.stp
+Dependencies=
 [Options]
-ActiveProject=sample
-ActiveConfig=Release (Discovery)
+ActiveProject=dumpfirmware
+ActiveConfig=Debug
 AddSortedElements=0

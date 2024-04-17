@@ -105,7 +105,7 @@ class SRec:
             line = s19file.readline()
             while line:
                 record: SRec = SRec()
-                print(vars(record))
+                # print(vars(record))
                 line = line.strip()
                 assert len(line) >= 10, "SRecord '%s' is too short." % line
 
@@ -131,9 +131,7 @@ class SRec:
                 # Now validate the checksum which is calculated over byte count,
                 # address and data fields.
                 crcInput: str = int(line[-2:], 16)
-                assert record.crc == crcInput, "CRC of '%2.2x' was not the expected value of '%s'." % (record.crc, crcInput)
-
-
+                assert record.crc == crcInput, "CRC of '%2.2x' was not the expected value of '%2.2X' in '%s'." % (record.crc, crcInput, line)
                 records.append(record)
 
                 # Next line.

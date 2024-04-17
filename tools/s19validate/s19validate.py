@@ -27,6 +27,7 @@ def main(argv: List[str]) -> int:
         elif record.type == SRecType.START16:
             startAddress = int(record.address, 16)
 
+    print("Stats...")
     print(recordsCount)
     print("%4.4X" % minAddress)
     print("%4.4X" % maxAddress)
