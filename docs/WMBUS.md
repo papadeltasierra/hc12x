@@ -1,5 +1,7 @@
 # 44363 Settings for WMBUS
 
+> Ignore this.  The Wireless Development Suite will generate the correct configuration for a 4463 so we don't have to calculate this ourselves!
+
 ## T1 mode
 - Only RX is supported initially.
 
