@@ -12,21 +12,21 @@ Filename=bootloader\bootloader.stp
 Dependencies=
 
 [Project2]
-Filename=application\application.stp
-Dependencies=
-
-[Project3]
 Filename=receiver\receiver.stp
 Dependencies=
 
-[Project4]
+[Project3]
 Filename=sample\sample.stp
 Dependencies=
 
-[Project5]
+[Project4]
 Filename=dumpfirmware\dumpfirmware.stp
 Dependencies=
+
+[Project5]
+Filename=application\application.stp
+Dependencies=
 [Options]
-ActiveProject=dumpfirmware
+ActiveProject=application
 ActiveConfig=Debug
 AddSortedElements=0
