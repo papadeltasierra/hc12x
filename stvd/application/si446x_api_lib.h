@@ -36,7 +36,10 @@ enum
 void si446x_reset(void);
 void si446x_power_up(uint8_t BOOT_OPTIONS, uint8_t XTAL_OPTIONS, uint32_t XO_FREQ);
 
-uint8_t si446x_configuration_init(const uint8_t* pSetPropCmd);
+uint8_t si446x_configuration_init(
+    const uint8_t* pSetPropCmd,
+    const uint8_t *pCustomSet,
+    const uint8_t *pPowerSet);
 uint8_t si446x_apply_patch(void);
 void si446x_part_info(void);
 

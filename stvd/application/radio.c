@@ -23,22 +23,27 @@
 #if defined(STM8S003) || defined(STM8S105)
 uint8_t Radio_Configuration_Data_Array[] = RADIO_CONFIGURATION_DATA_ARRAY;
 
-const tRadioConfiguration RadioConfiguration = RADIO_CONFIGURATION_DATA;
+const tRadioConfiguration FixedRadioConfiguration = RADIO_FIXED_CONFIGURATION_DATA;
+#pragma segment(ecode)
+const tRadioConfiguration CustomRadioConfiguration = RADIO_CUSTOM_CONFIGURATION_DATA;
+#pragma segment()
+const tRadioConfiguration PowerRadioConfiguration = RADIO_POWER_CONFIGURATION_DATA;
 
-const tRadioConfiguration *pRadioConfiguration = &RadioConfiguration;
+const tRadioConfiguration *pFixedRadioConfiguration = &FixedRadioConfiguration;
+const tRadioConfiguration *pCustomRadioConfiguration = &CustomRadioConfiguration;
+const tRadioConfiguration *pPowerRadioConfiguration = &PowerRadioConfiguration;
 
-
-uint8_t fixRadioPacket[RADIO_MAX_PACKET_LENGTH];
+uint8_t rxRadioPacket[RADIO_MAX_PACKET_LENGTH];
+uint8_t txRadioPacket[RADIO_MAX_PACKET_LENGTH];
 #else
-const SEGMENT_VARIABLE(Radio_Configuration_Data_Array[], uint8_t, SEG_CODE) = \
-              RADIO_CONFIGURATION_DATA_ARRAY;
+const SEGMENT_VARIABLE(Radio_Configuration_Data_Array[], uint8_t, SEG_CODE) =
+    RADIO_CONFIGURATION_DATA_ARRAY;
 
-const SEGMENT_VARIABLE(RadioConfiguration, tRadioConfiguration, SEG_CODE) = \
-                        RADIO_CONFIGURATION_DATA;
+const SEGMENT_VARIABLE(RadioConfiguration, tRadioConfiguration, SEG_CODE) =
+    RADIO_CONFIGURATION_DATA;
 
-const SEGMENT_VARIABLE_SEGMENT_POINTER(pRadioConfiguration, tRadioConfiguration, SEG_CODE, SEG_CODE) = \
-                        &RadioConfiguration;
-
+const SEGMENT_VARIABLE_SEGMENT_POINTER(pRadioConfiguration, tRadioConfiguration, SEG_CODE, SEG_CODE) =
+    &RadioConfiguration;
 
 SEGMENT_VARIABLE(fixRadioPacket[RADIO_MAX_PACKET_LENGTH], uint8_t, SEG_XDATA);
 #endif
@@ -56,17 +61,14 @@ void vRadio_PowerUp(void);
 @tiny static uint16_t wDelay = 0u;
 void vRadio_PowerUp(void)
 {
-#if defined (STM8S003) || defined(STM8S105)
-#else
-	// !!PDS: Trying to make these global not stack??
-  SEGMENT_VARIABLE(wDelay,  uint16_t, SEG_XDATA) = 0u;
-#endif
+    @tiny uint16_t wDelay = 0u;
 
-  /* Hardware reset the chip */
-  si446x_reset();
+    /* Hardware reset the chip */
+    si446x_reset();
 
-  /* Wait until reset timeout or Reset IT signal */
-  for (; wDelay < pRadioConfiguration->Radio_Delay_Cnt_After_Reset; wDelay++);
+    /* Wait until reset timeout or Reset IT signal */
+    for (; wDelay < pFixedRadioConfiguration->Radio_Delay_Cnt_After_Reset; wDelay++)
+        ;
 }
 
 /*!
@@ -79,23 +81,28 @@ void vRadio_PowerUp(void)
  */
 void vRadio_Init(void)
 {
-  uint16_t wDelay;
-
-  /* Power Up the radio chip */
-  vRadio_PowerUp();
-
-  /* Load radio configuration */
-  while (SI446X_SUCCESS != si446x_configuration_init(pRadioConfiguration->Radio_ConfigurationArray))
-  {
-    /* Error hook */
-    for (wDelay = 0x7FFF; wDelay--; ) ;
+    uint16_t wDelay;
 
     /* Power Up the radio chip */
     vRadio_PowerUp();
-  }
 
-  // Read ITs, clear pending ones
-  si446x_get_int_status(0u, 0u, 0u);
+    /* Load radio configuration */
+    while (SI446X_SUCCESS != si446x_configuration_init(
+        pFixedRadioConfiguration->Radio_ConfigurationArray,
+        pCustomRadioConfiguration->Radio_ConfigurationArray,
+        pPowerRadioConfiguration->Radio_ConfigurationArray
+        ))
+    {
+        /* Error hook */
+        for (wDelay = 0x7FFF; wDelay--;)
+            ;
+
+        /* Power Up the radio chip */
+        vRadio_PowerUp();
+    }
+
+    // Read ITs, clear pending ones
+    si446x_get_int_status(0u, 0u, 0u);
 }
 
 /*!
@@ -108,43 +115,27 @@ void vRadio_Init(void)
  */
 BitStatus gRadio_CheckReceived(void)
 {
-
-  // !!PDS: Need to understand how these work!!  if (RF_NIRQ == FALSE)
-	if (1)
-  {
     /* Read ITs, clear pending ones */
     si446x_get_int_status(0u, 0u, 0u);
 
     /* check the reason for the IT */
     if (Si446xCmd.GET_INT_STATUS.PH_PEND & SI446X_CMD_GET_INT_STATUS_REP_PH_PEND_PACKET_RX_PEND_BIT)
     {
-      /* Packet RX */
-      si446x_read_rx_fifo(RadioConfiguration.Radio_PacketLength, (uint8_t *) &fixRadioPacket[0u]);
+        /* Packet RX */
 
-#ifdef UART_LOGGING_SUPPORT
-      {
-          uint8_t lCnt;
+        /* Get payload length */
+        si446x_fifo_info(0x00);
 
-          /* Send it to UART */
-          for (lCnt = 0u; lCnt < RadioConfiguration.Radio_PacketLength; lCnt++)
-          {
-            Comm_IF_SendUART(*((uint8_t *) &fixRadioPacket[0u] + lCnt));
-          }
-          Comm_IF_SendUART('\n');
-      }
-#endif
-
-      return TRUE;
+        si446x_read_rx_fifo(Si446xCmd.FIFO_INFO.RX_FIFO_COUNT, &rxRadioPacket[0]);
+        return TRUE;
     }
 
     if (Si446xCmd.GET_INT_STATUS.PH_PEND & SI446X_CMD_GET_INT_STATUS_REP_PH_STATUS_CRC_ERROR_BIT)
     {
-      /* Reset FIFO */
-      si446x_fifo_info(SI446X_CMD_FIFO_INFO_ARG_FIFO_RX_BIT);
+        /* Reset FIFO */
+        si446x_fifo_info(SI446X_CMD_FIFO_INFO_ARG_FIFO_RX_BIT);
     }
-  }
-
-  return FALSE;
+    return FALSE;
 }
 
 /*!
@@ -157,17 +148,33 @@ BitStatus gRadio_CheckReceived(void)
  */
 void vRadio_StartRX(uint8_t channel)
 {
+    // Read ITs, clear pending ones
+    si446x_get_int_status(0u, 0u, 0u);
+
+    /* Start Receiving packet, channel 0, START immediately, Packet n bytes long */
+		// !!PDS: Duplication.
+    si446x_start_rx(channel, 0u, FixedRadioConfiguration.Radio_PacketLength,
+                    SI446X_CMD_START_RX_ARG_NEXT_STATE1_RXTIMEOUT_STATE_ENUM_NOCHANGE,
+                    SI446X_CMD_START_RX_ARG_NEXT_STATE2_RXVALID_STATE_ENUM_RX,
+                    SI446X_CMD_START_RX_ARG_NEXT_STATE3_RXINVALID_STATE_ENUM_RX);
+}
+
+/*!
+ *  Set Radio to TX mode, fixed packet length.
+ *
+ *  @param channel Freq. Channel, Packet to be sent
+ *
+ *  @note
+ *
+ */
+void  vRadio_StartTx(uint8_t channel, uint8_t length, uint8_t *pioFixRadioPacket)
+{
   // Read ITs, clear pending ones
   si446x_get_int_status(0u, 0u, 0u);
 
-  /* Start Receiving packet, channel 0, START immediately, Packet n bytes long */
-  si446x_start_rx(channel, 0u, RadioConfiguration.Radio_PacketLength,
-                  SI446X_CMD_START_RX_ARG_NEXT_STATE1_RXTIMEOUT_STATE_ENUM_NOCHANGE,
-                  SI446X_CMD_START_RX_ARG_NEXT_STATE2_RXVALID_STATE_ENUM_RX,
-                  SI446X_CMD_START_RX_ARG_NEXT_STATE3_RXINVALID_STATE_ENUM_RX );
+  /* Fill the TX fifo with datas */
+  si446x_write_tx_fifo(length, pioFixRadioPacket);
 
-#if !defined(STM8S003) && !defined(STM8S105)
-  /* Switch on LED1 to show RX state */
-  vHmi_ChangeLedState(eHmi_Led1_c, eHmi_LedOn_c);
-#endif
+  /* Start sending packet, channel 0, START immediately, Packet n bytes long, go READY when done */
+  si446x_start_tx(channel, 0x80,  length);
 }

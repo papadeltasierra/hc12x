@@ -50,7 +50,15 @@
 // Command:                  RF_GPIO_PIN_CFG
 // Description:              Configures the GPIO pins.
 */
-#define RF_GPIO_PIN_CFG 0x13, 0x0C, 0x08, 0x03, 0x03, 0x27, 0x0B, 0x00
+#define RF_GPIO_PIN_CFG 0x13, 0x60, 0x48, 0x57, 0x56, 0x5A, 0x4B, 0x00
+
+// GPIO0 - TX_STATE, pull-up
+// GPIO1 - CTS, pull-up
+// GPIO2 - ANTENNA_SW_2, pull-up ????
+// GPIO3 - ANTENNA_SW_1, pull-up
+// NIRQ  - SYNC_WORD_DETECT, pull-up
+// SDO   - SDO, pull-up
+// Drive strength - HIGH
 
 /*
 // Set properties:           RF_GLOBAL_XO_TUNE_2
@@ -622,22 +630,7 @@
 #define RADIO_CONFIGURATION_DATA_RADIO_DELAY_CNT_AFTER_RESET  RADIO_CONFIGURATION_DATA_RADIO_DELAY_CNT_AFTER_RESET_DEFAULT
 #endif
 
-// !!PDS: Need to split these and create a tool to do it!
-#define RADIO_FIXED_CONFIGURATION_DATA { \
-                            Radio_Configuration_Data_Array,                            \
-                            RADIO_CONFIGURATION_DATA_CHANNEL_NUMBER,                   \
-                            RADIO_CONFIGURATION_DATA_RADIO_PACKET_LENGTH,              \
-                            RADIO_CONFIGURATION_DATA_RADIO_STATE_AFTER_POWER_UP,       \
-                            RADIO_CONFIGURATION_DATA_RADIO_DELAY_CNT_AFTER_RESET       \
-                            }
-#define RADIO_CUSTOM_CONFIGURATION_DATA { \
-                            Radio_Configuration_Data_Array,                            \
-                            RADIO_CONFIGURATION_DATA_CHANNEL_NUMBER,                   \
-                            RADIO_CONFIGURATION_DATA_RADIO_PACKET_LENGTH,              \
-                            RADIO_CONFIGURATION_DATA_RADIO_STATE_AFTER_POWER_UP,       \
-                            RADIO_CONFIGURATION_DATA_RADIO_DELAY_CNT_AFTER_RESET       \
-                            }
-#define RADIO_POWER_CONFIGURATION_DATA { \
+#define RADIO_CONFIGURATION_DATA { \
                             Radio_Configuration_Data_Array,                            \
                             RADIO_CONFIGURATION_DATA_CHANNEL_NUMBER,                   \
                             RADIO_CONFIGURATION_DATA_RADIO_PACKET_LENGTH,              \

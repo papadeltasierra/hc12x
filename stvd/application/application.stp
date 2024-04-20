@@ -217,7 +217,7 @@ String.6.0=2024,4,17,18,30,16
 [Root.Source Files]
 ElemType=Folder
 PathName=Source Files
-Child=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_gpio.c
+Child=Root.Source Files.stm8s_it.c
 Next=Root.Include Files
 Config.0=Root.Source Files.Config.0
 Config.1=Root.Source Files.Config.1
@@ -288,6 +288,16 @@ String.4.0=
 String.5.0=
 String.6.0=2024,4,17,18,30,16
 
+[Root.Source Files.stm8s_it.c]
+ElemType=File
+PathName=stm8s_it.c
+Next=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_exti.c
+
+[Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_exti.c]
+ElemType=File
+PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_exti.c
+Next=Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_gpio.c
+
 [Root.Source Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_gpio.c]
 ElemType=File
 PathName=..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_gpio.c
@@ -340,7 +350,7 @@ PathName=main.c
 [Root.Include Files]
 ElemType=Folder
 PathName=Include Files
-Child=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template\stm8s_conf.h
+Child=Root.Include Files.stm8s_it.h
 Config.0=Root.Include Files.Config.0
 Config.1=Root.Include Files.Config.1
 
@@ -409,6 +419,11 @@ String.3.0=
 String.4.0=
 String.5.0=
 String.6.0=2024,4,17,18,30,16
+
+[Root.Include Files.stm8s_it.h]
+ElemType=File
+PathName=stm8s_it.h
+Next=Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template\stm8s_conf.h
 
 [Root.Include Files...\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template\stm8s_conf.h]
 ElemType=File

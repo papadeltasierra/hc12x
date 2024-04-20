@@ -35,8 +35,11 @@ typedef struct
  *****************************************************************************/
 // !!PDS: Not clear what we need here but these need to be variables of some sort!
 #if defined(STM8S003) || defined(STM8S105)
-extern const tRadioConfiguration *pRadioConfiguration;
-extern uint8_t fixRadioPacket[RADIO_MAX_PACKET_LENGTH];
+extern const tRadioConfiguration *pFixedRadioConfiguration;
+extern const tRadioConfiguration *pCustomRadioConfiguration;
+extern const tRadioConfiguration *pPowerRadioConfiguration;
+extern uint8_t rxRadioPacket[RADIO_MAX_PACKET_LENGTH];
+extern uint8_t txRadioPacket[RADIO_MAX_PACKET_LENGTH];
 
 /*! Si446x configuration array */
 extern const uint8_t Radio_Configuration_Data_Array[];
@@ -51,8 +54,9 @@ extern const SEGMENT_VARIABLE(Radio_Configuration_Data_Array[], uint8_t, SEG_COD
  *  Global Function Declarations
  *****************************************************************************/
 void  vRadio_Init(void);
-BitStatus   gRadio_CheckReceived(void);
+BitStatus gRadio_CheckReceived(void);
 void  vRadio_StartRX(uint8_t);
+void  vRadio_StartTx(uint8_t channel, uint8_t length, uint8_t *pioFixRadioPacket);
 uint8_t    bRadio_Check_Ezconfig(uint16_t);
 
 #endif /* RADIO_H_ */

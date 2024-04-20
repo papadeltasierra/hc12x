@@ -20,14 +20,14 @@ union si446x_cmd_reply_union Si446xCmd;
 uint8_t Pro2Cmd[16];
 
 #ifdef SI446X_PATCH_CMDS
-uint8_t Si446xPatchCommands[][8] = { SI446X_PATCH_CMDS };
+uint8_t Si446xPatchCommands[][8] = {SI446X_PATCH_CMDS};
 #endif
 #else
-SEGMENT_VARIABLE( Si446xCmd, union si446x_cmd_reply_union, SEG_XDATA );
-SEGMENT_VARIABLE( Pro2Cmd[16], uint8_t, SEG_XDATA );
+SEGMENT_VARIABLE(Si446xCmd, union si446x_cmd_reply_union, SEG_XDATA);
+SEGMENT_VARIABLE(Pro2Cmd[16], uint8_t, SEG_XDATA);
 
 #ifdef SI446X_PATCH_CMDS
-SEGMENT_VARIABLE( Si446xPatchCommands[][8] = { SI446X_PATCH_CMDS }, uint8_t, SEG_CODE);
+SEGMENT_VARIABLE(Si446xPatchCommands[][8] = {SI446X_PATCH_CMDS}, uint8_t, SEG_CODE);
 #endif
 #endif
 
@@ -44,9 +44,11 @@ void si446x_reset(void)
     /* Put radio in shutdown, wait then release */
     radio_hal_AssertShutdown();
     //! @todo this needs to be a better delay function.
-    for (loopCount = 255; loopCount != 0; loopCount--);
+    for (loopCount = 255; loopCount != 0; loopCount--)
+        ;
     radio_hal_DeassertShutdown();
-    for (loopCount = 255; loopCount != 0; loopCount--);
+    for (loopCount = 255; loopCount != 0; loopCount--)
+        ;
     radio_comm_ClearCTS();
 }
 
@@ -64,63 +66,82 @@ void si446x_power_up(uint8_t BOOT_OPTIONS, uint8_t XTAL_OPTIONS, uint32_t XO_FRE
     Pro2Cmd[5] = (uint8_t)(XO_FREQ >> 8);
     Pro2Cmd[6] = (uint8_t)(XO_FREQ);
 
-    radio_comm_SendCmd( SI446X_CMD_ARG_COUNT_POWER_UP, Pro2Cmd );
+    radio_comm_SendCmd(SI446X_CMD_ARG_COUNT_POWER_UP, Pro2Cmd);
 }
 
 /*!
  * This function is used to load all properties and commands with a list of NULL terminated commands.
  * Before this function @si446x_reset should be called.
+ *
+ * Configuration is split in three for the HC-12:
+ * - Fixed configuration such a pin-functions
+ * - Custom configuration such as transmission, preamble etc
+ * - Fixed final power-up settings.
+ *
+ * The custom configuration is stored in EEPROM and can be configured by
+ * writing new data to the EEPROM.
  */
 @tiny static uint8_t col;
 @tiny static uint8_t numOfBytes;
-uint8_t si446x_configuration_init(const uint8_t* pSetPropCmd)
+uint8_t _si446x_configuration_init(const uint8_t *pSetPropCmd);
+uint8_t si446x_configuration_init(
+    const uint8_t *pSetPropCmd,
+    const uint8_t *pCustomSet,
+    const uint8_t *pPowerSet)
+{
+    _si446x_configuration_init(pSetPropCmd);
+    _si446x_configuration_init(pCustomSet);
+    _si446x_configuration_init(pPowerSet);
+}
+
+uint8_t _si446x_configuration_init(const uint8_t *pSetPropCmd)
 {
 #if defined(STM8S003) || defined(STM8S105)
 #else
-  SEGMENT_VARIABLE(col, uint8_t, SEG_DATA);
-  SEGMENT_VARIABLE(numOfBytes, uint8_t, SEG_DATA);
+    SEGMENT_VARIABLE(col, uint8_t, SEG_DATA);
+    SEGMENT_VARIABLE(numOfBytes, uint8_t, SEG_DATA);
 #endif
 
-  /* While cycle as far as the pointer points to a command */
-  while (*pSetPropCmd != 0x00)
-  {
-    /* Commands structure in the array:
-     * --------------------------------
-     * LEN | <LEN length of data>
-     */
-
-    numOfBytes = *pSetPropCmd++;
-
-    if (numOfBytes > 16u)
+    /* While cycle as far as the pointer points to a command */
+    while (*pSetPropCmd != 0x00)
     {
-      /* Number of command bytes exceeds maximal allowable length */
-      return SI446X_COMMAND_ERROR;
+        /* Commands structure in the array:
+         * --------------------------------
+         * LEN | <LEN length of data>
+         */
+
+        numOfBytes = *pSetPropCmd++;
+
+        if (numOfBytes > 16u)
+        {
+            /* Number of command bytes exceeds maximal allowable length */
+            return SI446X_COMMAND_ERROR;
+        }
+
+        for (col = 0u; col < numOfBytes; col++)
+        {
+            Pro2Cmd[col] = *pSetPropCmd;
+            pSetPropCmd++;
+        }
+
+        if (radio_comm_SendCmdGetResp(numOfBytes, Pro2Cmd, 0, 0) != 0xFF)
+        {
+            /* Timeout occured */
+            return SI446X_CTS_TIMEOUT;
+        }
+
+        if (radio_hal_NirqLevel() == 0)
+        {
+            /* Get and clear all interrupts.  An error has occured... */
+            si446x_get_int_status(0, 0, 0);
+            if (Si446xCmd.GET_INT_STATUS.CHIP_PEND & SI446X_CMD_GET_CHIP_STATUS_REP_CHIP_PEND_CMD_ERROR_PEND_MASK)
+            {
+                return SI446X_COMMAND_ERROR;
+            }
+        }
     }
 
-    for (col = 0u; col < numOfBytes; col++)
-    {
-      Pro2Cmd[col] = *pSetPropCmd;
-      pSetPropCmd++;
-    }
-
-    if (radio_comm_SendCmdGetResp(numOfBytes, Pro2Cmd, 0, 0) != 0xFF)
-    {
-      /* Timeout occured */
-      return SI446X_CTS_TIMEOUT;
-    }
-
-    if (radio_hal_NirqLevel() == 0)
-    {
-      /* Get and clear all interrupts.  An error has occured... */
-      si446x_get_int_status(0, 0, 0);
-      if (Si446xCmd.GET_INT_STATUS.CHIP_PEND & SI446X_CMD_GET_CHIP_STATUS_REP_CHIP_PEND_CMD_ERROR_PEND_MASK)
-      {
-        return SI446X_COMMAND_ERROR;
-      }
-    }
-  }
-
-  return SI446X_SUCCESS;
+    return SI446X_SUCCESS;
 }
 
 /*! This function sends the PART_INFO command to the radio and receives the answer
@@ -130,19 +151,19 @@ void si446x_part_info(void)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_PART_INFO;
 
-    radio_comm_SendCmdGetResp( SI446X_CMD_ARG_COUNT_PART_INFO,
+    radio_comm_SendCmdGetResp(SI446X_CMD_ARG_COUNT_PART_INFO,
                               Pro2Cmd,
                               SI446X_CMD_REPLY_COUNT_PART_INFO,
-                              Pro2Cmd );
+                              Pro2Cmd);
 
-    Si446xCmd.PART_INFO.CHIPREV         = Pro2Cmd[0];
-    Si446xCmd.PART_INFO.PART            = ((uint16_t)Pro2Cmd[1] << 8) & 0xFF00;
-    Si446xCmd.PART_INFO.PART           |= (uint16_t)Pro2Cmd[2] & 0x00FF;
-    Si446xCmd.PART_INFO.PBUILD          = Pro2Cmd[3];
-    Si446xCmd.PART_INFO.ID              = ((uint16_t)Pro2Cmd[4] << 8) & 0xFF00;
-    Si446xCmd.PART_INFO.ID             |= (uint16_t)Pro2Cmd[5] & 0x00FF;
-    Si446xCmd.PART_INFO.CUSTOMER        = Pro2Cmd[6];
-    Si446xCmd.PART_INFO.ROMID           = Pro2Cmd[7];
+    Si446xCmd.PART_INFO.CHIPREV = Pro2Cmd[0];
+    Si446xCmd.PART_INFO.PART = ((uint16_t)Pro2Cmd[1] << 8) & 0xFF00;
+    Si446xCmd.PART_INFO.PART |= (uint16_t)Pro2Cmd[2] & 0x00FF;
+    Si446xCmd.PART_INFO.PBUILD = Pro2Cmd[3];
+    Si446xCmd.PART_INFO.ID = ((uint16_t)Pro2Cmd[4] << 8) & 0xFF00;
+    Si446xCmd.PART_INFO.ID |= (uint16_t)Pro2Cmd[5] & 0x00FF;
+    Si446xCmd.PART_INFO.CUSTOMER = Pro2Cmd[6];
+    Si446xCmd.PART_INFO.ROMID = Pro2Cmd[7];
 }
 
 /*! Sends START_TX command to the radio.
@@ -164,7 +185,7 @@ void si446x_start_tx(uint8_t CHANNEL, uint8_t CONDITION, uint16_t TX_LEN)
     // ie. transmit the packet only once
     Pro2Cmd[6] = 0x00;
 
-    radio_comm_SendCmd( SI446X_CMD_ARG_COUNT_START_TX, Pro2Cmd );
+    radio_comm_SendCmd(SI446X_CMD_ARG_COUNT_START_TX, Pro2Cmd);
 }
 
 /*!
@@ -188,7 +209,7 @@ void si446x_start_rx(uint8_t CHANNEL, uint8_t CONDITION, uint16_t RX_LEN, uint8_
     Pro2Cmd[6] = NEXT_STATE2;
     Pro2Cmd[7] = NEXT_STATE3;
 
-    radio_comm_SendCmd( SI446X_CMD_ARG_COUNT_START_RX, Pro2Cmd );
+    radio_comm_SendCmd(SI446X_CMD_ARG_COUNT_START_RX, Pro2Cmd);
 }
 
 /*!
@@ -205,19 +226,19 @@ void si446x_get_int_status(uint8_t PH_CLR_PEND, uint8_t MODEM_CLR_PEND, uint8_t 
     Pro2Cmd[2] = MODEM_CLR_PEND;
     Pro2Cmd[3] = CHIP_CLR_PEND;
 
-    radio_comm_SendCmdGetResp( SI446X_CMD_ARG_COUNT_GET_INT_STATUS,
+    radio_comm_SendCmdGetResp(SI446X_CMD_ARG_COUNT_GET_INT_STATUS,
                               Pro2Cmd,
                               SI446X_CMD_REPLY_COUNT_GET_INT_STATUS,
-                              Pro2Cmd );
+                              Pro2Cmd);
 
-    Si446xCmd.GET_INT_STATUS.INT_PEND       = Pro2Cmd[0];
-    Si446xCmd.GET_INT_STATUS.INT_STATUS     = Pro2Cmd[1];
-    Si446xCmd.GET_INT_STATUS.PH_PEND        = Pro2Cmd[2];
-    Si446xCmd.GET_INT_STATUS.PH_STATUS      = Pro2Cmd[3];
-    Si446xCmd.GET_INT_STATUS.MODEM_PEND     = Pro2Cmd[4];
-    Si446xCmd.GET_INT_STATUS.MODEM_STATUS   = Pro2Cmd[5];
-    Si446xCmd.GET_INT_STATUS.CHIP_PEND      = Pro2Cmd[6];
-    Si446xCmd.GET_INT_STATUS.CHIP_STATUS    = Pro2Cmd[7];
+    Si446xCmd.GET_INT_STATUS.INT_PEND = Pro2Cmd[0];
+    Si446xCmd.GET_INT_STATUS.INT_STATUS = Pro2Cmd[1];
+    Si446xCmd.GET_INT_STATUS.PH_PEND = Pro2Cmd[2];
+    Si446xCmd.GET_INT_STATUS.PH_STATUS = Pro2Cmd[3];
+    Si446xCmd.GET_INT_STATUS.MODEM_PEND = Pro2Cmd[4];
+    Si446xCmd.GET_INT_STATUS.MODEM_STATUS = Pro2Cmd[5];
+    Si446xCmd.GET_INT_STATUS.CHIP_PEND = Pro2Cmd[6];
+    Si446xCmd.GET_INT_STATUS.CHIP_STATUS = Pro2Cmd[7];
 }
 
 /*!
@@ -243,22 +264,20 @@ void si446x_gpio_pin_cfg(uint8_t GPIO0, uint8_t GPIO1, uint8_t GPIO2, uint8_t GP
     Pro2Cmd[6] = SDO;
     Pro2Cmd[7] = GEN_CONFIG;
 
-    radio_comm_SendCmdGetResp( SI446X_CMD_ARG_COUNT_GPIO_PIN_CFG,
+    radio_comm_SendCmdGetResp(SI446X_CMD_ARG_COUNT_GPIO_PIN_CFG,
                               Pro2Cmd,
                               SI446X_CMD_REPLY_COUNT_GPIO_PIN_CFG,
-                              Pro2Cmd );
+                              Pro2Cmd);
 
-    Si446xCmd.GPIO_PIN_CFG.GPIO[0]        = Pro2Cmd[0];
-    Si446xCmd.GPIO_PIN_CFG.GPIO[1]        = Pro2Cmd[1];
-    Si446xCmd.GPIO_PIN_CFG.GPIO[2]        = Pro2Cmd[2];
-    Si446xCmd.GPIO_PIN_CFG.GPIO[3]        = Pro2Cmd[3];
-    Si446xCmd.GPIO_PIN_CFG.NIRQ         = Pro2Cmd[4];
-    Si446xCmd.GPIO_PIN_CFG.SDO          = Pro2Cmd[5];
-    Si446xCmd.GPIO_PIN_CFG.GEN_CONFIG   = Pro2Cmd[6];
+    Si446xCmd.GPIO_PIN_CFG.GPIO[0] = Pro2Cmd[0];
+    Si446xCmd.GPIO_PIN_CFG.GPIO[1] = Pro2Cmd[1];
+    Si446xCmd.GPIO_PIN_CFG.GPIO[2] = Pro2Cmd[2];
+    Si446xCmd.GPIO_PIN_CFG.GPIO[3] = Pro2Cmd[3];
+    Si446xCmd.GPIO_PIN_CFG.NIRQ = Pro2Cmd[4];
+    Si446xCmd.GPIO_PIN_CFG.SDO = Pro2Cmd[5];
+    Si446xCmd.GPIO_PIN_CFG.GEN_CONFIG = Pro2Cmd[6];
 }
 
-// !!PDS: Does not seem to be being used.
-#if 0
 /*!
  * Send SET_PROPERTY command to the radio.
  *
@@ -268,9 +287,9 @@ void si446x_gpio_pin_cfg(uint8_t GPIO0, uint8_t GPIO1, uint8_t GPIO2, uint8_t GP
  * @param START_PROP  Start sub-property address.
  */
 #ifdef __C51__
-#pragma maxargs (13)  /* allow 13 bytes for parameters */
+#pragma maxargs(13) /* allow 13 bytes for parameters */
 #endif
-void si446x_set_property( uint8_t GROUP, uint8_t NUM_PROPS, uint8_t START_PROP, ... )
+void si446x_set_property(uint8_t GROUP, uint8_t NUM_PROPS, uint8_t START_PROP, ...)
 {
     va_list argList;
     uint8_t cmdIndex;
@@ -280,18 +299,17 @@ void si446x_set_property( uint8_t GROUP, uint8_t NUM_PROPS, uint8_t START_PROP, 
     Pro2Cmd[2] = NUM_PROPS;
     Pro2Cmd[3] = START_PROP;
 
-    va_start (argList, START_PROP);
+    va_start(argList, START_PROP);
     cmdIndex = 4;
-    while(NUM_PROPS--)
+    while (NUM_PROPS--)
     {
-        Pro2Cmd[cmdIndex] = va_arg (argList, uint8_t);
+        Pro2Cmd[cmdIndex] = va_arg(argList, uint8_t);
         cmdIndex++;
     }
     va_end(argList);
 
-    radio_comm_SendCmd( cmdIndex, Pro2Cmd );
+    radio_comm_SendCmd(cmdIndex, Pro2Cmd);
 }
-#endif
 
 /*!
  * Issue a change state command to the radio.
@@ -303,9 +321,8 @@ void si446x_change_state(uint8_t NEXT_STATE1)
     Pro2Cmd[0] = SI446X_CMD_ID_CHANGE_STATE;
     Pro2Cmd[1] = NEXT_STATE1;
 
-    radio_comm_SendCmd( SI446X_CMD_ARG_COUNT_CHANGE_STATE, Pro2Cmd );
+    radio_comm_SendCmd(SI446X_CMD_ARG_COUNT_CHANGE_STATE, Pro2Cmd);
 }
-
 
 #ifdef RADIO_DRIVER_EXTENDED_SUPPORT
 /* Extended driver support functions */
@@ -316,7 +333,7 @@ void si446x_nop(void)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_NOP;
 
-    radio_comm_SendCmd( SI446X_CMD_ARG_COUNT_NOP, Pro2Cmd );
+    radio_comm_SendCmd(SI446X_CMD_ARG_COUNT_NOP, Pro2Cmd);
 }
 
 /*!
@@ -330,13 +347,13 @@ void si446x_fifo_info(uint8_t FIFO)
     Pro2Cmd[0] = SI446X_CMD_ID_FIFO_INFO;
     Pro2Cmd[1] = FIFO;
 
-    radio_comm_SendCmdGetResp( SI446X_CMD_ARG_COUNT_FIFO_INFO,
+    radio_comm_SendCmdGetResp(SI446X_CMD_ARG_COUNT_FIFO_INFO,
                               Pro2Cmd,
                               SI446X_CMD_REPLY_COUNT_FIFO_INFO,
-                              Pro2Cmd );
+                              Pro2Cmd);
 
-    Si446xCmd.FIFO_INFO.RX_FIFO_COUNT   = Pro2Cmd[0];
-    Si446xCmd.FIFO_INFO.TX_FIFO_SPACE   = Pro2Cmd[1];
+    Si446xCmd.FIFO_INFO.RX_FIFO_COUNT = Pro2Cmd[0];
+    Si446xCmd.FIFO_INFO.TX_FIFO_SPACE = Pro2Cmd[1];
 }
 
 /*!
@@ -345,9 +362,9 @@ void si446x_fifo_info(uint8_t FIFO)
  * @param numBytes  Data length to be load.
  * @param pTxData   Pointer to the data (uint8_t*).
  */
-void si446x_write_tx_fifo(uint8_t numBytes, uint8_t* pTxData)
+void si446x_write_tx_fifo(uint8_t numBytes, uint8_t *pTxData)
 {
-  radio_comm_WriteData( SI446X_CMD_ID_WRITE_TX_FIFO, 0, numBytes, pTxData );
+    radio_comm_WriteData(SI446X_CMD_ID_WRITE_TX_FIFO, 0, numBytes, pTxData);
 }
 
 /*!
@@ -356,9 +373,9 @@ void si446x_write_tx_fifo(uint8_t numBytes, uint8_t* pTxData)
  * @param numBytes  Data length to be read.
  * @param pRxData   Pointer to the buffer location.
  */
-void si446x_read_rx_fifo(uint8_t numBytes, uint8_t* pRxData)
+void si446x_read_rx_fifo(uint8_t numBytes, uint8_t *pRxData)
 {
-  radio_comm_ReadData( SI446X_CMD_ID_READ_RX_FIFO, 0, numBytes, pRxData );
+    radio_comm_ReadData(SI446X_CMD_ID_READ_RX_FIFO, 0, numBytes, pRxData);
 }
 
 /*!
@@ -375,29 +392,28 @@ void si446x_get_property(uint8_t GROUP, uint8_t NUM_PROPS, uint8_t START_PROP)
     Pro2Cmd[2] = NUM_PROPS;
     Pro2Cmd[3] = START_PROP;
 
-    radio_comm_SendCmdGetResp( SI446X_CMD_ARG_COUNT_GET_PROPERTY,
+    radio_comm_SendCmdGetResp(SI446X_CMD_ARG_COUNT_GET_PROPERTY,
                               Pro2Cmd,
                               Pro2Cmd[2],
-                              Pro2Cmd );
+                              Pro2Cmd);
 
-    Si446xCmd.GET_PROPERTY.DATA[0 ]   = Pro2Cmd[0];
-    Si446xCmd.GET_PROPERTY.DATA[1 ]   = Pro2Cmd[1];
-    Si446xCmd.GET_PROPERTY.DATA[2 ]   = Pro2Cmd[2];
-    Si446xCmd.GET_PROPERTY.DATA[3 ]   = Pro2Cmd[3];
-    Si446xCmd.GET_PROPERTY.DATA[4 ]   = Pro2Cmd[4];
-    Si446xCmd.GET_PROPERTY.DATA[5 ]   = Pro2Cmd[5];
-    Si446xCmd.GET_PROPERTY.DATA[6 ]   = Pro2Cmd[6];
-    Si446xCmd.GET_PROPERTY.DATA[7 ]   = Pro2Cmd[7];
-    Si446xCmd.GET_PROPERTY.DATA[8 ]   = Pro2Cmd[8];
-    Si446xCmd.GET_PROPERTY.DATA[9 ]   = Pro2Cmd[9];
-    Si446xCmd.GET_PROPERTY.DATA[10]   = Pro2Cmd[10];
-    Si446xCmd.GET_PROPERTY.DATA[11]   = Pro2Cmd[11];
-    Si446xCmd.GET_PROPERTY.DATA[12]   = Pro2Cmd[12];
-    Si446xCmd.GET_PROPERTY.DATA[13]   = Pro2Cmd[13];
-    Si446xCmd.GET_PROPERTY.DATA[14]   = Pro2Cmd[14];
-    Si446xCmd.GET_PROPERTY.DATA[15]   = Pro2Cmd[15];
+    Si446xCmd.GET_PROPERTY.DATA[0] = Pro2Cmd[0];
+    Si446xCmd.GET_PROPERTY.DATA[1] = Pro2Cmd[1];
+    Si446xCmd.GET_PROPERTY.DATA[2] = Pro2Cmd[2];
+    Si446xCmd.GET_PROPERTY.DATA[3] = Pro2Cmd[3];
+    Si446xCmd.GET_PROPERTY.DATA[4] = Pro2Cmd[4];
+    Si446xCmd.GET_PROPERTY.DATA[5] = Pro2Cmd[5];
+    Si446xCmd.GET_PROPERTY.DATA[6] = Pro2Cmd[6];
+    Si446xCmd.GET_PROPERTY.DATA[7] = Pro2Cmd[7];
+    Si446xCmd.GET_PROPERTY.DATA[8] = Pro2Cmd[8];
+    Si446xCmd.GET_PROPERTY.DATA[9] = Pro2Cmd[9];
+    Si446xCmd.GET_PROPERTY.DATA[10] = Pro2Cmd[10];
+    Si446xCmd.GET_PROPERTY.DATA[11] = Pro2Cmd[11];
+    Si446xCmd.GET_PROPERTY.DATA[12] = Pro2Cmd[12];
+    Si446xCmd.GET_PROPERTY.DATA[13] = Pro2Cmd[13];
+    Si446xCmd.GET_PROPERTY.DATA[14] = Pro2Cmd[14];
+    Si446xCmd.GET_PROPERTY.DATA[15] = Pro2Cmd[15];
 }
-
 
 #ifdef RADIO_DRIVER_FULL_SUPPORT
 /* Full driver support functions */
@@ -409,15 +425,15 @@ void si446x_func_info(void)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_FUNC_INFO;
 
-    radio_comm_SendCmdGetResp( SI446X_CMD_ARG_COUNT_FUNC_INFO,
+    radio_comm_SendCmdGetResp(SI446X_CMD_ARG_COUNT_FUNC_INFO,
                               Pro2Cmd,
                               SI446X_CMD_REPLY_COUNT_FUNC_INFO,
-                              Pro2Cmd );
+                              Pro2Cmd);
 
-    Si446xCmd.FUNC_INFO.REVEXT          = Pro2Cmd[0];
-    Si446xCmd.FUNC_INFO.REVBRANCH       = Pro2Cmd[1];
-    Si446xCmd.FUNC_INFO.REVINT          = Pro2Cmd[2];
-    Si446xCmd.FUNC_INFO.FUNC            = Pro2Cmd[5];
+    Si446xCmd.FUNC_INFO.REVEXT = Pro2Cmd[0];
+    Si446xCmd.FUNC_INFO.REVBRANCH = Pro2Cmd[1];
+    Si446xCmd.FUNC_INFO.REVINT = Pro2Cmd[2];
+    Si446xCmd.FUNC_INFO.FUNC = Pro2Cmd[5];
 }
 
 /*!
@@ -428,7 +444,7 @@ void si446x_func_info(void)
 void si446x_frr_a_read(uint8_t respByteCount)
 {
     radio_comm_ReadData(SI446X_CMD_ID_FRR_A_READ,
-                            0,
+                        0,
                         respByteCount,
                         Pro2Cmd);
 
@@ -446,7 +462,7 @@ void si446x_frr_a_read(uint8_t respByteCount)
 void si446x_frr_b_read(uint8_t respByteCount)
 {
     radio_comm_ReadData(SI446X_CMD_ID_FRR_B_READ,
-                            0,
+                        0,
                         respByteCount,
                         Pro2Cmd);
 
@@ -464,7 +480,7 @@ void si446x_frr_b_read(uint8_t respByteCount)
 void si446x_frr_c_read(uint8_t respByteCount)
 {
     radio_comm_ReadData(SI446X_CMD_ID_FRR_C_READ,
-                            0,
+                        0,
                         respByteCount,
                         Pro2Cmd);
 
@@ -482,7 +498,7 @@ void si446x_frr_c_read(uint8_t respByteCount)
 void si446x_frr_d_read(uint8_t respByteCount)
 {
     radio_comm_ReadData(SI446X_CMD_ID_FRR_D_READ,
-                            0,
+                        0,
                         respByteCount,
                         Pro2Cmd);
 
@@ -502,17 +518,17 @@ void si446x_get_adc_reading(uint8_t ADC_EN)
     Pro2Cmd[0] = SI446X_CMD_ID_GET_ADC_READING;
     Pro2Cmd[1] = ADC_EN;
 
-    radio_comm_SendCmdGetResp( SI446X_CMD_ARG_COUNT_GET_ADC_READING,
+    radio_comm_SendCmdGetResp(SI446X_CMD_ARG_COUNT_GET_ADC_READING,
                               Pro2Cmd,
                               SI446X_CMD_REPLY_COUNT_GET_ADC_READING,
-                              Pro2Cmd );
+                              Pro2Cmd);
 
-    Si446xCmd.GET_ADC_READING.GPIO_ADC         = ((uint16_t)Pro2Cmd[0] << 8) & 0xFF00;
-    Si446xCmd.GET_ADC_READING.GPIO_ADC        |=  (uint16_t)Pro2Cmd[1] & 0x00FF;
-    Si446xCmd.GET_ADC_READING.BATTERY_ADC      = ((uint16_t)Pro2Cmd[2] << 8) & 0xFF00;
-    Si446xCmd.GET_ADC_READING.BATTERY_ADC     |=  (uint16_t)Pro2Cmd[3] & 0x00FF;
-    Si446xCmd.GET_ADC_READING.TEMP_ADC         = ((uint16_t)Pro2Cmd[4] << 8) & 0xFF00;
-    Si446xCmd.GET_ADC_READING.TEMP_ADC        |=  (uint16_t)Pro2Cmd[5] & 0x00FF;
+    Si446xCmd.GET_ADC_READING.GPIO_ADC = ((uint16_t)Pro2Cmd[0] << 8) & 0xFF00;
+    Si446xCmd.GET_ADC_READING.GPIO_ADC |= (uint16_t)Pro2Cmd[1] & 0x00FF;
+    Si446xCmd.GET_ADC_READING.BATTERY_ADC = ((uint16_t)Pro2Cmd[2] << 8) & 0xFF00;
+    Si446xCmd.GET_ADC_READING.BATTERY_ADC |= (uint16_t)Pro2Cmd[3] & 0x00FF;
+    Si446xCmd.GET_ADC_READING.TEMP_ADC = ((uint16_t)Pro2Cmd[4] << 8) & 0xFF00;
+    Si446xCmd.GET_ADC_READING.TEMP_ADC |= (uint16_t)Pro2Cmd[5] & 0x00FF;
 }
 
 /*!
@@ -523,7 +539,7 @@ void si446x_get_adc_reading(uint8_t ADC_EN)
  * @param LEN               Length value.
  * @param DIFF_LEN          Difference length.
  */
-void si446x_get_packet_info(uint8_t FIELD_NUMBER_MASK, uint16_t LEN, S16 DIFF_LEN )
+void si446x_get_packet_info(uint8_t FIELD_NUMBER_MASK, uint16_t LEN, S16 DIFF_LEN)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_PACKET_INFO;
     Pro2Cmd[1] = FIELD_NUMBER_MASK;
@@ -534,10 +550,10 @@ void si446x_get_packet_info(uint8_t FIELD_NUMBER_MASK, uint16_t LEN, S16 DIFF_LE
     Pro2Cmd[4] = (uint8_t)((uint16_t)DIFF_LEN >> 8);
     Pro2Cmd[5] = (uint8_t)(DIFF_LEN);
 
-    radio_comm_SendCmdGetResp( SI446X_CMD_ARG_COUNT_PACKET_INFO,
+    radio_comm_SendCmdGetResp(SI446X_CMD_ARG_COUNT_PACKET_INFO,
                               Pro2Cmd,
                               SI446X_CMD_REPLY_COUNT_PACKET_INFO,
-                              Pro2Cmd );
+                              Pro2Cmd);
 
     Si446xCmd.PACKET_INFO.LENGTH = ((uint16_t)Pro2Cmd[0] << 8) & 0xFF00;
     Si446xCmd.PACKET_INFO.LENGTH |= (uint16_t)Pro2Cmd[1] & 0x00FF;
@@ -553,13 +569,13 @@ void si446x_get_ph_status(uint8_t PH_CLR_PEND)
     Pro2Cmd[0] = SI446X_CMD_ID_GET_PH_STATUS;
     Pro2Cmd[1] = PH_CLR_PEND;
 
-    radio_comm_SendCmdGetResp( SI446X_CMD_ARG_COUNT_GET_PH_STATUS,
+    radio_comm_SendCmdGetResp(SI446X_CMD_ARG_COUNT_GET_PH_STATUS,
                               Pro2Cmd,
                               SI446X_CMD_REPLY_COUNT_GET_PH_STATUS,
-                              Pro2Cmd );
+                              Pro2Cmd);
 
-    Si446xCmd.GET_PH_STATUS.PH_PEND        = Pro2Cmd[0];
-    Si446xCmd.GET_PH_STATUS.PH_STATUS      = Pro2Cmd[1];
+    Si446xCmd.GET_PH_STATUS.PH_PEND = Pro2Cmd[0];
+    Si446xCmd.GET_PH_STATUS.PH_STATUS = Pro2Cmd[1];
 }
 
 /*!
@@ -567,23 +583,23 @@ void si446x_get_ph_status(uint8_t PH_CLR_PEND)
  *
  * @param MODEM_CLR_PEND Flags to clear.
  */
-void si446x_get_modem_status( uint8_t MODEM_CLR_PEND )
+void si446x_get_modem_status(uint8_t MODEM_CLR_PEND)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_GET_MODEM_STATUS;
     Pro2Cmd[1] = MODEM_CLR_PEND;
 
-    radio_comm_SendCmdGetResp( SI446X_CMD_ARG_COUNT_GET_MODEM_STATUS,
+    radio_comm_SendCmdGetResp(SI446X_CMD_ARG_COUNT_GET_MODEM_STATUS,
                               Pro2Cmd,
                               SI446X_CMD_REPLY_COUNT_GET_MODEM_STATUS,
-                              Pro2Cmd );
+                              Pro2Cmd);
 
-    Si446xCmd.GET_MODEM_STATUS.MODEM_PEND   = Pro2Cmd[0];
+    Si446xCmd.GET_MODEM_STATUS.MODEM_PEND = Pro2Cmd[0];
     Si446xCmd.GET_MODEM_STATUS.MODEM_STATUS = Pro2Cmd[1];
-    Si446xCmd.GET_MODEM_STATUS.CURR_RSSI    = Pro2Cmd[2];
-    Si446xCmd.GET_MODEM_STATUS.LATCH_RSSI   = Pro2Cmd[3];
-    Si446xCmd.GET_MODEM_STATUS.ANT1_RSSI    = Pro2Cmd[4];
-    Si446xCmd.GET_MODEM_STATUS.ANT2_RSSI    = Pro2Cmd[5];
-    Si446xCmd.GET_MODEM_STATUS.AFC_FREQ_OFFSET =  ((uint16_t)Pro2Cmd[6] << 8) & 0xFF00;
+    Si446xCmd.GET_MODEM_STATUS.CURR_RSSI = Pro2Cmd[2];
+    Si446xCmd.GET_MODEM_STATUS.LATCH_RSSI = Pro2Cmd[3];
+    Si446xCmd.GET_MODEM_STATUS.ANT1_RSSI = Pro2Cmd[4];
+    Si446xCmd.GET_MODEM_STATUS.ANT2_RSSI = Pro2Cmd[5];
+    Si446xCmd.GET_MODEM_STATUS.AFC_FREQ_OFFSET = ((uint16_t)Pro2Cmd[6] << 8) & 0xFF00;
     Si446xCmd.GET_MODEM_STATUS.AFC_FREQ_OFFSET |= (uint16_t)Pro2Cmd[7] & 0x00FF;
 }
 
@@ -592,19 +608,19 @@ void si446x_get_modem_status( uint8_t MODEM_CLR_PEND )
  *
  * @param CHIP_CLR_PEND Flags to clear.
  */
-void si446x_get_chip_status( uint8_t CHIP_CLR_PEND )
+void si446x_get_chip_status(uint8_t CHIP_CLR_PEND)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_GET_CHIP_STATUS;
     Pro2Cmd[1] = CHIP_CLR_PEND;
 
-    radio_comm_SendCmdGetResp( SI446X_CMD_ARG_COUNT_GET_CHIP_STATUS,
+    radio_comm_SendCmdGetResp(SI446X_CMD_ARG_COUNT_GET_CHIP_STATUS,
                               Pro2Cmd,
                               SI446X_CMD_REPLY_COUNT_GET_CHIP_STATUS,
-                              Pro2Cmd );
+                              Pro2Cmd);
 
-    Si446xCmd.GET_CHIP_STATUS.CHIP_PEND         = Pro2Cmd[0];
-    Si446xCmd.GET_CHIP_STATUS.CHIP_STATUS       = Pro2Cmd[1];
-    Si446xCmd.GET_CHIP_STATUS.CMD_ERR_STATUS    = Pro2Cmd[2];
+    Si446xCmd.GET_CHIP_STATUS.CHIP_PEND = Pro2Cmd[0];
+    Si446xCmd.GET_CHIP_STATUS.CHIP_STATUS = Pro2Cmd[1];
+    Si446xCmd.GET_CHIP_STATUS.CMD_ERR_STATUS = Pro2Cmd[2];
 }
 
 /*!
@@ -623,9 +639,8 @@ void si446x_ircal(uint8_t SEARCHING_STEP_SIZE, uint8_t SEARCHING_RSSI_AVG, uint8
     Pro2Cmd[3] = RX_CHAIN_SETTING1;
     Pro2Cmd[4] = RX_CHAIN_SETTING2;
 
-    radio_comm_SendCmd( SI446X_CMD_ARG_COUNT_IRCAL, Pro2Cmd);
+    radio_comm_SendCmd(SI446X_CMD_ARG_COUNT_IRCAL, Pro2Cmd);
 }
-
 
 /*!
  * Image rejection calibration. Forces a specific value for IR calibration, and reads back calibration values from previous calibrations
@@ -639,13 +654,13 @@ void si446x_ircal_manual(uint8_t IRCAL_AMP, uint8_t IRCAL_PH)
     Pro2Cmd[1] = IRCAL_AMP;
     Pro2Cmd[2] = IRCAL_PH;
 
-    radio_comm_SendCmdGetResp( SI446X_CMD_ARG_COUNT_IRCAL_MANUAL,
+    radio_comm_SendCmdGetResp(SI446X_CMD_ARG_COUNT_IRCAL_MANUAL,
                               Pro2Cmd,
                               SI446X_CMD_REPLY_COUNT_IRCAL_MANUAL,
-                              Pro2Cmd );
+                              Pro2Cmd);
 
-    Si446xCmd.IRCAL_MANUAL.IRCAL_AMP_REPLY   = Pro2Cmd[0];
-    Si446xCmd.IRCAL_MANUAL.IRCAL_PH_REPLY    = Pro2Cmd[1];
+    Si446xCmd.IRCAL_MANUAL.IRCAL_AMP_REPLY = Pro2Cmd[0];
+    Si446xCmd.IRCAL_MANUAL.IRCAL_PH_REPLY = Pro2Cmd[1];
 }
 
 /*!
@@ -655,13 +670,13 @@ void si446x_request_device_state(void)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_REQUEST_DEVICE_STATE;
 
-    radio_comm_SendCmdGetResp( SI446X_CMD_ARG_COUNT_REQUEST_DEVICE_STATE,
+    radio_comm_SendCmdGetResp(SI446X_CMD_ARG_COUNT_REQUEST_DEVICE_STATE,
                               Pro2Cmd,
                               SI446X_CMD_REPLY_COUNT_REQUEST_DEVICE_STATE,
-                              Pro2Cmd );
+                              Pro2Cmd);
 
-    Si446xCmd.REQUEST_DEVICE_STATE.CURR_STATE       = Pro2Cmd[0];
-    Si446xCmd.REQUEST_DEVICE_STATE.CURRENT_CHANNEL  = Pro2Cmd[1];
+    Si446xCmd.REQUEST_DEVICE_STATE.CURR_STATE = Pro2Cmd[0];
+    Si446xCmd.REQUEST_DEVICE_STATE.CURRENT_CHANNEL = Pro2Cmd[1];
 }
 
 /*!
@@ -688,7 +703,7 @@ void si446x_tx_hop(uint8_t INTE, uint8_t FRAC2, uint8_t FRAC1, uint8_t FRAC0, ui
     Pro2Cmd[7] = PLL_SETTLE_TIME1;
     Pro2Cmd[8] = PLL_SETTLE_TIME0;
 
-    radio_comm_SendCmd( SI446X_CMD_ARG_COUNT_TX_HOP, Pro2Cmd );
+    radio_comm_SendCmd(SI446X_CMD_ARG_COUNT_TX_HOP, Pro2Cmd);
 }
 
 /*!
@@ -711,39 +726,39 @@ void si446x_rx_hop(uint8_t INTE, uint8_t FRAC2, uint8_t FRAC1, uint8_t FRAC0, ui
     Pro2Cmd[5] = VCO_CNT1;
     Pro2Cmd[6] = VCO_CNT0;
 
-    radio_comm_SendCmd( SI446X_CMD_ARG_COUNT_RX_HOP, Pro2Cmd );
+    radio_comm_SendCmd(SI446X_CMD_ARG_COUNT_RX_HOP, Pro2Cmd);
 }
 
 /*! Sends START_TX command ID to the radio with no input parameters
  *
  */
-void si446x_start_tx_fast( void )
+void si446x_start_tx_fast(void)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_START_TX;
 
-    radio_comm_SendCmd( 1, Pro2Cmd );
+    radio_comm_SendCmd(1, Pro2Cmd);
 }
 
 /*!
  * Sends START_RX command ID to the radio with no input parameters
  *
  */
-void si446x_start_rx_fast( void )
+void si446x_start_rx_fast(void)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_START_RX;
 
-    radio_comm_SendCmd( 1, Pro2Cmd );
+    radio_comm_SendCmd(1, Pro2Cmd);
 }
 
 /*!
  * Clear all Interrupt status/pending flags. Does NOT read back interrupt flags
  *
  */
-void si446x_get_int_status_fast_clear( void )
+void si446x_get_int_status_fast_clear(void)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_GET_INT_STATUS;
 
-    radio_comm_SendCmd( 1, Pro2Cmd );
+    radio_comm_SendCmd(1, Pro2Cmd);
 }
 
 /*!
@@ -754,54 +769,53 @@ void si446x_get_int_status_fast_clear_read(void)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_GET_INT_STATUS;
 
-    radio_comm_SendCmdGetResp( 1,
+    radio_comm_SendCmdGetResp(1,
                               Pro2Cmd,
                               SI446X_CMD_REPLY_COUNT_GET_INT_STATUS,
-                              Pro2Cmd );
+                              Pro2Cmd);
 
-    Si446xCmd.GET_INT_STATUS.INT_PEND       = Pro2Cmd[0];
-    Si446xCmd.GET_INT_STATUS.INT_STATUS     = Pro2Cmd[1];
-    Si446xCmd.GET_INT_STATUS.PH_PEND        = Pro2Cmd[2];
-    Si446xCmd.GET_INT_STATUS.PH_STATUS      = Pro2Cmd[3];
-    Si446xCmd.GET_INT_STATUS.MODEM_PEND     = Pro2Cmd[4];
-    Si446xCmd.GET_INT_STATUS.MODEM_STATUS   = Pro2Cmd[5];
-    Si446xCmd.GET_INT_STATUS.CHIP_PEND      = Pro2Cmd[6];
-    Si446xCmd.GET_INT_STATUS.CHIP_STATUS    = Pro2Cmd[7];
+    Si446xCmd.GET_INT_STATUS.INT_PEND = Pro2Cmd[0];
+    Si446xCmd.GET_INT_STATUS.INT_STATUS = Pro2Cmd[1];
+    Si446xCmd.GET_INT_STATUS.PH_PEND = Pro2Cmd[2];
+    Si446xCmd.GET_INT_STATUS.PH_STATUS = Pro2Cmd[3];
+    Si446xCmd.GET_INT_STATUS.MODEM_PEND = Pro2Cmd[4];
+    Si446xCmd.GET_INT_STATUS.MODEM_STATUS = Pro2Cmd[5];
+    Si446xCmd.GET_INT_STATUS.CHIP_PEND = Pro2Cmd[6];
+    Si446xCmd.GET_INT_STATUS.CHIP_STATUS = Pro2Cmd[7];
 }
 
 /*!
  * Reads back current GPIO pin configuration. Does NOT configure GPIO pins
-  *
+ *
  */
-void si446x_gpio_pin_cfg_fast( void )
+void si446x_gpio_pin_cfg_fast(void)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_GPIO_PIN_CFG;
 
-    radio_comm_SendCmdGetResp( 1,
+    radio_comm_SendCmdGetResp(1,
                               Pro2Cmd,
                               SI446X_CMD_REPLY_COUNT_GPIO_PIN_CFG,
-                              Pro2Cmd );
+                              Pro2Cmd);
 
-    Si446xCmd.GPIO_PIN_CFG.GPIO[0]        = Pro2Cmd[0];
-    Si446xCmd.GPIO_PIN_CFG.GPIO[1]        = Pro2Cmd[1];
-    Si446xCmd.GPIO_PIN_CFG.GPIO[2]        = Pro2Cmd[2];
-    Si446xCmd.GPIO_PIN_CFG.GPIO[3]        = Pro2Cmd[3];
-    Si446xCmd.GPIO_PIN_CFG.NIRQ         = Pro2Cmd[4];
-    Si446xCmd.GPIO_PIN_CFG.SDO          = Pro2Cmd[5];
-    Si446xCmd.GPIO_PIN_CFG.GEN_CONFIG   = Pro2Cmd[6];
+    Si446xCmd.GPIO_PIN_CFG.GPIO[0] = Pro2Cmd[0];
+    Si446xCmd.GPIO_PIN_CFG.GPIO[1] = Pro2Cmd[1];
+    Si446xCmd.GPIO_PIN_CFG.GPIO[2] = Pro2Cmd[2];
+    Si446xCmd.GPIO_PIN_CFG.GPIO[3] = Pro2Cmd[3];
+    Si446xCmd.GPIO_PIN_CFG.NIRQ = Pro2Cmd[4];
+    Si446xCmd.GPIO_PIN_CFG.SDO = Pro2Cmd[5];
+    Si446xCmd.GPIO_PIN_CFG.GEN_CONFIG = Pro2Cmd[6];
 }
-
 
 /*!
  * Clear all Packet Handler status flags. Does NOT read back interrupt flags
  *
  */
-void si446x_get_ph_status_fast_clear( void )
+void si446x_get_ph_status_fast_clear(void)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_GET_PH_STATUS;
     Pro2Cmd[1] = 0;
 
-    radio_comm_SendCmd( 2, Pro2Cmd );
+    radio_comm_SendCmd(2, Pro2Cmd);
 }
 
 /*!
@@ -812,46 +826,46 @@ void si446x_get_ph_status_fast_clear_read(void)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_GET_PH_STATUS;
 
-    radio_comm_SendCmdGetResp( 1,
+    radio_comm_SendCmdGetResp(1,
                               Pro2Cmd,
                               SI446X_CMD_REPLY_COUNT_GET_PH_STATUS,
-                              Pro2Cmd );
+                              Pro2Cmd);
 
-    Si446xCmd.GET_PH_STATUS.PH_PEND        = Pro2Cmd[0];
-    Si446xCmd.GET_PH_STATUS.PH_STATUS      = Pro2Cmd[1];
+    Si446xCmd.GET_PH_STATUS.PH_PEND = Pro2Cmd[0];
+    Si446xCmd.GET_PH_STATUS.PH_STATUS = Pro2Cmd[1];
 }
 
 /*!
  * Clear all Modem status flags. Does NOT read back interrupt flags
  *
  */
-void si446x_get_modem_status_fast_clear( void )
+void si446x_get_modem_status_fast_clear(void)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_GET_MODEM_STATUS;
     Pro2Cmd[1] = 0;
 
-    radio_comm_SendCmd( 2, Pro2Cmd );
+    radio_comm_SendCmd(2, Pro2Cmd);
 }
 
 /*!
  * Clear and read all Modem status flags.
  *
  */
-void si446x_get_modem_status_fast_clear_read( void )
+void si446x_get_modem_status_fast_clear_read(void)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_GET_MODEM_STATUS;
 
-    radio_comm_SendCmdGetResp( 1,
+    radio_comm_SendCmdGetResp(1,
                               Pro2Cmd,
                               SI446X_CMD_REPLY_COUNT_GET_MODEM_STATUS,
-                              Pro2Cmd );
+                              Pro2Cmd);
 
-    Si446xCmd.GET_MODEM_STATUS.MODEM_PEND   = Pro2Cmd[0];
+    Si446xCmd.GET_MODEM_STATUS.MODEM_PEND = Pro2Cmd[0];
     Si446xCmd.GET_MODEM_STATUS.MODEM_STATUS = Pro2Cmd[1];
-    Si446xCmd.GET_MODEM_STATUS.CURR_RSSI    = Pro2Cmd[2];
-    Si446xCmd.GET_MODEM_STATUS.LATCH_RSSI   = Pro2Cmd[3];
-    Si446xCmd.GET_MODEM_STATUS.ANT1_RSSI    = Pro2Cmd[4];
-    Si446xCmd.GET_MODEM_STATUS.ANT2_RSSI    = Pro2Cmd[5];
+    Si446xCmd.GET_MODEM_STATUS.CURR_RSSI = Pro2Cmd[2];
+    Si446xCmd.GET_MODEM_STATUS.LATCH_RSSI = Pro2Cmd[3];
+    Si446xCmd.GET_MODEM_STATUS.ANT1_RSSI = Pro2Cmd[4];
+    Si446xCmd.GET_MODEM_STATUS.ANT2_RSSI = Pro2Cmd[5];
     Si446xCmd.GET_MODEM_STATUS.AFC_FREQ_OFFSET = ((uint16_t)Pro2Cmd[6] << 8) & 0xFF00;
     Si446xCmd.GET_MODEM_STATUS.AFC_FREQ_OFFSET |= (uint16_t)Pro2Cmd[7] & 0x00FF;
 }
@@ -860,30 +874,30 @@ void si446x_get_modem_status_fast_clear_read( void )
  * Clear all Chip status flags. Does NOT read back interrupt flags
  *
  */
-void si446x_get_chip_status_fast_clear( void )
+void si446x_get_chip_status_fast_clear(void)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_GET_CHIP_STATUS;
     Pro2Cmd[1] = 0;
 
-    radio_comm_SendCmd( 2, Pro2Cmd );
+    radio_comm_SendCmd(2, Pro2Cmd);
 }
 
 /*!
  * Clear and read all Chip status flags.
  *
  */
-void si446x_get_chip_status_fast_clear_read( void )
+void si446x_get_chip_status_fast_clear_read(void)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_GET_CHIP_STATUS;
 
-    radio_comm_SendCmdGetResp( 1,
+    radio_comm_SendCmdGetResp(1,
                               Pro2Cmd,
                               SI446X_CMD_REPLY_COUNT_GET_CHIP_STATUS,
-                              Pro2Cmd );
+                              Pro2Cmd);
 
-    Si446xCmd.GET_CHIP_STATUS.CHIP_PEND         = Pro2Cmd[0];
-    Si446xCmd.GET_CHIP_STATUS.CHIP_STATUS       = Pro2Cmd[1];
-    Si446xCmd.GET_CHIP_STATUS.CMD_ERR_STATUS    = Pro2Cmd[2];
+    Si446xCmd.GET_CHIP_STATUS.CHIP_PEND = Pro2Cmd[0];
+    Si446xCmd.GET_CHIP_STATUS.CHIP_STATUS = Pro2Cmd[1];
+    Si446xCmd.GET_CHIP_STATUS.CMD_ERR_STATUS = Pro2Cmd[2];
 }
 
 /*!
@@ -895,7 +909,7 @@ void si446x_fifo_info_fast_reset(uint8_t FIFO)
     Pro2Cmd[0] = SI446X_CMD_ID_FIFO_INFO;
     Pro2Cmd[1] = FIFO;
 
-    radio_comm_SendCmd( 2, Pro2Cmd );
+    radio_comm_SendCmd(2, Pro2Cmd);
 }
 
 /*!
@@ -906,13 +920,13 @@ void si446x_fifo_info_fast_read(void)
 {
     Pro2Cmd[0] = SI446X_CMD_ID_FIFO_INFO;
 
-    radio_comm_SendCmdGetResp( 1,
+    radio_comm_SendCmdGetResp(1,
                               Pro2Cmd,
                               SI446X_CMD_REPLY_COUNT_FIFO_INFO,
-                              Pro2Cmd );
+                              Pro2Cmd);
 
-    Si446xCmd.FIFO_INFO.RX_FIFO_COUNT   = Pro2Cmd[0];
-    Si446xCmd.FIFO_INFO.TX_FIFO_SPACE   = Pro2Cmd[1];
+    Si446xCmd.FIFO_INFO.RX_FIFO_COUNT = Pro2Cmd[0];
+    Si446xCmd.FIFO_INFO.TX_FIFO_SPACE = Pro2Cmd[1];
 }
 
 #endif /* RADIO_DRIVER_FULL_SUPPORT */
