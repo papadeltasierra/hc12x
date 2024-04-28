@@ -38,8 +38,7 @@ void si446x_power_up(uint8_t BOOT_OPTIONS, uint8_t XTAL_OPTIONS, uint32_t XO_FRE
 
 uint8_t si446x_configuration_init(
     const uint8_t* pSetPropCmd,
-    const uint8_t *pCustomSet,
-    const uint8_t *pPowerSet);
+    const uint8_t *pEepromSetpropCmd);
 uint8_t si446x_apply_patch(void);
 void si446x_part_info(void);
 

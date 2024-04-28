@@ -43,8 +43,10 @@
 /*              USER BOOT CODE Customisation 	     			 */
 /*********************************************************/
 
-//user application start (user interrupt table address)
-#define MAIN_USER_RESET_ADDR 0x8A00ul
+// user application start (user interrupt table address; This has to be the
+// address of the BOOTLOADER table not the application.
+#define MAIN_USER_RESET_ADDR 0x8200ul
+#define MAIN_USER_APP_RESET_ADDR 0x8A00ul
 
 // bootloader enable pin definition
 /* #define BL_ENABLE_PORT  GPIOD */

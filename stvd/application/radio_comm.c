@@ -46,9 +46,9 @@ BitStatus ctsWentHigh = 0;
  */
 uint8_t radio_comm_GetResp(uint8_t byteCount, uint8_t *pData)
 {
-    @tiny uint8_t ctsVal = 0u;
-    @tiny uint16_t errCnt = RADIO_CTS_TIMEOUT;
+    uint16_t errCnt = RADIO_CTS_TIMEOUT;
 
+#if 0
     while (errCnt != 0) // wait until radio IC is ready with the data
     {
         radio_hal_ClearNsel();
@@ -82,8 +82,37 @@ uint8_t radio_comm_GetResp(uint8_t byteCount, uint8_t *pData)
     {
         ctsWentHigh = 1;
     }
-
     return ctsVal;
+#else
+    while (errCnt != 0) // wait until radio IC is ready with the data
+    {
+        while (!ctsWentHigh)
+        {
+            radio_comm_PollCTS();
+            if (ctsWentHigh)
+            {
+                if (byteCount)
+                {
+                    radio_hal_SpiReadData(byteCount, pData);
+                }
+                return 0xff;
+            }
+        }
+        errCnt--;
+    }
+
+    if (errCnt == 0)
+    {
+        while (1)
+        {
+/* ERROR!!!!  CTS should never take this long. */
+#ifdef RADIO_COMM_ERROR_CALLBACK
+            RADIO_COMM_ERROR_CALLBACK();
+#endif
+        }
+    }
+    return 0;
+#endif
 }
 
 /*!

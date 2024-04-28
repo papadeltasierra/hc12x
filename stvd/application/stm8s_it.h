@@ -39,8 +39,11 @@
 extern ITStatus rxActive;
 extern ITStatus uartActive;
 /* Exported functions ------------------------------------------------------- */
+// !!PDS: How should this work?
 #ifdef _COSMIC_
+#if 0
  void _stext(void); /* RESET startup routine */
+#endif
  INTERRUPT void NonHandledInterrupt(void);
 #endif /* _COSMIC_ */
 

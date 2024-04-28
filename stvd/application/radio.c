@@ -9,7 +9,7 @@
 
 #include "stm8s.h"
 #include "radio.h"
-#include "radio_config_wmbus.h"
+#include "hc12_original.h"
 #include "si446x_cmd.h"
 #include "si446x_api_lib.h"
 
@@ -20,33 +20,18 @@
 /*****************************************************************************
  *  Global Variables
  *****************************************************************************/
-#if defined(STM8S003) || defined(STM8S105)
-uint8_t Radio_Configuration_Data_Array[] = RADIO_CONFIGURATION_DATA_ARRAY;
+const uint8_t Radio_Configuration_Data_Array[] = RADIO_CONFIGURATION_DATA_ARRAY;
+// #pragma segment(".eeprom")
+const uint8_t Eeprom_Radio_Configuration_Data_Array[] = EEPROM_RADIO_CONFIGURATION_DATA_ARRAY;
+// #pragma segment()
 
-const tRadioConfiguration FixedRadioConfiguration = RADIO_FIXED_CONFIGURATION_DATA;
-#pragma segment(ecode)
-const tRadioConfiguration CustomRadioConfiguration = RADIO_CUSTOM_CONFIGURATION_DATA;
-#pragma segment()
-const tRadioConfiguration PowerRadioConfiguration = RADIO_POWER_CONFIGURATION_DATA;
-
-const tRadioConfiguration *pFixedRadioConfiguration = &FixedRadioConfiguration;
-const tRadioConfiguration *pCustomRadioConfiguration = &CustomRadioConfiguration;
-const tRadioConfiguration *pPowerRadioConfiguration = &PowerRadioConfiguration;
+const tRadioConfiguration RadioConfiguration = RADIO_CONFIGURATION_DATA;
+// @near const tRadioConfiguration *pRadioConfiguration = &RadioConfiguration;
+const tRadioConfiguration *pRadioConfiguration = &RadioConfiguration;
 
 uint8_t rxRadioPacket[RADIO_MAX_PACKET_LENGTH];
 uint8_t txRadioPacket[RADIO_MAX_PACKET_LENGTH];
-#else
-const SEGMENT_VARIABLE(Radio_Configuration_Data_Array[], uint8_t, SEG_CODE) =
-    RADIO_CONFIGURATION_DATA_ARRAY;
 
-const SEGMENT_VARIABLE(RadioConfiguration, tRadioConfiguration, SEG_CODE) =
-    RADIO_CONFIGURATION_DATA;
-
-const SEGMENT_VARIABLE_SEGMENT_POINTER(pRadioConfiguration, tRadioConfiguration, SEG_CODE, SEG_CODE) =
-    &RadioConfiguration;
-
-SEGMENT_VARIABLE(fixRadioPacket[RADIO_MAX_PACKET_LENGTH], uint8_t, SEG_XDATA);
-#endif
 /*****************************************************************************
  *  Local Function Declarations
  *****************************************************************************/
@@ -61,13 +46,13 @@ void vRadio_PowerUp(void);
 @tiny static uint16_t wDelay = 0u;
 void vRadio_PowerUp(void)
 {
-    @tiny uint16_t wDelay = 0u;
+    uint16_t wDelay = 0u;
 
     /* Hardware reset the chip */
     si446x_reset();
 
     /* Wait until reset timeout or Reset IT signal */
-    for (; wDelay < pFixedRadioConfiguration->Radio_Delay_Cnt_After_Reset; wDelay++)
+    for (; wDelay < pRadioConfiguration->Radio_Delay_Cnt_After_Reset; wDelay++)
         ;
 }
 
@@ -88,14 +73,12 @@ void vRadio_Init(void)
 
     /* Load radio configuration */
     while (SI446X_SUCCESS != si446x_configuration_init(
-        pFixedRadioConfiguration->Radio_ConfigurationArray,
-        pCustomRadioConfiguration->Radio_ConfigurationArray,
-        pPowerRadioConfiguration->Radio_ConfigurationArray
+        pRadioConfiguration->Radio_ConfigurationArray,
+        pRadioConfiguration->Eeprom_Radio_ConfigurationArray
         ))
     {
         /* Error hook */
-        for (wDelay = 0x7FFF; wDelay--;)
-            ;
+        for (wDelay = 0x7FFF; wDelay--;);
 
         /* Power Up the radio chip */
         vRadio_PowerUp();
@@ -153,7 +136,7 @@ void vRadio_StartRX(uint8_t channel)
 
     /* Start Receiving packet, channel 0, START immediately, Packet n bytes long */
 		// !!PDS: Duplication.
-    si446x_start_rx(channel, 0u, FixedRadioConfiguration.Radio_PacketLength,
+    si446x_start_rx(channel, 0u, RadioConfiguration.Radio_PacketLength,
                     SI446X_CMD_START_RX_ARG_NEXT_STATE1_RXTIMEOUT_STATE_ENUM_NOCHANGE,
                     SI446X_CMD_START_RX_ARG_NEXT_STATE2_RXVALID_STATE_ENUM_RX,
                     SI446X_CMD_START_RX_ARG_NEXT_STATE3_RXINVALID_STATE_ENUM_RX);

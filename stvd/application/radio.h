@@ -22,6 +22,7 @@
 typedef struct
 {
     uint8_t   *Radio_ConfigurationArray;
+    uint8_t   *Eeprom_Radio_ConfigurationArray;
 
     uint8_t   Radio_ChannelNumber;
     uint8_t   Radio_PacketLength;
@@ -35,9 +36,7 @@ typedef struct
  *****************************************************************************/
 // !!PDS: Not clear what we need here but these need to be variables of some sort!
 #if defined(STM8S003) || defined(STM8S105)
-extern const tRadioConfiguration *pFixedRadioConfiguration;
-extern const tRadioConfiguration *pCustomRadioConfiguration;
-extern const tRadioConfiguration *pPowerRadioConfiguration;
+extern const tRadioConfiguration *pRadioConfiguration;
 extern uint8_t rxRadioPacket[RADIO_MAX_PACKET_LENGTH];
 extern uint8_t txRadioPacket[RADIO_MAX_PACKET_LENGTH];
 
