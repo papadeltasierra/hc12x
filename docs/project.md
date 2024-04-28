@@ -52,26 +52,17 @@ An [HC-12] is a cheap little board that can perform quite complex wireless commu
 
 - An [STMicroelectronics] [STM8] 8-bit processor that is the interface that configures and transmits and receives via a...
 - [Silicon Labs] [4463] High-Performance, Low Current Tranceiver
-<<<<<<< HEAD
-- An AS179-92LF 2-way radio frequency switch (marked S79)
-
-Using the standard firmware, data cna be transmitted between pairs of [HC-12]s using the default custom protocol and settings.
-=======
 - A [Skyworks] [AS179-92LF] 2-way radio frequency switch (marked S79)
 
 Using the standard firmware, data can be transmitted between pairs of [HC-12]s using the default custom protocol and settings.
 
 > There is no specification of the custom protocol used or access to to source code for the standard firmware used with these boards.
->>>>>>> dumpfirmware
 
 ### Connections
 The connections around the HC-12 are as follows:
 
-<<<<<<< HEAD
-=======
 > Assume there might be errors below - hard to follow them on a board this size!
 
->>>>>>> dumpfirmware
 |STM8|4463|AS179-92LF|Purpose|
 |-|-|-|-|
 |D4|
@@ -85,15 +76,9 @@ The connections around the HC-12 are as follows:
 |D3|
 |D2|nSEL||nSEL|
 |D1|||SWIM<br/>Pad by 'TX' pin/label|
-<<<<<<< HEAD
-|C7|SDI||SPI MISO|
-|C6|SDO||SPI MOSI|
-|C5|SCLK||SPI CLK|
-=======
-|C7MISO|SDI||SPI MISO|
+|C7/MISO|SDI||SPI MISO|
 |C6/MOSI|SDO||SPI MOSI|
 |C5/SCK|SCLK||SPI CLK|
->>>>>>> dumpfirmware
 |C4|nIRQ||Interrupt<br/>Packet received?|
 |C3|GPIO1|||
 |B4|GPIO0|||
@@ -109,14 +94,6 @@ The [4463] can do so much more than the [HC-12] standard firmware exposes, and t
 - Attempt to create a standard framework that can be used to extend the [HC-12] for other functions using whatever functions of the [4463] your project requires.
 
 ## Hardware Requirements
-<<<<<<< HEAD
-- An [HC-12]
-- A suitable USB-TTL serial port device
-- ??? aka _Blue Pill_
-
-## Software Requirements
-- [HC-12] firmware extractor i.e. [rumpeltux/hc12]
-=======
 - An [STM8S-DISCOVERY kit with STM8S105C6 MCU](stm8s-discovery) is being used for initial development of the software.
 - An [HC-12] will be the final target board
 - A suitable USB-TTL serial port device is required for serial communications to the boards
@@ -124,17 +101,13 @@ The [4463] can do so much more than the [HC-12] standard firmware exposes, and t
 
 ## Software Requirements
 - [HC-12] firmware extractor i.e. [rumpeltux/hc12]; this will be attempted but given my board might be a clone, it might not work!
->>>>>>> dumpfirmware
 - [ST Visual Programmer STM8]
 - An alternative is the older [STM8 IDE]
 - [STM8] software library
 - Silicon Labs [WDS] (Wireless Development Suite)
-<<<<<<< HEAD
 - Silicon Micro WMBUS package ?????
 - [Ghidra] _A software reverse engineering (SRE) suite of tools developed by NSA's Research Directorate in support of the Cybersecurity mission_ if yuo wish to reverse engineer the firmware
-=======
 - [Ghidra] _A software reverse engineering (SRE) suite of tools developed by NSA's Research Directorate in support of the Cybersecurity mission_ if you wish to reverse engineer the firmware
->>>>>>> dumpfirmware
     - [esaulenka/ghidra_STM8] is required to allow [Ghidra] to understand the STM8 byte code
 
 ### Installling the older [STM8 IDE]
@@ -166,11 +139,7 @@ You should see this:
 - The [STM8 IDE] should install and should happily launch and build projects.
 
 ### Associating the STM8 standard Peripherals Library
-<<<<<<< HEAD
-?????????????????????
-=======
 The SPL consists of header files and source so is just imported _file-by-file_ into STVD projects.
->>>>>>> dumpfirmware
 
 ## Programming Overview
 - The [WDS] has sample code that is not intended for the STM8 but might be portable
@@ -180,14 +149,6 @@ The SPL consists of header files and source so is just imported _file-by-file_ i
 ## Standard HC-12 (STM8) Firmware
 See the [rumpeltux/hc12] tools for instructions on downloading the standard [HC-12] firmware.
 
-<<<<<<< HEAD
-> It is very much recommended that you download your firmware first so that you can restore your [HC-12] if required.
-
-Some projects patch teh standard [HC-12] firmware but this project will not do thta.  Instead a totally new set of firmware will be written that emulates some features of the standard firmware but allows the functionality to be changed by building in custom parts.
-
-### Emulated Features
-- The use of `AT` commands via the `set` line to configure the [HC-12] will be replicated
-=======
 > It is very much recommended that you download your firmware first so that you can restore your [HC-12] if required. This may, or may not, work if your [HC-12] isa clone or a difference version from the one the author used.
 
 Some projects patch the standard [HC-12] firmware but this project will not do that.  Instead a totally new set of firmware will be written that emulates some features of the standard firmware but allows the functionality to be changed by building in custom parts.
@@ -197,7 +158,6 @@ Some projects patch the standard [HC-12] firmware but this project will not do t
 
 - The use of `AT` commands via the `set` line to configure the [HC-12] will be replicated
 - The `AT+V` command to show firmware version will be emulated.
->>>>>>> dumpfirmware
 - The `AT+UPDATE` command to install different firware will be emulated.
 
 [HC-12]: https://statics3.seeedstudio.com/assets/file/bazaar/product/HC-12_english_datasheets.pdf
@@ -215,9 +175,6 @@ Some projects patch the standard [HC-12] firmware but this project will not do t
 [4GSK]: https://en.wikipedia.org/wiki/Frequency-shift_keying
 [STM8 IDE]: https://www.st.com/en/development-tools/stm8-ides/products.html
 [otya128/winevdm]: https://github.com/otya128/winevdm?tab=readme-ov-file
-<<<<<<< HEAD
-[ST Visual Programmer STM8]: https://www.st.com/en/development-tools/stvp-stm8.html
-=======
 [ST Visual Programmer STM8]: https://www.st.com/en/development-tools/stvp-stm8.html
 [Skyworks]: https://www.skyworksinc.com/
 [AS179-92LF]: https://www.mouser.co.uk/datasheet/2/472/AS179_92LF_200176J-3365297.pdf
@@ -226,4 +183,3 @@ Some projects patch the standard [HC-12] firmware but this project will not do t
 
 [AN2659]: https://www.st.com/resource/en/application_note/an2659-stm8-inapplication-programming-iap-using-a-customized-userbootloader-stmicroelectronics.pdf
 [Flasher-stm8s]: https://www.st.com/en/development-tools/flasher-stm8.html
->>>>>>> dumpfirmware

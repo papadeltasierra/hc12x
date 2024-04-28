@@ -36,8 +36,13 @@
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported variables ------------------------------------------------------- */
+// !!PDS: should be importing this.
+#define RADIO_MAX_PACKET_LENGTH 64
 extern ITStatus rxActive;
-extern ITStatus uartActive;
+extern uint8_t UART_data_count;
+extern uint8_t UART_data_index;
+extern uint8_t UART_data_start;
+extern uint8_t UART_buffer[RADIO_MAX_PACKET_LENGTH];
 /* Exported functions ------------------------------------------------------- */
 // !!PDS: How should this work?
 #ifdef _COSMIC_

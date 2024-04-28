@@ -50,3 +50,4 @@ isr.h
 hc12_conf.h
 application_defs.h
 ..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\mods0.h
+..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h

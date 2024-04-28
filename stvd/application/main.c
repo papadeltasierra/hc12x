@@ -13,7 +13,7 @@
  * @n http://www.silabs.com
  *
  */
-
+#include <string.h>
 #include "stm8s.h"
 #include "stm8s_it.h"
 #include "stm8s_exti.h"
@@ -68,11 +68,11 @@ void main(void)
     /* UART configuration -----------------------------------------*/
     GPIO_Config();
 
-    /* UART configuration -----------------------------------------*/
-    UART_Config();
-
     /* SPI configuration ------------------------------------------*/
     SPI_Config();
+
+    /* UART configuration -----------------------------------------*/
+    UART_Config();
 
     /* Initialize the Radio ---------------------------------------*/
     vRadio_Init();
@@ -103,7 +103,11 @@ void main(void)
 void Pollhandler()
 {
     uint8_t len;
+    uint8_t *UART_ptr;
     uint8_t *ptr;
+    uint8_t data_count;
+    uint8_t data_start;
+    uint8_t data_end;
     if (rxActive)
     {
         /*
@@ -113,7 +117,7 @@ void Pollhandler()
         if (TRUE == gRadio_CheckReceived())
         {
             len = Si446xCmd.FIFO_INFO.RX_FIFO_COUNT;
-            ptr = &rxRadioPacket[0u];
+            ptr = &txrx_buffer[0u];
             while (len--)
             {
                 UART1_SendData8(*ptr++);
@@ -124,27 +128,55 @@ void Pollhandler()
         }
     }
 
-    if (UART1_GetFlagStatus(UART1_FLAG_RXNE))
+    if (UART_data_count)
     {
         /**
-         * Variable numbers of bytes so keep receiving until the buffer is
-         * full or there are no more.
+         * We will copy the data out as fast as we can but also reset the
+         * "start next" count.  Copy values so that we do not get tripped up
+         * by the interrupt routine altering them under our feet.  And yes, we
+         * might lose some data but the application using us has to implement
+         * sensible handshaking to ensure this does not happen.
          *
-         * TODO: Will need to test to see whether a wait is required
-         *       in order to capture all bytes.
+         * Remember that the data might wrap around the UART buffer and disable
+         * interrupts whilst we copy key data,
          */
-        ptr = &txRadioPacket[2];
-        (*ptr++) = 0x18;
-        ptr++;
-        len = 0;
-        while (
-				(len <= 0x11) && UART1_GetFlagStatus(UART1_FLAG_RXNE))
+// !!PDS: Really want this outside of here.  And maybe even move this routine out.
+#define FU3_MAX_TRANSMIT 17
+        // !!PDS: Ignore overruns for the moment.
+        // UART1_ITConfig(UART1_IT_RXNE_OR, DISABLE);
+        UART1_ITConfig(UART1_IT_RXNE, DISABLE);
+        data_start = UART_data_start;
+        // For FU3, we cannot transmit more than 17 bytes at a time!
+        if (UART_data_count > FU3_MAX_TRANSMIT)
         {
-            *ptr++ = UART1_ReceiveData8();
-            len++;
+            data_count = FU3_MAX_TRANSMIT;
+            UART_data_count -= FU3_MAX_TRANSMIT;
         }
-        txRadioPacket[1] = (uint8_t)len;
-        vRadio_StartTx(1, len, txRadioPacket);
+        else
+        {
+            data_count = UART_data_count;
+            UART_data_count = 0;
+        }
+        UART_data_start = (data_start + data_count) % RADIO_MAX_PACKET_LENGTH;
+        // UART1_ITConfig(UART1_IT_RXNE_OR, ENABLE);
+        UART1_ITConfig(UART1_IT_RXNE, ENABLE);
+
+        data_end = (data_start + data_count) % RADIO_MAX_PACKET_LENGTH;
+        if (data_end > data_start)
+        {
+            // buffer has (probaly) not wrapped; easy :-).
+            memcpy(&txrx_buffer[2], &UART_buffer[data_start], data_count);
+        }
+        else
+        {
+            // Data has wrapped.
+            memcpy(&txrx_buffer[2], &UART_buffer[data_start], RADIO_MAX_PACKET_LENGTH - data_start);
+            memcpy(&txrx_buffer[RADIO_MAX_PACKET_LENGTH - data_start + 2], &UART_buffer[0], data_count + data_start - RADIO_MAX_PACKET_LENGTH);
+        }
+        txrx_buffer[0] = 0x18;
+        txrx_buffer[1] = data_count;
+
+        vRadio_StartTx(pRadioConfiguration->Radio_ChannelNumber, data_count + 2, txrx_buffer);
     }
 }
 
@@ -167,6 +199,7 @@ static void CLK_Config(void)
  */
 static void UART_Config(void)
 {
+		UART1_DeInit();
     UART1_Init(
         UART1_BAUDRATE,
         UART1_WORDLENGTH,
@@ -174,12 +207,17 @@ static void UART_Config(void)
         UART1_PARITY,
         UART1_SYNCMODE,
         UART1_MODE);
+				
+		// Clear the status register.
+		UART1->SR = 0xC0;
 
     /*
      * Enable the UART Receive interrupt: this interrupt is generated when the UART
      * receive data register is not empty
      */
-    UART1_ITConfig(UART1_IT_RXNE_OR, ENABLE);
+    // !!PDS:Ignore overruns for now.
+    // UART1_ITConfig(UART1_IT_RXNE_OR, ENABLE);
+    UART1_ITConfig(UART1_IT_RXNE, ENABLE);
 
     /*
      * Enable the UART Transmit complete interrupt: this interrupt is generated

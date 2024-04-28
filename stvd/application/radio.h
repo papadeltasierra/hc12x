@@ -14,7 +14,7 @@
  *  Global Macros & Definitions
  *****************************************************************************/
 /*! Maximal packet length definition (FIFO size) */
-#define RADIO_MAX_PACKET_LENGTH     64u
+// #define RADIO_MAX_PACKET_LENGTH     64u
 
 /*****************************************************************************
  *  Global Typedefs & Enums
@@ -35,10 +35,11 @@ typedef struct
  *  Global Variable Declarations
  *****************************************************************************/
 // !!PDS: Not clear what we need here but these need to be variables of some sort!
+#define RADIO_MAX_PACKET_LENGTH 64
 #if defined(STM8S003) || defined(STM8S105)
 extern const tRadioConfiguration *pRadioConfiguration;
-extern uint8_t rxRadioPacket[RADIO_MAX_PACKET_LENGTH];
-extern uint8_t txRadioPacket[RADIO_MAX_PACKET_LENGTH];
+extern uint8_t txrx_buffer[RADIO_MAX_PACKET_LENGTH];
+// extern uint8_t txRadioPacket[RADIO_MAX_PACKET_LENGTH];
 
 /*! Si446x configuration array */
 extern const uint8_t Radio_Configuration_Data_Array[];

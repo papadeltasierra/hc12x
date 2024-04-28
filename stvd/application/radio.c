@@ -29,8 +29,7 @@ const tRadioConfiguration RadioConfiguration = RADIO_CONFIGURATION_DATA;
 // @near const tRadioConfiguration *pRadioConfiguration = &RadioConfiguration;
 const tRadioConfiguration *pRadioConfiguration = &RadioConfiguration;
 
-uint8_t rxRadioPacket[RADIO_MAX_PACKET_LENGTH];
-uint8_t txRadioPacket[RADIO_MAX_PACKET_LENGTH];
+uint8_t txrx_buffer[RADIO_MAX_PACKET_LENGTH];
 
 /*****************************************************************************
  *  Local Function Declarations
@@ -109,7 +108,7 @@ BitStatus gRadio_CheckReceived(void)
         /* Get payload length */
         si446x_fifo_info(0x00);
 
-        si446x_read_rx_fifo(Si446xCmd.FIFO_INFO.RX_FIFO_COUNT, &rxRadioPacket[0]);
+        si446x_read_rx_fifo(Si446xCmd.FIFO_INFO.RX_FIFO_COUNT, &txrx_buffer[0]);
         return TRUE;
     }
 

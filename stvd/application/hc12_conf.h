@@ -1,11 +1,12 @@
 /* HC-12 specific configuration. */
 // UART configuration.
-#define UART1_BAUDRATE      115200
+// !!PDS: what speed?
+#define UART1_BAUDRATE      9600
 #define UART1_WORDLENGTH    UART1_WORDLENGTH_8D
 #define UART1_STOPBITS      UART1_STOPBITS_1
-#define UART1_PARITY        UART1_PARITY_EVEN
+#define UART1_PARITY        UART1_PARITY_NO
 #define UART1_SYNCMODE      UART1_SYNCMODE_CLOCK_DISABLE
-#define UART1_MODE          UART1_MODE_RX_ENABLE
+#define UART1_MODE          UART1_MODE_TXRX_ENABLE
 
 // 4463 interface configuration
 #define NSEL_GPIOX          (GPIOA)

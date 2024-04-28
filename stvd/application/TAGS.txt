@@ -77,7 +77,7 @@ ADC1_GetFlagStatus	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8
 ADC1_GetITStatus	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_adc1.h	329;"	prototype	signature:(ADC1_IT_TypeDef ITPendingBit)
 ADC1_HTRH_RESET_VALUE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	350;"	macro
 ADC1_HTRL_RESET_VALUE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	349;"	macro
-ADC1_IRQHandler	stm8s_it.h	111;"	prototype	signature:(void)
+ADC1_IRQHandler	stm8s_it.h	119;"	prototype	signature:(void)
 ADC1_ITConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_adc1.h	312;"	prototype	signature:(ADC1_IT_TypeDef ADC1_IT, FunctionalState NewState)
 ADC1_IT_AWD	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_adc1.h	81;"	enumerator	enum:__anon227
 ADC1_IT_AWDIE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_adc1.h	79;"	enumerator	enum:__anon227
@@ -179,7 +179,7 @@ ADC2_ExternalTriggerConfig	..\..\..\..\..\..\program files (x86)\stmicroelectron
 ADC2_GetConversionValue	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_adc2.h	244;"	prototype	signature:(void)
 ADC2_GetFlagStatus	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_adc2.h	245;"	prototype	signature:(void)
 ADC2_GetITStatus	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_adc2.h	247;"	prototype	signature:(void)
-ADC2_IRQHandler	stm8s_it.h	109;"	prototype	signature:(void)
+ADC2_IRQHandler	stm8s_it.h	117;"	prototype	signature:(void)
 ADC2_ITConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_adc2.h	235;"	prototype	signature:(FunctionalState NewState)
 ADC2_Init	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_adc2.h	226;"	prototype	signature:(ADC2_ConvMode_TypeDef ADC2_ConversionMode, ADC2_Channel_TypeDef ADC2_Channel, ADC2_PresSel_TypeDef ADC2_PrescalerSelection, ADC2_ExtTrig_TypeDef ADC2_ExtTrigger, FunctionalState ADC2_ExtTriggerState, ADC2_Align_TypeDef ADC2_Align, ADC2_SchmittTrigg_TypeDef ADC2_SchmittTriggerChannel, FunctionalState ADC2_SchmittTriggerState)
 ADC2_PRESSEL_FCPU_D10	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_adc2.h	52;"	enumerator	enum:__anon218
@@ -217,9 +217,9 @@ ADC2_TDRL_RESET_VALUE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\s
 ADC2_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	401;"	typedef	typeref:struct:ADC2_struct
 ADC2_struct	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	390;"	struct
 AFC_FREQ_OFFSET	si446x_cmd.h	122;"	member	struct:si446x_reply_GET_MODEM_STATUS_map
-AFR0	main.c	249;"	macro	file:
-AFR2	main.c	250;"	macro	file:
-AFR7	main.c	252;"	macro	file:
+AFR0	main.c	279;"	macro	file:
+AFR2	main.c	280;"	macro	file:
+AFR7	main.c	282;"	macro	file:
 ANT1_RSSI	si446x_cmd.h	120;"	member	struct:si446x_reply_GET_MODEM_STATUS_map
 ANT2_RSSI	si446x_cmd.h	121;"	member	struct:si446x_reply_GET_MODEM_STATUS_map
 APPLICATION_DEFS_H_	application_defs.h	11;"	macro
@@ -250,7 +250,7 @@ AWU_CSR_RESET_VALUE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm
 AWU_Cmd	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_awu.h	135;"	prototype	signature:(FunctionalState NewState)
 AWU_DeInit	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_awu.h	133;"	prototype	signature:(void)
 AWU_GetFlagStatus	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_awu.h	138;"	prototype	signature:(void)
-AWU_IRQHandler	stm8s_it.h	50;"	prototype	signature:(void)
+AWU_IRQHandler	stm8s_it.h	58;"	prototype	signature:(void)
 AWU_IdleModeEnable	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_awu.h	137;"	prototype	signature:(void)
 AWU_Init	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_awu.h	134;"	prototype	signature:(AWU_Timebase_TypeDef AWU_TimeBase)
 AWU_LSICalibrationConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_awu.h	136;"	prototype	signature:(uint32_t LSIFreqHz)
@@ -569,7 +569,7 @@ CAN_RFR_RFOM	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdp
 CAN_RTR_Data	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_can.h	225;"	enumerator	enum:__anon208
 CAN_RTR_Remote	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_can.h	226;"	enumerator	enum:__anon208
 CAN_RTR_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_can.h	227;"	typedef	typeref:enum:__anon208
-CAN_RX_IRQHandler	stm8s_it.h	63;"	prototype	signature:(void)
+CAN_RX_IRQHandler	stm8s_it.h	71;"	prototype	signature:(void)
 CAN_Receive	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_can.h	497;"	prototype	signature:(void)
 CAN_ST7CompatibilityCmd	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_can.h	486;"	prototype	signature:(CAN_ST7Compatibility_TypeDef CAN_ST7Compatibility)
 CAN_ST7Compatibility_Disable	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_can.h	306;"	enumerator	enum:__anon214
@@ -612,7 +612,7 @@ CAN_TSR_TXOK0	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_std
 CAN_TSR_TXOK1	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2358;"	macro
 CAN_TSR_TXOK2	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2359;"	macro
 CAN_TTComModeCmd	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_can.h	492;"	prototype	signature:(FunctionalState NewState)
-CAN_TX_IRQHandler	stm8s_it.h	64;"	prototype	signature:(void)
+CAN_TX_IRQHandler	stm8s_it.h	72;"	prototype	signature:(void)
 CAN_Transmit	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_can.h	487;"	prototype	signature:( uint32_t CAN_Id, CAN_Id_TypeDef CAN_IDE, CAN_RTR_TypeDef CAN_RTR, uint8_t CAN_DLC, uint8_t *CAN_Data)
 CAN_TransmitMailBox_0	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_can.h	198;"	enumerator	enum:__anon205
 CAN_TransmitMailBox_1	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_can.h	199;"	enumerator	enum:__anon205
@@ -731,7 +731,7 @@ CLK_ClockSwitchCmd	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8
 CLK_ClockSwitchCmd	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_clk.c	213;"	function	signature:(FunctionalState NewState)
 CLK_ClockSwitchConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_clk.h	361;"	prototype	signature:(CLK_SwitchMode_TypeDef CLK_SwitchMode, CLK_Source_TypeDef CLK_NewClock, FunctionalState ITState, CLK_CurrentClockState_TypeDef CLK_CurrentClockState)
 CLK_ClockSwitchConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_clk.c	309;"	function	signature:(CLK_SwitchMode_TypeDef CLK_SwitchMode, CLK_Source_TypeDef CLK_NewClock, FunctionalState ITState, CLK_CurrentClockState_TypeDef CLK_CurrentClockState)
-CLK_Config	main.c	151;"	function	file:	signature:(void)
+CLK_Config	main.c	180;"	function	file:	signature:(void)
 CLK_Config	main.c	30;"	prototype	file:	signature:(void)
 CLK_CurrentClockState_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_clk.h	56;"	typedef	typeref:enum:__anon183
 CLK_DeInit	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_clk.h	352;"	prototype	signature:(void)
@@ -783,7 +783,7 @@ CLK_ICKR_LSIEN	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_st
 CLK_ICKR_LSIRDY	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	552;"	macro
 CLK_ICKR_RESET_VALUE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	531;"	macro
 CLK_ICKR_SWUAH	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	551;"	macro
-CLK_IRQHandler	stm8s_it.h	51;"	prototype	signature:(void)
+CLK_IRQHandler	stm8s_it.h	59;"	prototype	signature:(void)
 CLK_ITConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_clk.h	364;"	prototype	signature:(CLK_IT_TypeDef CLK_IT, FunctionalState NewState)
 CLK_ITConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_clk.c	459;"	function	signature:(CLK_IT_TypeDef CLK_IT, FunctionalState NewState)
 CLK_IT_CSSD	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_clk.h	167;"	enumerator	enum:__anon190
@@ -1005,7 +1005,7 @@ ECKR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_li
 EEPROM	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	125;"	macro
 EEPROM	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	131;"	macro
 EEPROM	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	145;"	macro
-EEPROM_EEC_IRQHandler	stm8s_it.h	119;"	prototype	signature:(void)
+EEPROM_EEC_IRQHandler	stm8s_it.h	127;"	prototype	signature:(void)
 EEPROM_RADIO_CONFIGURATION_DATA_ARRAY	wds3\hc12_original.h	666;"	macro
 EEPROM_RADIO_CONFIGURATION_DATA_ARRAY	wds3\hc12_original.h	680;"	macro
 EGR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1067;"	member	struct:TIM4_struct
@@ -1035,12 +1035,12 @@ EXTI_GetExtIntSensitivity	..\..\..\..\..\..\program files (x86)\stmicroelectroni
 EXTI_GetExtIntSensitivity	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_exti.c	126;"	function	signature:(EXTI_Port_TypeDef Port)
 EXTI_GetTLISensitivity	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_exti.h	125;"	prototype	signature:(void)
 EXTI_GetTLISensitivity	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_exti.c	162;"	function	signature:(void)
-EXTI_PORTA_IRQHandler	stm8s_it.h	52;"	prototype	signature:(void)
-EXTI_PORTB_IRQHandler	stm8s_it.h	53;"	prototype	signature:(void)
-EXTI_PORTC_IRQHandler	stm8s_it.h	54;"	prototype	signature:(void)
-EXTI_PORTD_IRQHandler	stm8s_it.h	55;"	prototype	signature:(void)
-EXTI_PORTE_IRQHandler	stm8s_it.h	56;"	prototype	signature:(void)
-EXTI_PORTF_IRQHandler	stm8s_it.h	59;"	prototype	signature:(void)
+EXTI_PORTA_IRQHandler	stm8s_it.h	60;"	prototype	signature:(void)
+EXTI_PORTB_IRQHandler	stm8s_it.h	61;"	prototype	signature:(void)
+EXTI_PORTC_IRQHandler	stm8s_it.h	62;"	prototype	signature:(void)
+EXTI_PORTD_IRQHandler	stm8s_it.h	63;"	prototype	signature:(void)
+EXTI_PORTE_IRQHandler	stm8s_it.h	64;"	prototype	signature:(void)
+EXTI_PORTF_IRQHandler	stm8s_it.h	67;"	prototype	signature:(void)
 EXTI_PORT_GPIOA	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_exti.h	63;"	enumerator	enum:__anon181
 EXTI_PORT_GPIOB	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_exti.h	64;"	enumerator	enum:__anon181
 EXTI_PORT_GPIOC	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_exti.h	65;"	enumerator	enum:__anon181
@@ -1062,7 +1062,7 @@ EXTI_TLISensitivity_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectro
 EXTI_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1478;"	typedef	typeref:struct:EXTI_struct
 EXTI_struct	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1473;"	struct
 Eeprom_Radio_ConfigurationArray	radio.h	25;"	member	struct:__anon246
-Eeprom_Radio_Configuration_Data_Array	radio.c	26;"	variable
+Eeprom_Radio_Configuration_Data_Array	radio.c	25;"	variable
 ErrorStatus	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	238;"	typedef	typeref:enum:__anon235
 F0R1	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2230;"	member	struct:__anon236::__anon237::__anon240
 F0R2	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2231;"	member	struct:__anon236::__anon237::__anon240
@@ -1256,6 +1256,7 @@ FRR_D_VALUE	si446x_cmd.h	100;"	member	struct:si446x_reply_FRR_D_READ_map
 FRR_D_VALUE	si446x_cmd.h	82;"	member	struct:si446x_reply_FRR_A_READ_map
 FRR_D_VALUE	si446x_cmd.h	88;"	member	struct:si446x_reply_FRR_B_READ_map
 FRR_D_VALUE	si446x_cmd.h	94;"	member	struct:si446x_reply_FRR_C_READ_map
+FU3_MAX_TRANSMIT	main.c	144;"	macro	file:
 FUNC	si446x_cmd.h	39;"	member	struct:si446x_reply_FUNC_INFO_map
 FUNC_INFO	si446x_cmd.h	153;"	member	union:si446x_cmd_reply_union	typeref:struct:si446x_cmd_reply_union::si446x_reply_FUNC_INFO_map
 Filter	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2226;"	member	union:__anon236::__anon237	typeref:struct:__anon236::__anon237::__anon239
@@ -1295,7 +1296,7 @@ GPIOI_BaseAddress	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s
 GPIO_ADC	si446x_cmd.h	130;"	member	struct:si446x_reply_GET_ADC_READING_map
 GPIO_CR1_RESET_VALUE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	285;"	macro
 GPIO_CR2_RESET_VALUE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	286;"	macro
-GPIO_Config	main.c	200;"	function	file:	signature:(void)
+GPIO_Config	main.c	230;"	function	file:	signature:(void)
 GPIO_Config	main.c	31;"	prototype	file:	signature:(void)
 GPIO_DDR_RESET_VALUE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	284;"	macro
 GPIO_DeInit	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_gpio.h	139;"	prototype	signature:(GPIO_TypeDef* GPIOx)
@@ -1438,7 +1439,7 @@ I2C_GenerateSTOP	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_
 I2C_GetFlagStatus	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_i2c.h	615;"	prototype	signature:(I2C_Flag_TypeDef I2C_Flag)
 I2C_GetITStatus	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_i2c.h	621;"	prototype	signature:(I2C_ITPendingBit_TypeDef I2C_ITPendingBit)
 I2C_GetLastEvent	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_i2c.h	609;"	prototype	signature:(void)
-I2C_IRQHandler	stm8s_it.h	96;"	prototype	signature:(void)
+I2C_IRQHandler	stm8s_it.h	104;"	prototype	signature:(void)
 I2C_ITConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_i2c.h	517;"	prototype	signature:(I2C_IT_TypeDef I2C_IT, FunctionalState NewState)
 I2C_ITPENDINGBIT_ACKNOWLEDGEFAILURE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_i2c.h	149;"	enumerator	enum:__anon169
 I2C_ITPENDINGBIT_ADDRESSSENTMATCHED	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_i2c.h	143;"	enumerator	enum:__anon169
@@ -1521,7 +1522,6 @@ INTERRUPT_HANDLER	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s
 INTERRUPT_HANDLER_TRAP	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2749;"	macro
 INTERRUPT_HANDLER_TRAP	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2754;"	macro
 INTERRUPT_HANDLER_TRAP	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2763;"	macro
-INTERRUPT_HANDLER_TRAP	stm8s_it.c	73;"	function
 INT_PEND	si446x_cmd.h	59;"	member	struct:si446x_reply_GET_INT_STATUS_map
 INT_STATUS	si446x_cmd.h	60;"	member	struct:si446x_reply_GET_INT_STATUS_map
 IN_RAM	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	171;"	macro
@@ -1896,7 +1896,7 @@ ITC_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdpe
 ITC_struct	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1435;"	struct
 ITR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1340;"	member	struct:I2C_struct
 ITStatus	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	233;"	typedef	typeref:enum:__anon233
-IT_Config	main.c	298;"	function	file:	signature:(void)
+IT_Config	main.c	328;"	function	file:	signature:(void)
 IWDG	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2653;"	macro
 IWDG_BaseAddress	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2571;"	macro
 IWDG_Enable	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_iwdg.h	118;"	prototype	signature:(void)
@@ -1990,7 +1990,8 @@ NOPT5	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_l
 NOPT7	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1600;"	member	struct:OPT_struct
 NSEL_GPIOX	hc12_conf.h	11;"	macro
 NSEL_GPIO_PIN	hc12_conf.h	12;"	macro
-NonHandledInterrupt	stm8s_it.h	44;"	prototype	signature:(void)
+NULL	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	9;"	macro
+NonHandledInterrupt	stm8s_it.h	52;"	prototype	signature:(void)
 OARH	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1334;"	member	struct:I2C_struct
 OARL	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1333;"	member	struct:I2C_struct
 ODR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	267;"	member	struct:GPIO_struct
@@ -2034,7 +2035,7 @@ PUKR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_li
 Page	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2327;"	member	struct:__anon236	typeref:union:__anon236::__anon237
 PointerAttr	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	156;"	macro
 PointerAttr	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	160;"	macro
-Pollhandler	main.c	102;"	function
+Pollhandler	main.c	103;"	function
 Pollhandler	main.c	50;"	prototype	file:	signature:(void)
 Pro2Cmd	si446x_api_lib.c	20;"	variable
 RADIO_CONFIGURATION_DATA	wds3\hc12_original.h	721;"	macro
@@ -2061,7 +2062,8 @@ RADIO_CONFIGURATION_DATA_RADIO_XO_FREQ_DEFAULT	wds3\hc12_original.h	684;"	macro
 RADIO_CONFIG_H_	wds3\hc12_original.h	15;"	macro
 RADIO_CTS_TIMEOUT	radio_comm.h	25;"	macro
 RADIO_H_	radio.h	11;"	macro
-RADIO_MAX_PACKET_LENGTH	radio.h	17;"	macro
+RADIO_MAX_PACKET_LENGTH	radio.h	38;"	macro
+RADIO_MAX_PACKET_LENGTH	stm8s_it.h	40;"	macro
 RAW	si446x_cmd.h	150;"	member	union:si446x_cmd_reply_union
 RCR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	634;"	member	struct:TIM1_struct
 READ_CMD_BUFF	si446x_cmd.h	159;"	member	union:si446x_cmd_reply_union	typeref:struct:si446x_cmd_reply_union::si446x_reply_READ_CMD_BUFF_map
@@ -2142,10 +2144,10 @@ RST_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdpe
 RST_struct	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1671;"	struct
 RXCRCR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1704;"	member	struct:SPI_struct
 RX_FIFO_COUNT	si446x_cmd.h	54;"	member	struct:si446x_reply_FIFO_INFO_map
-RadioConfiguration	radio.c	29;"	variable
+RadioConfiguration	radio.c	28;"	variable
 Radio_ChannelNumber	radio.h	27;"	member	struct:__anon246
 Radio_ConfigurationArray	radio.h	24;"	member	struct:__anon246
-Radio_Configuration_Data_Array	radio.c	24;"	variable
+Radio_Configuration_Data_Array	radio.c	23;"	variable
 Radio_Delay_Cnt_After_Reset	radio.h	31;"	member	struct:__anon246
 Radio_PacketLength	radio.h	28;"	member	struct:__anon246
 Radio_State_After_Power_Up	radio.h	29;"	member	struct:__anon246
@@ -2162,15 +2164,12 @@ SAMPLE_CODE_FUNC_H_	sample_code_func.h	11;"	macro
 SDN_GPIOX	hc12_conf.h	13;"	macro
 SDN_GPIO_PIN	hc12_conf.h	14;"	macro
 SDO	si446x_cmd.h	49;"	member	struct:si446x_reply_GPIO_PIN_CFG_map
-SEGMENT_VARIABLE	radio.c	36;"	prototype	file:	signature:(Radio_Configuration_Data_Array[], uint8_t, SEG_CODE)
-SEGMENT_VARIABLE	radio.c	39;"	prototype	file:
-SEGMENT_VARIABLE	radio.h	47;"	prototype	signature:(fixRadioPacket[RADIO_MAX_PACKET_LENGTH], uint8_t, SEG_XDATA)
-SEGMENT_VARIABLE	radio.h	50;"	prototype	signature:(Radio_Configuration_Data_Array[], uint8_t, SEG_CODE)
+SEGMENT_VARIABLE	radio.h	48;"	prototype	signature:(fixRadioPacket[RADIO_MAX_PACKET_LENGTH], uint8_t, SEG_XDATA)
+SEGMENT_VARIABLE	radio.h	51;"	prototype	signature:(Radio_Configuration_Data_Array[], uint8_t, SEG_CODE)
 SEGMENT_VARIABLE	radio_comm.h	34;"	prototype	signature:(radioCmd[16u], uint8_t, SEG_XDATA)
 SEGMENT_VARIABLE	si446x_api_lib.h	19;"	prototype	signature:( Si446xCmd, union si446x_cmd_reply_union, SEG_XDATA )
 SEGMENT_VARIABLE	si446x_api_lib.h	20;"	prototype	signature:( Pro2Cmd[16], uint8_t, SEG_XDATA )
-SEGMENT_VARIABLE_SEGMENT_POINTER	radio.c	42;"	prototype	file:
-SEGMENT_VARIABLE_SEGMENT_POINTER	radio.h	46;"	prototype	signature:(pRadioConfiguration, tRadioConfiguration, SEG_CODE, SEG_CODE)
+SEGMENT_VARIABLE_SEGMENT_POINTER	radio.h	47;"	prototype	signature:(pRadioConfiguration, tRadioConfiguration, SEG_CODE, SEG_CODE)
 SET	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	233;"	enumerator	enum:__anon233
 SI446X_CMD_ARG_COUNT_CHANGE_STATE	si446x_cmd.h	1764;"	macro
 SI446X_CMD_ARG_COUNT_FIFO_INFO	si446x_cmd.h	927;"	macro
@@ -5394,7 +5393,7 @@ SPI_ClockPhase_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\
 SPI_ClockPolarity_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_spi.h	105;"	typedef	typeref:enum:__anon152
 SPI_Cmd	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_spi.h	309;"	prototype	signature:(FunctionalState NewState)
 SPI_Cmd	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_spi.c	119;"	function	signature:(FunctionalState NewState)
-SPI_Config	main.c	273;"	function	file:	signature:(void)
+SPI_Config	main.c	303;"	function	file:	signature:(void)
 SPI_Config	main.c	33;"	prototype	file:	signature:(void)
 SPI_DATADIRECTION_1LINE_RX	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_spi.h	50;"	enumerator	enum:__anon147
 SPI_DATADIRECTION_1LINE_TX	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_spi.h	51;"	enumerator	enum:__anon147
@@ -5431,7 +5430,7 @@ SPI_ICR_RESET_VALUE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm
 SPI_ICR_RXEI	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1746;"	macro
 SPI_ICR_TXEI	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1745;"	macro
 SPI_ICR_WKIE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1748;"	macro
-SPI_IRQHandler	stm8s_it.h	67;"	prototype	signature:(void)
+SPI_IRQHandler	stm8s_it.h	75;"	prototype	signature:(void)
 SPI_ITConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_spi.h	310;"	prototype	signature:(SPI_IT_TypeDef SPI_IT, FunctionalState NewState)
 SPI_ITConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_spi.c	141;"	function	signature:(SPI_IT_TypeDef SPI_IT, FunctionalState NewState)
 SPI_IT_CRCERR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_spi.h	157;"	enumerator	enum:__anon157
@@ -5531,7 +5530,7 @@ TIM1_BREAK_ENABLE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s
 TIM1_BaseAddress	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2580;"	macro
 TIM1_BreakPolarity_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim1.h	175;"	typedef	typeref:enum:__anon125
 TIM1_BreakState_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim1.h	166;"	typedef	typeref:enum:__anon124
-TIM1_CAP_COM_IRQHandler	stm8s_it.h	68;"	prototype	signature:(void)
+TIM1_CAP_COM_IRQHandler	stm8s_it.h	76;"	prototype	signature:(void)
 TIM1_CCER1_CC1E	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	764;"	macro
 TIM1_CCER1_CC1NE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	762;"	macro
 TIM1_CCER1_CC1NP	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	761;"	macro
@@ -5853,7 +5852,7 @@ TIM1_TimeBaseInit	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s
 TIM1_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	647;"	typedef	typeref:struct:TIM1_struct
 TIM1_UPDATESOURCE_GLOBAL	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim1.h	400;"	enumerator	enum:__anon142
 TIM1_UPDATESOURCE_REGULAR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim1.h	401;"	enumerator	enum:__anon142
-TIM1_UPD_OVF_TRG_BRK_IRQHandler	stm8s_it.h	69;"	prototype	signature:(void)
+TIM1_UPD_OVF_TRG_BRK_IRQHandler	stm8s_it.h	77;"	prototype	signature:(void)
 TIM1_UpdateDisableConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim1.h	553;"	prototype	signature:(FunctionalState NewState)
 TIM1_UpdateRequestConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim1.h	554;"	prototype	signature:(TIM1_UpdateSource_TypeDef TIM1_UpdateSource)
 TIM1_UpdateSource_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim1.h	402;"	typedef	typeref:enum:__anon142
@@ -5865,7 +5864,7 @@ TIM2_ARRL_ARR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_std
 TIM2_ARRL_RESET_VALUE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	872;"	macro
 TIM2_ARRPreloadConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim2.h	302;"	prototype	signature:(FunctionalState NewState)
 TIM2_BaseAddress	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2581;"	macro
-TIM2_CAP_COM_IRQHandler	stm8s_it.h	76;"	prototype	signature:(void)
+TIM2_CAP_COM_IRQHandler	stm8s_it.h	84;"	prototype	signature:(void)
 TIM2_CCER1_CC1E	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	922;"	macro
 TIM2_CCER1_CC1P	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	921;"	macro
 TIM2_CCER1_CC2E	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	920;"	macro
@@ -6043,7 +6042,7 @@ TIM2_TimeBaseInit	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s
 TIM2_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	852;"	typedef	typeref:struct:TIM2_struct
 TIM2_UPDATESOURCE_GLOBAL	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim2.h	244;"	enumerator	enum:__anon114
 TIM2_UPDATESOURCE_REGULAR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim2.h	245;"	enumerator	enum:__anon114
-TIM2_UPD_OVF_BRK_IRQHandler	stm8s_it.h	75;"	prototype	signature:(void)
+TIM2_UPD_OVF_BRK_IRQHandler	stm8s_it.h	83;"	prototype	signature:(void)
 TIM2_UpdateDisableConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim2.h	295;"	prototype	signature:(FunctionalState NewState)
 TIM2_UpdateRequestConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim2.h	296;"	prototype	signature:(TIM2_UpdateSource_TypeDef TIM2_UpdateSource)
 TIM2_UpdateSource_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim2.h	246;"	typedef	typeref:enum:__anon114
@@ -6055,7 +6054,7 @@ TIM3_ARRL_ARR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_std
 TIM3_ARRL_RESET_VALUE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	990;"	macro
 TIM3_ARRPreloadConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim3.h	292;"	prototype	signature:(FunctionalState NewState)
 TIM3_BaseAddress	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2582;"	macro
-TIM3_CAP_COM_IRQHandler	stm8s_it.h	82;"	prototype	signature:(void)
+TIM3_CAP_COM_IRQHandler	stm8s_it.h	90;"	prototype	signature:(void)
 TIM3_CCER1_CC1E	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1034;"	macro
 TIM3_CCER1_CC1P	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1033;"	macro
 TIM3_CCER1_CC2E	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1032;"	macro
@@ -6209,7 +6208,7 @@ TIM3_TimeBaseInit	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s
 TIM3_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	972;"	typedef	typeref:struct:TIM3_struct
 TIM3_UPDATESOURCE_GLOBAL	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim3.h	240;"	enumerator	enum:__anon99
 TIM3_UPDATESOURCE_REGULAR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim3.h	241;"	enumerator	enum:__anon99
-TIM3_UPD_OVF_BRK_IRQHandler	stm8s_it.h	81;"	prototype	signature:(void)
+TIM3_UPD_OVF_BRK_IRQHandler	stm8s_it.h	89;"	prototype	signature:(void)
 TIM3_UpdateDisableConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim3.h	286;"	prototype	signature:(FunctionalState NewState)
 TIM3_UpdateRequestConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim3.h	287;"	prototype	signature:(TIM3_UpdateSource_TypeDef TIM3_UpdateSource)
 TIM3_UpdateSource_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim3.h	242;"	typedef	typeref:enum:__anon99
@@ -6274,7 +6273,7 @@ TIM4_TimeBaseInit	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s
 TIM4_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1072;"	typedef	typeref:struct:TIM4_struct
 TIM4_UPDATESOURCE_GLOBAL	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim4.h	92;"	enumerator	enum:__anon82
 TIM4_UPDATESOURCE_REGULAR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim4.h	93;"	enumerator	enum:__anon82
-TIM4_UPD_OVF_IRQHandler	stm8s_it.h	117;"	prototype	signature:(void)
+TIM4_UPD_OVF_IRQHandler	stm8s_it.h	125;"	prototype	signature:(void)
 TIM4_UpdateDisableConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim4.h	142;"	prototype	signature:(FunctionalState NewState)
 TIM4_UpdateRequestConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim4.h	143;"	prototype	signature:(TIM4_UpdateSource_TypeDef TIM4_UpdateSource)
 TIM4_UpdateSource_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim4.h	94;"	typedef	typeref:enum:__anon82
@@ -6286,7 +6285,7 @@ TIM5_ARRL_ARR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_std
 TIM5_ARRL_RESET_VALUE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1168;"	macro
 TIM5_ARRPreloadConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim5.h	434;"	prototype	signature:(FunctionalState NewState)
 TIM5_BaseAddress	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2584;"	macro
-TIM5_CAP_COM_IRQHandler	stm8s_it.h	73;"	prototype	signature:(void)
+TIM5_CAP_COM_IRQHandler	stm8s_it.h	81;"	prototype	signature:(void)
 TIM5_CCER1_CC1E	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1228;"	macro
 TIM5_CCER1_CC1P	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1227;"	macro
 TIM5_CCER1_CC2E	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1226;"	macro
@@ -6509,7 +6508,7 @@ TIM5_TimeBaseInit	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s
 TIM5_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1146;"	typedef	typeref:struct:TIM5_struct
 TIM5_UPDATESOURCE_GLOBAL	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim5.h	247;"	enumerator	enum:__anon71
 TIM5_UPDATESOURCE_REGULAR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim5.h	248;"	enumerator	enum:__anon71
-TIM5_UPD_OVF_BRK_TRG_IRQHandler	stm8s_it.h	72;"	prototype	signature:(void)
+TIM5_UPD_OVF_BRK_TRG_IRQHandler	stm8s_it.h	80;"	prototype	signature:(void)
 TIM5_UpdateDisableConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim5.h	426;"	prototype	signature:(FunctionalState NewState)
 TIM5_UpdateRequestConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim5.h	427;"	prototype	signature:(TIM5_UpdateSource_TypeDef TIM5_UpdateSource)
 TIM5_UpdateSource_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim5.h	249;"	typedef	typeref:enum:__anon71
@@ -6604,7 +6603,7 @@ TIM6_TimeBaseInit	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s
 TIM6_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1272;"	typedef	typeref:struct:TIM6_struct
 TIM6_UPDATESOURCE_GLOBAL	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim6.h	85;"	enumerator	enum:__anon51
 TIM6_UPDATESOURCE_REGULAR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim6.h	86;"	enumerator	enum:__anon51
-TIM6_UPD_OVF_TRG_IRQHandler	stm8s_it.h	115;"	prototype	signature:(void)
+TIM6_UPD_OVF_TRG_IRQHandler	stm8s_it.h	123;"	prototype	signature:(void)
 TIM6_UpdateDisableConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim6.h	255;"	prototype	signature:(FunctionalState NewState)
 TIM6_UpdateRequestConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim6.h	256;"	prototype	signature:(TIM6_UpdateSource_TypeDef TIM6_UpdateSource)
 TIM6_UpdateSource_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_tim6.h	87;"	typedef	typeref:enum:__anon51
@@ -6612,9 +6611,10 @@ TIM6_struct	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdpe
 TINY	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	124;"	macro
 TINY	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	130;"	macro
 TINY	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	144;"	macro
-TLI_IRQHandler	stm8s_it.h	49;"	prototype	signature:(void)
+TLI_IRQHandler	stm8s_it.h	57;"	prototype	signature:(void)
 TPR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2179;"	member	struct:__anon236
-TRAP_IRQHandler	stm8s_it.h	48;"	prototype	signature:(void)
+TRAP_IRQHandler	stm8s_it.c	83;"	function	signature:(void)
+TRAP_IRQHandler	stm8s_it.h	56;"	prototype	signature:(void)
 TRISER	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1343;"	member	struct:I2C_struct
 TRUE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	231;"	enumerator	enum:__anon232
 TSR	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2178;"	member	struct:__anon236
@@ -6739,7 +6739,7 @@ UART1_PARITY_NO	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_s
 UART1_PARITY_ODD	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart1.h	83;"	enumerator	enum:__anon42
 UART1_PSCR_RESET_VALUE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1796;"	macro
 UART1_Parity_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart1.h	84;"	typedef	typeref:enum:__anon42
-UART1_RX_IRQHandler	stm8s_it.h	88;"	prototype	signature:(void)
+UART1_RX_IRQHandler	stm8s_it.h	96;"	prototype	signature:(void)
 UART1_ReceiveData8	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart1.h	360;"	prototype	signature:(void)
 UART1_ReceiveData8	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c	451;"	function	signature:(void)
 UART1_ReceiveData9	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart1.h	361;"	prototype	signature:(void)
@@ -6787,7 +6787,7 @@ UART1_SmartCardNACKCmd	..\..\..\..\..\..\program files (x86)\stmicroelectronics\
 UART1_SmartCardNACKCmd	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\src\stm8s_uart1.c	394;"	function	signature:(FunctionalState NewState)
 UART1_StopBits_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart1.h	76;"	typedef	typeref:enum:__anon41
 UART1_SyncMode_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart1.h	97;"	typedef	typeref:enum:__anon43
-UART1_TX_IRQHandler	stm8s_it.h	87;"	prototype	signature:(void)
+UART1_TX_IRQHandler	stm8s_it.h	95;"	prototype	signature:(void)
 UART1_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1781;"	typedef	typeref:struct:UART1_struct
 UART1_WAKEUP_ADDRESSMARK	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart1.h	58;"	enumerator	enum:__anon39
 UART1_WAKEUP_IDLELINE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart1.h	57;"	enumerator	enum:__anon39
@@ -6913,7 +6913,7 @@ UART2_PARITY_NO	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_s
 UART2_PARITY_ODD	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart2.h	86;"	enumerator	enum:__anon29
 UART2_PSCR_RESET_VALUE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1896;"	macro
 UART2_Parity_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart2.h	87;"	typedef	typeref:enum:__anon29
-UART2_RX_IRQHandler	stm8s_it.h	99;"	prototype	signature:(void)
+UART2_RX_IRQHandler	stm8s_it.h	107;"	prototype	signature:(void)
 UART2_ReceiveData8	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart2.h	422;"	prototype	signature:(void)
 UART2_ReceiveData9	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart2.h	423;"	prototype	signature:(void)
 UART2_ReceiverWakeUpCmd	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart2.h	421;"	prototype	signature:(FunctionalState NewState)
@@ -6948,7 +6948,7 @@ UART2_SmartCardCmd	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8
 UART2_SmartCardNACKCmd	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart2.h	419;"	prototype	signature:(FunctionalState NewState)
 UART2_StopBits_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart2.h	78;"	typedef	typeref:enum:__anon28
 UART2_SyncMode_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart2.h	118;"	typedef	typeref:enum:__anon33
-UART2_TX_IRQHandler	stm8s_it.h	100;"	prototype	signature:(void)
+UART2_TX_IRQHandler	stm8s_it.h	108;"	prototype	signature:(void)
 UART2_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1880;"	typedef	typeref:struct:UART2_struct
 UART2_WAKEUP_ADDRESSMARK	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart2.h	59;"	enumerator	enum:__anon26
 UART2_WAKEUP_IDLELINE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart2.h	58;"	enumerator	enum:__anon26
@@ -7055,7 +7055,7 @@ UART3_PARITY_EVEN	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s
 UART3_PARITY_NO	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart3.h	70;"	enumerator	enum:__anon17
 UART3_PARITY_ODD	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart3.h	72;"	enumerator	enum:__anon17
 UART3_Parity_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart3.h	73;"	typedef	typeref:enum:__anon17
-UART3_RX_IRQHandler	stm8s_it.h	104;"	prototype	signature:(void)
+UART3_RX_IRQHandler	stm8s_it.h	112;"	prototype	signature:(void)
 UART3_ReceiveData8	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart3.h	368;"	prototype	signature:(void)
 UART3_ReceiveData9	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart3.h	369;"	prototype	signature:(void)
 UART3_ReceiverWakeUpCmd	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart3.h	366;"	prototype	signature:(FunctionalState NewState)
@@ -7075,7 +7075,7 @@ UART3_SendData8	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_s
 UART3_SendData9	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart3.h	371;"	prototype	signature:(uint16_t Data)
 UART3_SetAddress	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart3.h	373;"	prototype	signature:(uint8_t UART3_Address)
 UART3_StopBits_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart3.h	65;"	typedef	typeref:enum:__anon16
-UART3_TX_IRQHandler	stm8s_it.h	105;"	prototype	signature:(void)
+UART3_TX_IRQHandler	stm8s_it.h	113;"	prototype	signature:(void)
 UART3_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1985;"	typedef	typeref:struct:UART3_struct
 UART3_WAKEUP_ADDRESSMARK	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart3.h	49;"	enumerator	enum:__anon14
 UART3_WAKEUP_IDLELINE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart3.h	48;"	enumerator	enum:__anon14
@@ -7200,7 +7200,7 @@ UART4_PARITY_NO	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_s
 UART4_PARITY_ODD	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart4.h	86;"	enumerator	enum:__anon5
 UART4_PSCR_RESET_VALUE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2095;"	macro
 UART4_Parity_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart4.h	87;"	typedef	typeref:enum:__anon5
-UART4_RX_IRQHandler	stm8s_it.h	93;"	prototype	signature:(void)
+UART4_RX_IRQHandler	stm8s_it.h	101;"	prototype	signature:(void)
 UART4_ReceiveData8	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart4.h	419;"	prototype	signature:(void)
 UART4_ReceiveData9	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart4.h	420;"	prototype	signature:(void)
 UART4_ReceiverWakeUpCmd	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart4.h	418;"	prototype	signature:(FunctionalState NewState)
@@ -7235,7 +7235,7 @@ UART4_SmartCardCmd	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8
 UART4_SmartCardNACKCmd	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart4.h	416;"	prototype	signature:(FunctionalState NewState)
 UART4_StopBits_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart4.h	78;"	typedef	typeref:enum:__anon4
 UART4_SyncMode_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart4.h	118;"	typedef	typeref:enum:__anon9
-UART4_TX_IRQHandler	stm8s_it.h	92;"	prototype	signature:(void)
+UART4_TX_IRQHandler	stm8s_it.h	100;"	prototype	signature:(void)
 UART4_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2079;"	typedef	typeref:struct:UART4_struct
 UART4_WAKEUP_ADDRESSMARK	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart4.h	59;"	enumerator	enum:__anon2
 UART4_WAKEUP_IDLELINE	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart4.h	58;"	enumerator	enum:__anon2
@@ -7245,8 +7245,12 @@ UART4_WakeUpConfig	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8
 UART4_WakeUp_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart4.h	60;"	typedef	typeref:enum:__anon2
 UART4_WordLength_TypeDef	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart4.h	125;"	typedef	typeref:enum:__anon10
 UART4_struct	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2064;"	struct
-UART_Config	main.c	168;"	function	file:	signature:(void)
+UART_Config	main.c	197;"	function	file:	signature:(void)
 UART_Config	main.c	32;"	prototype	file:	signature:(void)
+UART_buffer	stm8s_it.c	51;"	variable
+UART_data_count	stm8s_it.c	48;"	variable
+UART_data_index	stm8s_it.c	49;"	variable
+UART_data_start	stm8s_it.c	50;"	variable
 UNUSED	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2805;"	macro
 USE_STDPERIPH_DRIVER	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	96;"	macro
 VECTOR_ID	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2759;"	macro
@@ -7270,6 +7274,8 @@ WWDG_WR_W	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperi
 WWDG_struct	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	1633;"	struct
 _COSMIC_	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	83;"	macro
 _IAR_	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	87;"	macro
+_INLINE	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	13;"	macro
+_INLINE	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	15;"	macro
 _RADIO_COMM_H_	radio_comm.h	12;"	macro
 _RADIO_HAL_H_	radio_hal.h	13;"	macro
 _RAISONANCE_	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	85;"	macro
@@ -7311,27 +7317,28 @@ __STM8S_UART2_H	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_s
 __STM8S_UART3_H	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart3.h	30;"	macro
 __STM8S_UART4_H	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_uart4.h	30;"	macro
 __STM8S_WWDG_H	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s_wwdg.h	30;"	macro
+__STRING__	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	6;"	macro
 _si446x_configuration_init	si446x_api_lib.c	86;"	prototype	file:	signature:(const uint8_t *pSetPropCmd)
-_si446x_configuration_init	si446x_api_lib.c	95;"	function	signature:(const uint8_t *pSetPropCmd)
+_si446x_configuration_init	si446x_api_lib.c	96;"	function	signature:(const uint8_t *pSetPropCmd)
 _stext	stm8_interrupt_vector.c	13;"	prototype	file:
-_stext	stm8s_it.h	43;"	prototype	signature:(void)
 _vectab	stm8_interrupt_vector.c	15;"	variable
 assert_failed	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template\stm8s_conf.h	108;"	prototype	signature:(uint8_t* file, uint32_t line)
-assert_failed	main.c	311;"	function	signature:(uint8_t *file, uint32_t line)
+assert_failed	main.c	341;"	function	signature:(uint8_t *file, uint32_t line)
 assert_param	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template\stm8s_conf.h	106;"	macro
 assert_param	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\project\stm8s_stdperiph_template\stm8s_conf.h	110;"	macro
-bRadio_Check_Ezconfig	radio.h	59;"	prototype	signature:(uint16_t)
+bRadio_Check_Ezconfig	radio.h	60;"	prototype	signature:(uint16_t)
 bool	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	231;"	typedef	typeref:enum:__anon232
 col	si446x_api_lib.c	84;"	variable	file:
 ctsWentHigh	radio_comm.c	29;"	variable
 disableInterrupts	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2717;"	macro
 disableInterrupts	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2726;"	macro
 disableInterrupts	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2736;"	macro
+eepera	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	41;"	macro
 enableInterrupts	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2716;"	macro
 enableInterrupts	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2725;"	macro
 enableInterrupts	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2735;"	macro
-gRadio_CheckReceived	radio.c	112;"	function	signature:(void)
-gRadio_CheckReceived	radio.h	56;"	prototype	signature:(void)
+gRadio_CheckReceived	radio.c	98;"	function	signature:(void)
+gRadio_CheckReceived	radio.h	57;"	prototype	signature:(void)
 gSampleCode_StringCompare	sample_code_func.h	34;"	prototype	signature:(uint8_t* pbiPacketContent, uint8_t* pbiString, uint8_t lenght)
 halt	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2723;"	macro
 halt	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2732;"	macro
@@ -7348,24 +7355,29 @@ lSys_SysClockFreq_c	application_defs.h	14;"	macro
 mIsr_DisableAllIt	isr.h	25;"	macro
 mIsr_EnableAllIt	isr.h	20;"	macro
 main	main.c	60;"	function	signature:(void)
+memchr	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	34;"	prototype	signature:(void *s, char c, unsigned int n)
+memcmp	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	28;"	prototype	signature:(void *s1, void *s2, unsigned int n)
+memcpy	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	35;"	prototype	signature:(void *s1, void *s2, unsigned int n)
+memmove	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	36;"	prototype	signature:(void *s1, void *s2, unsigned int n)
+memset	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	37;"	prototype	signature:(void *s, char c, unsigned int n)
 nop	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2720;"	macro
 nop	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2729;"	macro
 nop	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2739;"	macro
 numOfBytes	si446x_api_lib.c	85;"	variable	file:
-pRadioConfiguration	radio.c	31;"	variable
-radio_comm_ClearCTS	radio_comm.c	173;"	function
+pRadioConfiguration	radio.c	30;"	variable
+radio_comm_ClearCTS	radio_comm.c	202;"	function
 radio_comm_ClearCTS	radio_comm.h	50;"	prototype	signature:(void)
 radio_comm_GetResp	radio_comm.c	47;"	function	signature:(uint8_t byteCount, uint8_t *pData)
 radio_comm_GetResp	radio_comm.h	42;"	prototype	signature:(uint8_t byteCount, uint8_t* pData)
-radio_comm_PollCTS	radio_comm.c	160;"	function	signature:(void)
+radio_comm_PollCTS	radio_comm.c	189;"	function	signature:(void)
 radio_comm_PollCTS	radio_comm.h	47;"	prototype	signature:(void)
-radio_comm_ReadData	radio_comm.c	115;"	function	signature:(uint8_t cmd, BitStatus pollCts, uint8_t byteCount, uint8_t *pData)
+radio_comm_ReadData	radio_comm.c	144;"	function	signature:(uint8_t cmd, BitStatus pollCts, uint8_t byteCount, uint8_t *pData)
 radio_comm_ReadData	radio_comm.h	44;"	prototype	signature:(uint8_t cmd, BitStatus pollCts, uint8_t byteCount, uint8_t* pData)
-radio_comm_SendCmd	radio_comm.c	95;"	function	signature:(uint8_t byteCount, uint8_t *pData)
+radio_comm_SendCmd	radio_comm.c	124;"	function	signature:(uint8_t byteCount, uint8_t *pData)
 radio_comm_SendCmd	radio_comm.h	43;"	prototype	signature:(uint8_t byteCount, uint8_t* pData)
-radio_comm_SendCmdGetResp	radio_comm.c	188;"	function	signature:(uint8_t cmdByteCount, uint8_t *pCmdData, uint8_t respByteCount, uint8_t *pRespData)
+radio_comm_SendCmdGetResp	radio_comm.c	217;"	function	signature:(uint8_t cmdByteCount, uint8_t *pCmdData, uint8_t respByteCount, uint8_t *pRespData)
 radio_comm_SendCmdGetResp	radio_comm.h	48;"	prototype	signature:(uint8_t cmdByteCount, uint8_t* pCmdData, \ uint8_t respByteCount, uint8_t* pRespData)
-radio_comm_WriteData	radio_comm.c	139;"	function	signature:(uint8_t cmd, BitStatus pollCts, uint8_t byteCount, uint8_t *pData)
+radio_comm_WriteData	radio_comm.c	168;"	function	signature:(uint8_t cmd, BitStatus pollCts, uint8_t byteCount, uint8_t *pData)
 radio_comm_WriteData	radio_comm.h	45;"	prototype	signature:(uint8_t cmd, BitStatus pollCts, uint8_t byteCount, uint8_t* pData)
 radio_hal_AssertShutdown	radio_hal.c	37;"	function	signature:(void)
 radio_hal_AssertShutdown	radio_hal.h	31;"	prototype	signature:(void)
@@ -7389,77 +7401,76 @@ rim	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib
 rim	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2727;"	macro
 rim	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2737;"	macro
 rxActive	stm8s_it.c	47;"	variable
-rxRadioPacket	radio.c	33;"	variable
 s16	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	223;"	typedef
 s32	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	222;"	typedef
 s8	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	224;"	typedef
 si446x_apply_patch	si446x_api_lib.h	42;"	prototype	signature:(void)
-si446x_change_state	si446x_api_lib.c	320;"	function	signature:(uint8_t NEXT_STATE1)
+si446x_change_state	si446x_api_lib.c	321;"	function	signature:(uint8_t NEXT_STATE1)
 si446x_change_state	si446x_api_lib.h	52;"	prototype	signature:(uint8_t NEXT_STATE1)
 si446x_cmd_reply_union	si446x_cmd.h	149;"	union
 si446x_configuration_init	si446x_api_lib.c	87;"	function	signature:( const uint8_t *pSetPropCmd, const uint8_t *pEepromSetPropCmd)
 si446x_configuration_init	si446x_api_lib.h	39;"	prototype	signature:( const uint8_t* pSetPropCmd, const uint8_t *pEepromSetpropCmd)
-si446x_fifo_info	si446x_api_lib.c	346;"	function	signature:(uint8_t FIFO)
+si446x_fifo_info	si446x_api_lib.c	347;"	function	signature:(uint8_t FIFO)
 si446x_fifo_info	si446x_api_lib.h	58;"	prototype	signature:(uint8_t FIFO)
-si446x_fifo_info_fast_read	si446x_api_lib.c	920;"	function	signature:(void)
+si446x_fifo_info_fast_read	si446x_api_lib.c	921;"	function	signature:(void)
 si446x_fifo_info_fast_read	si446x_api_lib.h	105;"	prototype	signature:(void)
-si446x_fifo_info_fast_reset	si446x_api_lib.c	908;"	function	signature:(uint8_t FIFO)
+si446x_fifo_info_fast_reset	si446x_api_lib.c	909;"	function	signature:(uint8_t FIFO)
 si446x_fifo_info_fast_reset	si446x_api_lib.h	104;"	prototype	signature:(uint8_t FIFO)
-si446x_frr_a_read	si446x_api_lib.c	445;"	function	signature:(uint8_t respByteCount)
+si446x_frr_a_read	si446x_api_lib.c	446;"	function	signature:(uint8_t respByteCount)
 si446x_frr_a_read	si446x_api_lib.h	68;"	prototype	signature:(uint8_t respByteCount)
-si446x_frr_b_read	si446x_api_lib.c	463;"	function	signature:(uint8_t respByteCount)
+si446x_frr_b_read	si446x_api_lib.c	464;"	function	signature:(uint8_t respByteCount)
 si446x_frr_b_read	si446x_api_lib.h	69;"	prototype	signature:(uint8_t respByteCount)
-si446x_frr_c_read	si446x_api_lib.c	481;"	function	signature:(uint8_t respByteCount)
+si446x_frr_c_read	si446x_api_lib.c	482;"	function	signature:(uint8_t respByteCount)
 si446x_frr_c_read	si446x_api_lib.h	70;"	prototype	signature:(uint8_t respByteCount)
-si446x_frr_d_read	si446x_api_lib.c	499;"	function	signature:(uint8_t respByteCount)
+si446x_frr_d_read	si446x_api_lib.c	500;"	function	signature:(uint8_t respByteCount)
 si446x_frr_d_read	si446x_api_lib.h	71;"	prototype	signature:(uint8_t respByteCount)
-si446x_func_info	si446x_api_lib.c	425;"	function	signature:(void)
+si446x_func_info	si446x_api_lib.c	426;"	function	signature:(void)
 si446x_func_info	si446x_api_lib.h	66;"	prototype	signature:(void)
-si446x_get_adc_reading	si446x_api_lib.c	517;"	function	signature:(uint8_t ADC_EN)
+si446x_get_adc_reading	si446x_api_lib.c	518;"	function	signature:(uint8_t ADC_EN)
 si446x_get_adc_reading	si446x_api_lib.h	73;"	prototype	signature:(uint8_t ADC_EN)
-si446x_get_chip_status	si446x_api_lib.c	612;"	function	signature:(uint8_t CHIP_CLR_PEND)
+si446x_get_chip_status	si446x_api_lib.c	613;"	function	signature:(uint8_t CHIP_CLR_PEND)
 si446x_get_chip_status	si446x_api_lib.h	77;"	prototype	signature:( uint8_t CHIP_CLR_PEND )
-si446x_get_chip_status_fast_clear	si446x_api_lib.c	878;"	function	signature:(void)
+si446x_get_chip_status_fast_clear	si446x_api_lib.c	879;"	function	signature:(void)
 si446x_get_chip_status_fast_clear	si446x_api_lib.h	101;"	prototype	signature:( void )
-si446x_get_chip_status_fast_clear_read	si446x_api_lib.c	890;"	function	signature:(void)
+si446x_get_chip_status_fast_clear_read	si446x_api_lib.c	891;"	function	signature:(void)
 si446x_get_chip_status_fast_clear_read	si446x_api_lib.h	102;"	prototype	signature:( void )
-si446x_get_int_status	si446x_api_lib.c	220;"	function	signature:(uint8_t PH_CLR_PEND, uint8_t MODEM_CLR_PEND, uint8_t CHIP_CLR_PEND)
+si446x_get_int_status	si446x_api_lib.c	221;"	function	signature:(uint8_t PH_CLR_PEND, uint8_t MODEM_CLR_PEND, uint8_t CHIP_CLR_PEND)
 si446x_get_int_status	si446x_api_lib.h	48;"	prototype	signature:(uint8_t PH_CLR_PEND, uint8_t MODEM_CLR_PEND, uint8_t CHIP_CLR_PEND)
-si446x_get_int_status_fast_clear	si446x_api_lib.c	758;"	function	signature:(void)
+si446x_get_int_status_fast_clear	si446x_api_lib.c	759;"	function	signature:(void)
 si446x_get_int_status_fast_clear	si446x_api_lib.h	90;"	prototype	signature:( void )
-si446x_get_int_status_fast_clear_read	si446x_api_lib.c	769;"	function	signature:(void)
+si446x_get_int_status_fast_clear_read	si446x_api_lib.c	770;"	function	signature:(void)
 si446x_get_int_status_fast_clear_read	si446x_api_lib.h	91;"	prototype	signature:( void )
-si446x_get_modem_status	si446x_api_lib.c	587;"	function	signature:(uint8_t MODEM_CLR_PEND)
+si446x_get_modem_status	si446x_api_lib.c	588;"	function	signature:(uint8_t MODEM_CLR_PEND)
 si446x_get_modem_status	si446x_api_lib.h	76;"	prototype	signature:( uint8_t MODEM_CLR_PEND )
-si446x_get_modem_status_fast_clear	si446x_api_lib.c	843;"	function	signature:(void)
+si446x_get_modem_status_fast_clear	si446x_api_lib.c	844;"	function	signature:(void)
 si446x_get_modem_status_fast_clear	si446x_api_lib.h	98;"	prototype	signature:( void )
-si446x_get_modem_status_fast_clear_read	si446x_api_lib.c	855;"	function	signature:(void)
+si446x_get_modem_status_fast_clear_read	si446x_api_lib.c	856;"	function	signature:(void)
 si446x_get_modem_status_fast_clear_read	si446x_api_lib.h	99;"	prototype	signature:( void )
-si446x_get_packet_info	si446x_api_lib.c	543;"	function	signature:(uint8_t FIELD_NUMBER_MASK, uint16_t LEN, S16 DIFF_LEN)
+si446x_get_packet_info	si446x_api_lib.c	544;"	function	signature:(uint8_t FIELD_NUMBER_MASK, uint16_t LEN, S16 DIFF_LEN)
 si446x_get_packet_info	si446x_api_lib.h	74;"	prototype	signature:(uint8_t FIELD_NUMBER_MASK, uint16_t LEN, S16 DIFF_LEN )
-si446x_get_ph_status	si446x_api_lib.c	568;"	function	signature:(uint8_t PH_CLR_PEND)
+si446x_get_ph_status	si446x_api_lib.c	569;"	function	signature:(uint8_t PH_CLR_PEND)
 si446x_get_ph_status	si446x_api_lib.h	75;"	prototype	signature:(uint8_t PH_CLR_PEND)
-si446x_get_ph_status_fast_clear	si446x_api_lib.c	814;"	function	signature:(void)
+si446x_get_ph_status_fast_clear	si446x_api_lib.c	815;"	function	signature:(void)
 si446x_get_ph_status_fast_clear	si446x_api_lib.h	95;"	prototype	signature:( void )
-si446x_get_ph_status_fast_clear_read	si446x_api_lib.c	826;"	function	signature:(void)
+si446x_get_ph_status_fast_clear_read	si446x_api_lib.c	827;"	function	signature:(void)
 si446x_get_ph_status_fast_clear_read	si446x_api_lib.h	96;"	prototype	signature:( void )
-si446x_get_property	si446x_api_lib.c	389;"	function	signature:(uint8_t GROUP, uint8_t NUM_PROPS, uint8_t START_PROP)
+si446x_get_property	si446x_api_lib.c	390;"	function	signature:(uint8_t GROUP, uint8_t NUM_PROPS, uint8_t START_PROP)
 si446x_get_property	si446x_api_lib.h	62;"	prototype	signature:(uint8_t GROUP, uint8_t NUM_PROPS, uint8_t START_PROP)
-si446x_gpio_pin_cfg	si446x_api_lib.c	254;"	function	signature:(uint8_t GPIO0, uint8_t GPIO1, uint8_t GPIO2, uint8_t GPIO3, uint8_t NIRQ, uint8_t SDO, uint8_t GEN_CONFIG)
+si446x_gpio_pin_cfg	si446x_api_lib.c	255;"	function	signature:(uint8_t GPIO0, uint8_t GPIO1, uint8_t GPIO2, uint8_t GPIO3, uint8_t NIRQ, uint8_t SDO, uint8_t GEN_CONFIG)
 si446x_gpio_pin_cfg	si446x_api_lib.h	49;"	prototype	signature:(uint8_t GPIO0, uint8_t GPIO1, uint8_t GPIO2, uint8_t GPIO3, uint8_t NIRQ, uint8_t SDO, uint8_t GEN_CONFIG)
-si446x_gpio_pin_cfg_fast	si446x_api_lib.c	792;"	function	signature:(void)
+si446x_gpio_pin_cfg_fast	si446x_api_lib.c	793;"	function	signature:(void)
 si446x_gpio_pin_cfg_fast	si446x_api_lib.h	93;"	prototype	signature:( void )
-si446x_ircal	si446x_api_lib.c	635;"	function	signature:(uint8_t SEARCHING_STEP_SIZE, uint8_t SEARCHING_RSSI_AVG, uint8_t RX_CHAIN_SETTING1, uint8_t RX_CHAIN_SETTING2)
-si446x_ircal_manual	si446x_api_lib.c	652;"	function	signature:(uint8_t IRCAL_AMP, uint8_t IRCAL_PH)
+si446x_ircal	si446x_api_lib.c	636;"	function	signature:(uint8_t SEARCHING_STEP_SIZE, uint8_t SEARCHING_RSSI_AVG, uint8_t RX_CHAIN_SETTING1, uint8_t RX_CHAIN_SETTING2)
+si446x_ircal_manual	si446x_api_lib.c	653;"	function	signature:(uint8_t IRCAL_AMP, uint8_t IRCAL_PH)
 si446x_ircal_manual	si446x_api_lib.h	79;"	prototype	signature:(uint8_t IRCAL_AMP, uint8_t IRCAL_PH)
-si446x_nop	si446x_api_lib.c	333;"	function	signature:(void)
+si446x_nop	si446x_api_lib.c	334;"	function	signature:(void)
 si446x_nop	si446x_api_lib.h	56;"	prototype	signature:(void)
-si446x_part_info	si446x_api_lib.c	148;"	function	signature:(void)
+si446x_part_info	si446x_api_lib.c	149;"	function	signature:(void)
 si446x_part_info	si446x_api_lib.h	43;"	prototype	signature:(void)
 si446x_power_up	si446x_api_lib.c	59;"	function	signature:(uint8_t BOOT_OPTIONS, uint8_t XTAL_OPTIONS, uint32_t XO_FREQ)
 si446x_power_up	si446x_api_lib.h	37;"	prototype	signature:(uint8_t BOOT_OPTIONS, uint8_t XTAL_OPTIONS, uint32_t XO_FREQ)
 si446x_protocol_cfg	si446x_api_lib.h	80;"	prototype	signature:(uint8_t PROTOCOL)
-si446x_read_rx_fifo	si446x_api_lib.c	377;"	function	signature:(uint8_t numBytes, uint8_t *pRxData)
+si446x_read_rx_fifo	si446x_api_lib.c	378;"	function	signature:(uint8_t numBytes, uint8_t *pRxData)
 si446x_read_rx_fifo	si446x_api_lib.h	60;"	prototype	signature:( uint8_t numBytes, uint8_t* pRxData )
 si446x_reply_FIFO_INFO_map	si446x_cmd.h	53;"	struct
 si446x_reply_FRR_A_READ_map	si446x_cmd.h	78;"	struct
@@ -7481,50 +7492,62 @@ si446x_reply_PART_INFO_map	si446x_cmd.h	26;"	struct
 si446x_reply_READ_CMD_BUFF_map	si446x_cmd.h	74;"	struct
 si446x_reply_READ_RX_FIFO_map	si446x_cmd.h	125;"	struct
 si446x_reply_REQUEST_DEVICE_STATE_map	si446x_cmd.h	69;"	struct
-si446x_request_device_state	si446x_api_lib.c	670;"	function	signature:(void)
+si446x_request_device_state	si446x_api_lib.c	671;"	function	signature:(void)
 si446x_request_device_state	si446x_api_lib.h	82;"	prototype	signature:(void)
 si446x_reset	si446x_api_lib.c	40;"	function	signature:(void)
 si446x_reset	si446x_api_lib.h	36;"	prototype	signature:(void)
-si446x_rx_hop	si446x_api_lib.c	720;"	function	signature:(uint8_t INTE, uint8_t FRAC2, uint8_t FRAC1, uint8_t FRAC0, uint8_t VCO_CNT1, uint8_t VCO_CNT0)
+si446x_rx_hop	si446x_api_lib.c	721;"	function	signature:(uint8_t INTE, uint8_t FRAC2, uint8_t FRAC1, uint8_t FRAC0, uint8_t VCO_CNT1, uint8_t VCO_CNT0)
 si446x_rx_hop	si446x_api_lib.h	85;"	prototype	signature:(uint8_t INTE, uint8_t FRAC2, uint8_t FRAC1, uint8_t FRAC0, uint8_t VCO_CNT1, uint8_t VCO_CNT0)
 si446x_set_property	si446x_api_lib.h	51;"	prototype	signature:( uint8_t GROUP, uint8_t NUM_PROPS, uint8_t START_PROP, ... )
-si446x_start_rx	si446x_api_lib.c	199;"	function	signature:(uint8_t CHANNEL, uint8_t CONDITION, uint16_t RX_LEN, uint8_t NEXT_STATE1, uint8_t NEXT_STATE2, uint8_t NEXT_STATE3)
+si446x_start_rx	si446x_api_lib.c	200;"	function	signature:(uint8_t CHANNEL, uint8_t CONDITION, uint16_t RX_LEN, uint8_t NEXT_STATE1, uint8_t NEXT_STATE2, uint8_t NEXT_STATE3)
 si446x_start_rx	si446x_api_lib.h	46;"	prototype	signature:(uint8_t CHANNEL, uint8_t CONDITION, uint16_t RX_LEN, uint8_t NEXT_STATE1, uint8_t NEXT_STATE2, uint8_t NEXT_STATE3)
-si446x_start_rx_fast	si446x_api_lib.c	747;"	function	signature:(void)
+si446x_start_rx_fast	si446x_api_lib.c	748;"	function	signature:(void)
 si446x_start_rx_fast	si446x_api_lib.h	88;"	prototype	signature:( void )
-si446x_start_tx	si446x_api_lib.c	173;"	function	signature:(uint8_t CHANNEL, uint8_t CONDITION, uint16_t TX_LEN)
+si446x_start_tx	si446x_api_lib.c	174;"	function	signature:(uint8_t CHANNEL, uint8_t CONDITION, uint16_t TX_LEN)
 si446x_start_tx	si446x_api_lib.h	45;"	prototype	signature:(uint8_t CHANNEL, uint8_t CONDITION, uint16_t TX_LEN)
-si446x_start_tx_fast	si446x_api_lib.c	736;"	function	signature:(void)
+si446x_start_tx_fast	si446x_api_lib.c	737;"	function	signature:(void)
 si446x_start_tx_fast	si446x_api_lib.h	87;"	prototype	signature:( void )
-si446x_tx_hop	si446x_api_lib.c	695;"	function	signature:(uint8_t INTE, uint8_t FRAC2, uint8_t FRAC1, uint8_t FRAC0, uint8_t VCO_CNT1, uint8_t VCO_CNT0, uint8_t PLL_SETTLE_TIME1, uint8_t PLL_SETTLE_TIME0)
+si446x_tx_hop	si446x_api_lib.c	696;"	function	signature:(uint8_t INTE, uint8_t FRAC2, uint8_t FRAC1, uint8_t FRAC0, uint8_t VCO_CNT1, uint8_t VCO_CNT0, uint8_t PLL_SETTLE_TIME1, uint8_t PLL_SETTLE_TIME0)
 si446x_tx_hop	si446x_api_lib.h	84;"	prototype	signature:(uint8_t INTE, uint8_t FRAC2, uint8_t FRAC1, uint8_t FRAC0, uint8_t VCO_CNT1, uint8_t VCO_CNT0, uint8_t PLL_SETTLE_TIME1, uint8_t PLL_SETTLE_TIME0)
-si446x_write_tx_fifo	si446x_api_lib.c	366;"	function	signature:(uint8_t numBytes, uint8_t *pTxData)
+si446x_write_tx_fifo	si446x_api_lib.c	367;"	function	signature:(uint8_t numBytes, uint8_t *pTxData)
 si446x_write_tx_fifo	si446x_api_lib.h	59;"	prototype	signature:( uint8_t numBytes, uint8_t* pData )
 sim	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2719;"	macro
 sim	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2728;"	macro
 sim	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2738;"	macro
+strcat	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	20;"	prototype	signature:(char *s1, char *s2)
+strchr	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	21;"	prototype	signature:(char *s, char c)
+strcmp	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	29;"	prototype	signature:(char *s1, char *s2)
+strcpy	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	22;"	prototype	signature:(char *s1, char *s2)
+strcspn	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	31;"	prototype	signature:(char *s1, char *s2)
+strlen	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	32;"	prototype	signature:(char *s)
+strncat	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	23;"	prototype	signature:(char *s1, char *s2, unsigned int n)
+strncmp	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	30;"	prototype	signature:(char *s1, char *s2, unsigned int n)
+strncpy	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	24;"	prototype	signature:(char *s1, char *s2, unsigned int n)
+strpbrk	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	25;"	prototype	signature:(char *s1, char *s2)
+strrchr	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	26;"	prototype	signature:(char *s, char c)
+strspn	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	33;"	prototype	signature:(char *s1, char *s2)
+strstr	..\..\..\..\..\..\program files (x86)\cosmic\fse_compilers\cxstm8\hstm8\string.h	27;"	prototype	signature:(char *s1, char *s2)
 tRadioConfiguration	radio.h	32;"	typedef	typeref:struct:__anon246
 trap	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2721;"	macro
 trap	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2730;"	macro
 trap	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2740;"	macro
-txRadioPacket	radio.c	34;"	variable
+txrx_buffer	radio.c	32;"	variable
 u16	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	227;"	typedef
 u32	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	226;"	typedef
 u8	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	228;"	typedef
-uartActive	stm8s_it.c	48;"	variable
 uint16_t	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	217;"	typedef
 uint32_t	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	218;"	typedef
 uint8_t	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	216;"	typedef
-vRadio_Init	radio.c	79;"	function	signature:(void)
-vRadio_Init	radio.h	55;"	prototype	signature:(void)
-vRadio_PowerUp	radio.c	50;"	prototype	file:	signature:(void)
-vRadio_PowerUp	radio.c	59;"	function	signature:(void)
-vRadio_StartRX	radio.c	145;"	function	signature:(uint8_t channel)
-vRadio_StartRX	radio.h	57;"	prototype	signature:(uint8_t)
-vRadio_StartTx	radio.c	166;"	function	signature:(uint8_t channel, uint8_t length, uint8_t *pioFixRadioPacket)
-vRadio_StartTx	radio.h	58;"	prototype	signature:(uint8_t channel, uint8_t length, uint8_t *pioFixRadioPacket)
+vRadio_Init	radio.c	66;"	function	signature:(void)
+vRadio_Init	radio.h	56;"	prototype	signature:(void)
+vRadio_PowerUp	radio.c	37;"	prototype	file:	signature:(void)
+vRadio_PowerUp	radio.c	46;"	function	signature:(void)
+vRadio_StartRX	radio.c	131;"	function	signature:(uint8_t channel)
+vRadio_StartRX	radio.h	58;"	prototype	signature:(uint8_t)
+vRadio_StartTx	radio.c	152;"	function	signature:(uint8_t channel, uint8_t length, uint8_t *pioFixRadioPacket)
+vRadio_StartTx	radio.h	59;"	prototype	signature:(uint8_t channel, uint8_t length, uint8_t *pioFixRadioPacket)
 vSampleCode_ShowPbOnBuzzer	sample_code_func.h	29;"	prototype	signature:(void)
-wDelay	radio.c	58;"	variable	file:
+wDelay	radio.c	45;"	variable	file:
 wfi	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2722;"	macro
 wfi	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2731;"	macro
 wfi	..\..\..\..\..\..\program files (x86)\stmicroelectronics\stm8s_stdperiph_lib\libraries\stm8s_stdperiph_driver\inc\stm8s.h	2741;"	macro
